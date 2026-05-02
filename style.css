@@ -1059,15 +1059,6 @@ button {
     opacity: 0.28;
 }
 
-#page-indicator {
-    min-width: 58px;
-    color: var(--text-secondary);
-    font-size: 0.76rem;
-    font-weight: 850;
-    text-align: center;
-    letter-spacing: 0.08em;
-}
-
 .page.page-arrive-next > .container {
     animation: page-arrive-next 820ms cubic-bezier(.16, .92, .16, 1) both;
 }

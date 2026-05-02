@@ -438,7 +438,6 @@ function initPageExperience() {
     const pages = $$('.home-page .page[id]');
     if (!pages.length) return;
 
-    const pageIndicator = $('#page-indicator');
     const prevButton = $('#prev-page');
     const nextButton = $('#next-page');
     const railButtons = $$('.rail-dot[data-target]');
@@ -452,10 +451,6 @@ function initPageExperience() {
     function setActivePage(index) {
         currentPage = Math.max(0, Math.min(index, pages.length - 1));
         const activeId = pages[currentPage].id;
-        const pageNumber = String(currentPage + 1).padStart(2, '0');
-        const total = String(pages.length).padStart(2, '0');
-
-        if (pageIndicator) pageIndicator.textContent = `${pageNumber} / ${total}`;
         if (prevButton) prevButton.disabled = currentPage === 0;
         if (nextButton) nextButton.disabled = currentPage === pages.length - 1;
 
