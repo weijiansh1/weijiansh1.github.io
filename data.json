@@ -77,6 +77,24 @@
       "category": "AI",
       "image": "assets/hackathon-wanderlace.jpg",
       "imagePosition": "82% 52%",
+      "aside": [
+        {
+          "label": "Event",
+          "value": "AI Hackathon Tour 2026"
+        },
+        {
+          "label": "Team",
+          "value": "Yuanlü (缘旅)"
+        },
+        {
+          "label": "Project",
+          "value": "Wanderlace"
+        },
+        {
+          "label": "Route",
+          "value": "Fudan Station → Nanjing Final"
+        }
+      ],
       "links": [
         {
           "label": "Fudan News",

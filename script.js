@@ -257,6 +257,7 @@ function renderFocus(focusItems) {
 
 function renderAward(item) {
     const links = Array.isArray(item.links) ? item.links : [];
+    const asideItems = Array.isArray(item.aside) ? item.aside : [];
     const linksHtml = links.length ? `
         <div class="pub-links">
             ${links.map(link => `
@@ -265,6 +266,16 @@ function renderAward(item) {
                 </a>
             `).join('')}
         </div>
+    ` : '';
+    const asideHtml = asideItems.length ? `
+        <aside class="award-aside" aria-label="Award details">
+            ${asideItems.map(entry => `
+                <div class="award-fact">
+                    <span>${html(entry.label || '')}</span>
+                    <strong>${html(entry.value || '')}</strong>
+                </div>
+            `).join('')}
+        </aside>
     ` : '';
 
     if (item.image) {
@@ -287,6 +298,7 @@ function renderAward(item) {
                         ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
                         ${linksHtml}
                     </div>
+                    ${asideHtml}
                 </div>
             </article>
         `;
@@ -488,6 +500,7 @@ function initPageExperience() {
     let currentPage = 0;
     let isPaging = false;
     let wheelDelta = 0;
+    let wheelResetTimer = 0;
     let touchStartY = 0;
     let touchStartX = 0;
 
@@ -506,30 +519,21 @@ function initPageExperience() {
         });
     }
 
-    function playPageTurn(direction, targetPage, sourcePage) {
+    function playPageTurn(direction, targetPage) {
         if (prefersReducedMotion.matches) return;
-        if (sourcePage) {
-            sourcePage.classList.remove('page-exit-next', 'page-exit-prev');
-            void sourcePage.offsetWidth;
-            sourcePage.classList.add(direction === 'prev' ? 'page-exit-prev' : 'page-exit-next');
-            window.setTimeout(() => sourcePage.classList.remove('page-exit-next', 'page-exit-prev'), 820);
-        }
-
         if (targetPage) {
             targetPage.classList.remove('page-arrive-next', 'page-arrive-prev');
             void targetPage.offsetWidth;
             targetPage.classList.add(direction === 'prev' ? 'page-arrive-prev' : 'page-arrive-next');
-            window.setTimeout(() => targetPage.classList.remove('page-arrive-next', 'page-arrive-prev'), 820);
+            window.setTimeout(() => targetPage.classList.remove('page-arrive-next', 'page-arrive-prev'), 760);
         }
     }
 
     function easedProgress(progress) {
         const clamped = Math.min(Math.max(progress, 0), 1);
-        if (clamped < 0.72) {
-            return 1.03 * (1 - Math.pow(1 - clamped / 0.72, 3));
-        }
-        const settle = (clamped - 0.72) / 0.28;
-        return 1.03 - 0.03 * (1 - Math.pow(1 - settle, 3));
+        return clamped < 0.5
+            ? 4 * clamped * clamped * clamped
+            : 1 - Math.pow(-2 * clamped + 2, 3) / 2;
     }
 
     function scrollToPage(page, done) {
@@ -543,7 +547,7 @@ function initPageExperience() {
             return;
         }
 
-        const duration = Math.min(920, Math.max(620, Math.abs(distance) * 0.45));
+        const duration = Math.min(780, Math.max(540, Math.abs(distance) * 0.32));
         const startTime = performance.now();
 
         function step(now) {
@@ -568,10 +572,9 @@ function initPageExperience() {
         if (targetIndex === currentPage || isPaging) return;
 
         const resolvedDirection = direction || (targetIndex > currentPage ? 'next' : 'prev');
-        const sourcePage = pages[currentPage];
         isPaging = true;
         document.body.classList.add('is-section-turning');
-        playPageTurn(resolvedDirection, pages[targetIndex], sourcePage);
+        playPageTurn(resolvedDirection, pages[targetIndex]);
         setActivePage(targetIndex);
         scrollToPage(pages[targetIndex], () => {
             isPaging = false;
@@ -615,12 +618,16 @@ function initPageExperience() {
     window.addEventListener('wheel', event => {
         if (window.innerWidth < 860 || prefersReducedMotion.matches) return;
         event.preventDefault();
-        if (isPaging) {
-            return;
-        }
+        if (isPaging) return;
 
-        wheelDelta += event.deltaY;
-        if (Math.abs(wheelDelta) < 150) return;
+        window.clearTimeout(wheelResetTimer);
+        wheelResetTimer = window.setTimeout(() => {
+            wheelDelta = 0;
+        }, 140);
+
+        const normalizedDelta = Math.max(-90, Math.min(90, event.deltaY));
+        wheelDelta += normalizedDelta;
+        if (Math.abs(wheelDelta) < 96) return;
 
         const direction = wheelDelta > 0 ? 'next' : 'prev';
         const targetIndex = currentPage + (direction === 'next' ? 1 : -1);
