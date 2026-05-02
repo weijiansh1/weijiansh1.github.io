@@ -419,10 +419,6 @@ function initPageExperience() {
     const pages = $$('.home-page .page[id]');
     if (!pages.length) return;
 
-    const pageFlip = $('#page-flip');
-    const pageIndicator = $('#page-indicator');
-    const prevButton = $('#prev-page');
-    const nextButton = $('#next-page');
     const railButtons = $$('.rail-dot[data-target]');
     const navAnchors = $$('.nav-links a[href^="#"], .page-link[href^="#"]');
     let currentPage = 0;
@@ -430,12 +426,6 @@ function initPageExperience() {
     function setActivePage(index) {
         currentPage = Math.max(0, Math.min(index, pages.length - 1));
         const activeId = pages[currentPage].id;
-        const pageNumber = String(currentPage + 1).padStart(2, '0');
-        const total = String(pages.length).padStart(2, '0');
-
-        if (pageIndicator) pageIndicator.textContent = `${pageNumber} / ${total}`;
-        if (prevButton) prevButton.disabled = currentPage === 0;
-        if (nextButton) nextButton.disabled = currentPage === pages.length - 1;
 
         $$('.nav-links a[href^="#"]').forEach(link => {
             link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
@@ -446,20 +436,10 @@ function initPageExperience() {
         });
     }
 
-    function playFlip(direction) {
-        if (!pageFlip || prefersReducedMotion.matches) return;
-        pageFlip.classList.remove('flip-next', 'flip-prev');
-        void pageFlip.offsetWidth;
-        pageFlip.classList.add(direction === 'prev' ? 'flip-prev' : 'flip-next');
-        window.setTimeout(() => pageFlip.classList.remove('flip-next', 'flip-prev'), 780);
-    }
-
-    function goToPage(index, direction) {
+    function goToPage(index) {
         const targetIndex = Math.max(0, Math.min(index, pages.length - 1));
         if (targetIndex === currentPage) return;
 
-        const resolvedDirection = direction || (targetIndex > currentPage ? 'next' : 'prev');
-        playFlip(resolvedDirection);
         setActivePage(targetIndex);
         pages[targetIndex].scrollIntoView({
             behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
@@ -494,38 +474,6 @@ function initPageExperience() {
             const index = pages.findIndex(page => page.id === button.dataset.target);
             if (index !== -1) goToPage(index);
         });
-    });
-
-    prevButton?.addEventListener('click', () => goToPage(currentPage - 1, 'prev'));
-    nextButton?.addEventListener('click', () => goToPage(currentPage + 1, 'next'));
-
-    window.addEventListener('keydown', event => {
-        const tagName = document.activeElement?.tagName;
-        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName)) return;
-
-        const keys = {
-            ArrowDown: 1,
-            PageDown: 1,
-            ArrowUp: -1,
-            PageUp: -1
-        };
-
-        if (event.key === 'Home') {
-            event.preventDefault();
-            goToPage(0, 'prev');
-            return;
-        }
-
-        if (event.key === 'End') {
-            event.preventDefault();
-            goToPage(pages.length - 1, 'next');
-            return;
-        }
-
-        if (keys[event.key]) {
-            event.preventDefault();
-            goToPage(currentPage + keys[event.key], keys[event.key] > 0 ? 'next' : 'prev');
-        }
     });
 
     setActivePage(0);
