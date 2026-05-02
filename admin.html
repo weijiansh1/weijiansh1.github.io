@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Weijian Shi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f1f5f9; --card: #fff; --text: #1e293b; --muted: #64748b;
+            --primary: #4f46e5; --primary-hover: #4338ca; --border: #e2e8f0;
+            --danger: #ef4444; --success: #22c55e; --radius: 10px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* Login */
+        .login-overlay {
+            position: fixed; inset: 0; background: var(--bg);
+            display: flex; align-items: center; justify-content: center; z-index: 9999;
+        }
+        .login-box { background: var(--card); padding: 40px; border-radius: var(--radius); box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; max-width: 420px; width: 90%; }
+        .login-box h1 { font-size: 1.5rem; margin-bottom: 8px; }
+        .login-box p { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+        .login-box input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; margin-bottom: 12px; }
+        .login-box .error { color: var(--danger); font-size: 0.85rem; margin-bottom: 8px; display: none; }
+
+        /* Layout */
+        .admin-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .admin-header h1 { font-size: 1.1rem; }
+        .header-actions { display: flex; gap: 8px; }
+        .admin-body { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+
+        /* Buttons */
+        .btn { padding: 8px 20px; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { opacity: 0.9; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-sm { padding: 5px 12px; font-size: 0.8rem; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Cards / Sections */
+        .card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+        .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .card-header h2 { font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+        .card-header h2 i { color: var(--primary); }
+        .card-body { padding: 20px; }
+        .card-body.collapsed { display: none; }
+
+        /* Form */
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: var(--muted); }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; font-family: inherit;
+        }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        /* List items */
+        .item-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; }
+        .item-row .item-info { flex: 1; }
+        .item-row .item-info h4 { font-size: 0.9rem; }
+        .item-row .item-info p { font-size: 0.8rem; color: var(--muted); }
+        .item-row .item-actions { display: flex; gap: 4px; }
+
+        /* Image upload */
+        .upload-area { border: 2px dashed var(--border); border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .upload-area:hover { border-color: var(--primary); }
+        .upload-area i { font-size: 2rem; color: var(--muted); margin-bottom: 8px; }
+        .upload-area p { color: var(--muted); font-size: 0.85rem; }
+        .upload-preview img { max-width: 200px; border-radius: 8px; margin-top: 12px; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 24px; border-radius: 8px; color: #fff; font-size: 0.9rem; z-index: 10000; opacity: 0; transition: 0.3s; transform: translateY(10px); }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 200; }
+        .modal { background: var(--card); border-radius: var(--radius); padding: 24px; max-width: 520px; width: 90%; max-height: 85vh; overflow-y: auto; }
+        .modal h3 { margin-bottom: 16px; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+        .saving-indicator { display: none; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--muted); }
+        .saving-indicator.show { display: inline-flex; }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .admin-header { flex-wrap: wrap; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="login-overlay" id="login-screen">
+    <div class="login-box">
+        <h1><i class="fas fa-lock"></i> Admin Login</h1>
+        <p>Enter your GitHub Personal Access Token to manage your website content.</p>
+        <div class="error" id="login-error">Invalid token. Please check and try again.</div>
+        <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxx">
+        <p style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">Token is stored in your browser session only and never sent to any third party.</p>
+        <button class="btn btn-primary" onclick="doLogin()" style="width:100%">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+    </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel" style="display:none">
+
+<header class="admin-header">
+    <h1><i class="fas fa-cog"></i> Site Admin</h1>
+    <div class="header-actions">
+        <span class="saving-indicator" id="saving-ind"><i class="fas fa-spinner fa-spin"></i> Saving...</span>
+        <a href="index.html" class="btn btn-outline btn-sm" target="_blank"><i class="fas fa-external-link-alt"></i> View Site</a>
+        <button class="btn btn-primary" onclick="saveAll()"><i class="fas fa-save"></i> Save & Publish</button>
+        <button class="btn btn-outline btn-sm" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+</header>
+
+<div class="admin-body">
+
+    <!-- Profile -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-user"></i> Profile</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-profile">
+            <div class="form-row">
+                <div class="form-group"><label>Name (English)</label><input id="f-name" placeholder="Weijian Shi"></div>
+                <div class="form-group"><label>Name (Chinese)</label><input id="f-name-cn" placeholder="石伟建"></div>
+            </div>
+            <div class="form-group"><label>Title</label><input id="f-title" placeholder="Fudan University · Undergraduate"></div>
+            <div class="form-group"><label>Subtitle</label><input id="f-subtitle" placeholder="B.E. in Aircraft Design..."></div>
+            <div class="form-group">
+                <label>Avatar</label>
+                <div class="upload-area" id="avatar-upload" onclick="document.getElementById('avatar-file').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload avatar image</p>
+                    <input type="file" id="avatar-file" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)">
+                </div>
+                <div class="upload-preview" id="avatar-preview"></div>
+            </div>
+            <div class="form-group"><label>Bio (one paragraph per line)</label><textarea id="f-bio" rows="4"></textarea></div>
+            <div class="form-group"><label>Skills (comma separated)</label><input id="f-skills" placeholder="Python, C/C++, MATLAB"></div>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-education">
+            <div id="edu-list"></div>
+            <button class="btn btn-outline btn-sm" onclick="addEducation()"><i class="fas fa-plus"></i> Add Education</button>
+        </div>
+    </div>
+
+    <!-- Research -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-flask"></i> Research Interests</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-research">
+            <div id="research-list"></div>
+            <button class="btn btn-outline btn-sm" onclick="openModal('research')"><i class="fas fa-plus"></i> Add Research</button>
+        </div>
+    </div>
+
+    <!-- Awards -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-trophy"></i> Awards & Honors</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-awards">
+            <div id="awards-admin-list"></div>
+            <button class="btn btn-outline btn-sm" onclick="openModal('award')"><i class="fas fa-plus"></i> Add Award</button>
+        </div>
+    </div>
+
+    <!-- Publications -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-file-alt"></i> Publications</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-publications">
+            <div id="pub-admin-list"></div>
+            <button class="btn btn-outline btn-sm" onclick="openModal('publication')"><i class="fas fa-plus"></i> Add Publication</button>
+        </div>
+    </div>
+
+    <!-- Blog -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-pen"></i> Blog Posts</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-blog">
+            <div id="blog-admin-list"></div>
+            <button class="btn btn-outline btn-sm" onclick="openModal('blog')"><i class="fas fa-plus"></i> Add Blog Post</button>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-address-book"></i> Contact</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body" id="section-contact">
+            <div class="form-group"><label>Email</label><input id="f-email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>GitHub URL</label><input id="f-github" placeholder="https://github.com/weijiansh1"></div>
+            <div class="form-group"><label>Google Scholar URL</label><input id="f-scholar" placeholder="https://scholar.google.com/..."></div>
+            <div class="form-group"><label>LinkedIn URL</label><input id="f-linkedin" placeholder="https://linkedin.com/in/..."></div>
+            <div class="form-group"><label>Location</label><input id="f-location" placeholder="Shanghai, China"></div>
+        </div>
+    </div>
+
+    <!-- Image Manager -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2><i class="fas fa-images"></i> Image Upload</h2>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px">Upload images to your repository. After uploading, copy the filename to use in your content.</p>
+            <div class="upload-area" onclick="document.getElementById('img-file').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload an image</p>
+                <input type="file" id="img-file" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+            </div>
+            <div id="img-upload-result" style="margin-top:12px"></div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- Modal Container -->
+<div id="modal-container"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO = 'weijiansh1/weijiansh1.github.io';
+const API = 'https://api.github.com';
+let TOKEN = '';
+let siteData = null;
+let dataSha = '';
+
+// ===== Login =====
+function doLogin() {
+    TOKEN = document.getElementById('token-input').value.trim();
+    if (!TOKEN) return;
+    fetch(`${API}/user`, { headers: { Authorization: `token ${TOKEN}` } })
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(user => {
+            sessionStorage.setItem('gh_token', TOKEN);
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            loadData();
+        })
+        .catch(() => {
+            document.getElementById('login-error').style.display = 'block';
+        });
+}
+
+function logout() {
+    sessionStorage.removeItem('gh_token');
+    location.reload();
+}
+
+// Auto-login from session
+(function() {
+    const saved = sessionStorage.getItem('gh_token');
+    if (saved) {
+        TOKEN = saved;
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        loadData();
+    }
+    document.getElementById('token-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') doLogin();
+    });
+})();
+
+// ===== Load Data =====
+async function loadData() {
+    try {
+        const res = await ghApi(`/repos/${REPO}/contents/data.json`);
+        dataSha = res.sha;
+        const content = atob(res.content.replace(/\n/g, ''));
+        siteData = JSON.parse(new TextDecoder().decode(Uint8Array.from(content, c => c.charCodeAt(0))));
+        populateForm();
+    } catch (e) {
+        showToast('Failed to load data: ' + e.message, 'error');
+    }
+}
+
+function populateForm() {
+    const p = siteData.profile;
+    document.getElementById('f-name').value = p.name || '';
+    document.getElementById('f-name-cn').value = p.name_cn || '';
+    document.getElementById('f-title').value = p.title || '';
+    document.getElementById('f-subtitle').value = p.subtitle || '';
+    document.getElementById('f-bio').value = (p.bio || []).map(b => b.replace(/<[^>]+>/g, '')).join('\n');
+    document.getElementById('f-skills').value = (p.skills || []).join(', ');
+
+    // Contact
+    const c = siteData.contact || {};
+    document.getElementById('f-email').value = c.email || '';
+    document.getElementById('f-github').value = c.github || '';
+    document.getElementById('f-scholar').value = c.scholar || '';
+    document.getElementById('f-linkedin').value = c.linkedin || '';
+    document.getElementById('f-location').value = (c.location || '').replace(/\n/g, ', ');
+
+    renderEduList();
+    renderResearchList();
+    renderAwardsList();
+    renderPubList();
+    renderBlogList();
+}
+
+// ===== Render Lists =====
+function renderEduList() {
+    const el = document.getElementById('edu-list');
+    el.innerHTML = (siteData.profile.education || []).map((e, i) => `
+        <div class="item-row">
+            <div class="item-info"><h4>${e.school}</h4><p>${e.date} · ${e.degree.replace(/\n/g, ', ')}</p></div>
+            <div class="item-actions">
+                <button class="btn btn-outline btn-sm" onclick="editEducation(${i})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="removeItem('education',${i})"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderResearchList() {
+    const el = document.getElementById('research-list');
+    el.innerHTML = (siteData.research || []).map((r, i) => `
+        <div class="item-row">
+            <div class="item-info"><h4><i class="fas ${r.icon}"></i> ${r.title}</h4><p>${r.desc}</p></div>
+            <div class="item-actions">
+                <button class="btn btn-outline btn-sm" onclick="editResearch(${i})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="removeItem('research',${i})"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderAwardsList() {
+    const el = document.getElementById('awards-admin-list');
+    el.innerHTML = (siteData.awards || []).map((a, i) => `
+        <div class="item-row">
+            <div class="item-info"><h4>${a.title}</h4><p>${a.year || ''} ${a.category ? '· ' + a.category : ''} ${a.detail ? '· ' + a.detail : ''}</p></div>
+            <div class="item-actions">
+                <button class="btn btn-outline btn-sm" onclick="editAward(${i})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="removeItem('awards',${i})"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderPubList() {
+    const el = document.getElementById('pub-admin-list');
+    el.innerHTML = (siteData.publications || []).map((p, i) => `
+        <div class="item-row">
+            <div class="item-info"><h4>${p.title}</h4><p>${p.year || ''} ${p.venue ? '· ' + p.venue : ''} ${p.category ? '· ' + p.category : ''}</p></div>
+            <div class="item-actions">
+                <button class="btn btn-outline btn-sm" onclick="editPublication(${i})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="removeItem('publications',${i})"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderBlogList() {
+    const el = document.getElementById('blog-admin-list');
+    el.innerHTML = (siteData.blog || []).map((b, i) => `
+        <div class="item-row">
+            <div class="item-info"><h4>${b.title}</h4><p>${b.date} · ${b.tags.join(', ')}</p></div>
+            <div class="item-actions">
+                <button class="btn btn-outline btn-sm" onclick="editBlog(${i})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="removeItem('blog',${i})"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== Modals =====
+function openModal(type, index) {
+    const isEdit = index !== undefined;
+    let html = '';
+
+    if (type === 'education') {
+        const e = isEdit ? siteData.profile.education[index] : { date: '', school: '', degree: '', detail: '' };
+        html = `<h3>${isEdit ? 'Edit' : 'Add'} Education</h3>
+            <div class="form-group"><label>Period</label><input id="m-edu-date" value="${e.date}" placeholder="2025 - Present"></div>
+            <div class="form-group"><label>School</label><input id="m-edu-school" value="${e.school}" placeholder="Fudan University"></div>
+            <div class="form-group"><label>Degree</label><textarea id="m-edu-degree" rows="2">${e.degree}</textarea></div>
+            <div class="form-group"><label>Detail</label><textarea id="m-edu-detail" rows="2">${e.detail || ''}</textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEducation(${isEdit ? index : -1})">Save</button>
+            </div>`;
+    } else if (type === 'research') {
+        const r = isEdit ? siteData.research[index] : { icon: 'fa-flask', title: '', desc: '' };
+        html = `<h3>${isEdit ? 'Edit' : 'Add'} Research Interest</h3>
+            <div class="form-row">
+                <div class="form-group"><label>Icon (FontAwesome)</label><input id="m-res-icon" value="${r.icon}" placeholder="fa-robot"></div>
+                <div class="form-group"><label>Title</label><input id="m-res-title" value="${r.title}"></div>
+            </div>
+            <div class="form-group"><label>Description</label><textarea id="m-res-desc">${r.desc}</textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveResearch(${isEdit ? index : -1})">Save</button>
+            </div>`;
+    } else if (type === 'award') {
+        const a = isEdit ? siteData.awards[index] : { year: '', title: '', detail: '', category: 'AI' };
+        html = `<h3>${isEdit ? 'Edit' : 'Add'} Award</h3>
+            <div class="form-row">
+                <div class="form-group"><label>Year</label><input id="m-aw-year" value="${a.year}" placeholder="2025"></div>
+                <div class="form-group"><label>Category</label>
+                    <select id="m-aw-cat">
+                        <option ${a.category==='AI'?'selected':''}>AI</option>
+                        <option ${a.category==='Academic'?'selected':''}>Academic</option>
+                        <option ${a.category==='Competition'?'selected':''}>Competition</option>
+                        <option ${a.category==='Other'?'selected':''}>Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label>Title</label><input id="m-aw-title" value="${a.title}" placeholder="Award name"></div>
+            <div class="form-group"><label>Detail</label><textarea id="m-aw-detail">${a.detail || ''}</textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAward(${isEdit ? index : -1})">Save</button>
+            </div>`;
+    } else if (type === 'publication') {
+        const p = isEdit ? siteData.publications[index] : { year: '', title: '', authors: '', venue: '', category: 'AI', links: [] };
+        html = `<h3>${isEdit ? 'Edit' : 'Add'} Publication</h3>
+            <div class="form-row">
+                <div class="form-group"><label>Year</label><input id="m-pub-year" value="${p.year}" placeholder="2026"></div>
+                <div class="form-group"><label>Category</label>
+                    <select id="m-pub-cat">
+                        <option ${p.category==='AI'?'selected':''}>AI</option>
+                        <option ${p.category==='Aerospace'?'selected':''}>Aerospace</option>
+                        <option ${p.category==='Other'?'selected':''}>Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label>Title</label><input id="m-pub-title" value="${p.title}"></div>
+            <div class="form-group"><label>Authors</label><input id="m-pub-authors" value="${p.authors || ''}" placeholder="Weijian Shi, ..."></div>
+            <div class="form-group"><label>Venue</label><input id="m-pub-venue" value="${p.venue || ''}" placeholder="Conference / Journal name"></div>
+            <div class="form-group"><label>PDF Link</label><input id="m-pub-pdf" value="${(p.links||[]).find(l=>l.label==='PDF')?.url||''}" placeholder="https://..."></div>
+            <div class="form-group"><label>Code Link</label><input id="m-pub-code" value="${(p.links||[]).find(l=>l.label==='Code')?.url||''}" placeholder="https://github.com/..."></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="savePublication(${isEdit ? index : -1})">Save</button>
+            </div>`;
+    } else if (type === 'blog') {
+        const b = isEdit ? siteData.blog[index] : { date: new Date().toISOString().split('T')[0], title: '', desc: '', url: '', tags: [] };
+        html = `<h3>${isEdit ? 'Edit' : 'Add'} Blog Post</h3>
+            <div class="form-row">
+                <div class="form-group"><label>Date</label><input type="date" id="m-blog-date" value="${b.date}"></div>
+                <div class="form-group"><label>Tags (comma separated)</label><input id="m-blog-tags" value="${(b.tags||[]).join(', ')}"></div>
+            </div>
+            <div class="form-group"><label>Title</label><input id="m-blog-title" value="${b.title}"></div>
+            <div class="form-group"><label>Description</label><textarea id="m-blog-desc">${b.desc}</textarea></div>
+            <div class="form-group"><label>URL (relative path)</label><input id="m-blog-url" value="${b.url || ''}" placeholder="blog/post1.html"></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveBlog(${isEdit ? index : -1})">Save</button>
+            </div>`;
+    }
+
+    const container = document.getElementById('modal-container');
+    container.innerHTML = `<div class="modal-overlay" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`;
+}
+
+function closeModal() {
+    document.getElementById('modal-container').innerHTML = '';
+}
+
+// ===== Save Handlers =====
+function saveEducation(i) {
+    const item = {
+        date: document.getElementById('m-edu-date').value,
+        school: document.getElementById('m-edu-school').value,
+        degree: document.getElementById('m-edu-degree').value,
+        detail: document.getElementById('m-edu-detail').value
+    };
+    if (i === -1) siteData.profile.education.push(item);
+    else siteData.profile.education[i] = item;
+    closeModal(); renderEduList();
+}
+
+function saveResearch(i) {
+    const item = {
+        icon: document.getElementById('m-res-icon').value,
+        title: document.getElementById('m-res-title').value,
+        desc: document.getElementById('m-res-desc').value
+    };
+    if (i === -1) siteData.research.push(item);
+    else siteData.research[i] = item;
+    closeModal(); renderResearchList();
+}
+
+function saveAward(i) {
+    const item = {
+        year: document.getElementById('m-aw-year').value,
+        title: document.getElementById('m-aw-title').value,
+        detail: document.getElementById('m-aw-detail').value,
+        category: document.getElementById('m-aw-cat').value
+    };
+    if (i === -1) siteData.awards.push(item);
+    else siteData.awards[i] = item;
+    closeModal(); renderAwardsList();
+}
+
+function savePublication(i) {
+    const links = [];
+    const pdf = document.getElementById('m-pub-pdf').value;
+    const code = document.getElementById('m-pub-code').value;
+    if (pdf) links.push({ label: 'PDF', icon: 'file-pdf', url: pdf });
+    if (code) links.push({ label: 'Code', icon: 'code', url: code });
+    const item = {
+        year: document.getElementById('m-pub-year').value,
+        title: document.getElementById('m-pub-title').value,
+        authors: document.getElementById('m-pub-authors').value,
+        venue: document.getElementById('m-pub-venue').value,
+        category: document.getElementById('m-pub-cat').value,
+        links
+    };
+    if (i === -1) siteData.publications.push(item);
+    else siteData.publications[i] = item;
+    closeModal(); renderPubList();
+}
+
+function saveBlog(i) {
+    const item = {
+        date: document.getElementById('m-blog-date').value,
+        title: document.getElementById('m-blog-title').value,
+        desc: document.getElementById('m-blog-desc').value,
+        url: document.getElementById('m-blog-url').value,
+        tags: document.getElementById('m-blog-tags').value.split(',').map(t => t.trim()).filter(Boolean)
+    };
+    if (i === -1) siteData.blog.push(item);
+    else siteData.blog[i] = item;
+    closeModal(); renderBlogList();
+}
+
+// Edit shortcuts
+function addEducation() { openModal('education'); }
+function editEducation(i) { openModal('education', i); }
+function editResearch(i) { openModal('research', i); }
+function editAward(i) { openModal('award', i); }
+function editPublication(i) { openModal('publication', i); }
+function editBlog(i) { openModal('blog', i); }
+
+function removeItem(section, i) {
+    if (!confirm('Are you sure you want to delete this item?')) return;
+    if (section === 'education') { siteData.profile.education.splice(i, 1); renderEduList(); }
+    else if (section === 'research') { siteData.research.splice(i, 1); renderResearchList(); }
+    else if (section === 'awards') { siteData.awards.splice(i, 1); renderAwardsList(); }
+    else if (section === 'publications') { siteData.publications.splice(i, 1); renderPubList(); }
+    else if (section === 'blog') { siteData.blog.splice(i, 1); renderBlogList(); }
+}
+
+// ===== Collect Form Data & Save =====
+async function saveAll() {
+    // Collect profile fields
+    const name = document.getElementById('f-name').value;
+    siteData.profile.name = name;
+    siteData.profile.name_cn = document.getElementById('f-name-cn').value;
+    siteData.profile.title = document.getElementById('f-title').value;
+    siteData.profile.subtitle = document.getElementById('f-subtitle').value;
+    siteData.profile.skills = document.getElementById('f-skills').value.split(',').map(s => s.trim()).filter(Boolean);
+
+    // Bio: wrap name in <strong> tag
+    const bioLines = document.getElementById('f-bio').value.split('\n').filter(Boolean);
+    siteData.profile.bio = bioLines.map(line => {
+        if (name && line.includes(name)) {
+            return line.replace(name, `<strong>${name}</strong>`);
+        }
+        return line;
+    });
+
+    // Contact
+    siteData.contact.email = document.getElementById('f-email').value;
+    siteData.contact.github = document.getElementById('f-github').value;
+    siteData.contact.scholar = document.getElementById('f-scholar').value;
+    siteData.contact.linkedin = document.getElementById('f-linkedin').value;
+    siteData.contact.location = document.getElementById('f-location').value.replace(/, /g, '\n');
+
+    // Save to GitHub
+    const indicator = document.getElementById('saving-ind');
+    indicator.classList.add('show');
+
+    try {
+        const jsonStr = JSON.stringify(siteData, null, 2);
+        const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+        const res = await ghApi(`/repos/${REPO}/contents/data.json`, 'PUT', {
+            message: 'Update site content via admin panel',
+            content: encoded,
+            sha: dataSha
+        });
+        dataSha = res.content.sha;
+        showToast('Saved and published successfully!', 'success');
+    } catch (e) {
+        showToast('Save failed: ' + e.message, 'error');
+    } finally {
+        indicator.classList.remove('show');
+    }
+}
+
+// ===== Image Upload =====
+async function handleAvatarUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    try {
+        const path = 'avatar.jpg';
+        const url = await uploadImage(file, path);
+        siteData.profile.avatar = path;
+        document.getElementById('avatar-preview').innerHTML = `<img src="${URL.createObjectURL(file)}" alt="preview">`;
+        showToast('Avatar uploaded!', 'success');
+    } catch (e) {
+        showToast('Upload failed: ' + e.message, 'error');
+    }
+}
+
+async function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const resultEl = document.getElementById('img-upload-result');
+    resultEl.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Uploading...</p>';
+    try {
+        const filename = 'images/' + Date.now() + '-' + file.name.replace(/\s+/g, '-');
+        await uploadImage(file, filename);
+        resultEl.innerHTML = `
+            <div class="item-row">
+                <div class="item-info">
+                    <h4>${filename}</h4>
+                    <p>Uploaded successfully. Use this path in your content.</p>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText('${filename}');showToast('Copied!','success')">
+                    <i class="fas fa-copy"></i> Copy Path
+                </button>
+            </div>
+            <img src="${URL.createObjectURL(file)}" style="max-width:300px;border-radius:8px;margin-top:8px">
+        `;
+    } catch (e) {
+        resultEl.innerHTML = `<p style="color:var(--danger)">Upload failed: ${e.message}</p>`;
+    }
+}
+
+async function uploadImage(file, path) {
+    const reader = new FileReader();
+    const base64 = await new Promise((resolve) => {
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.readAsDataURL(file);
+    });
+
+    // Check if file exists to get SHA
+    let sha;
+    try {
+        const existing = await ghApi(`/repos/${REPO}/contents/${path}`);
+        sha = existing.sha;
+    } catch (e) { /* new file */ }
+
+    const body = { message: `Upload ${path}`, content: base64 };
+    if (sha) body.sha = sha;
+    const res = await ghApi(`/repos/${REPO}/contents/${path}`, 'PUT', body);
+    return res.content.download_url;
+}
+
+// ===== GitHub API Helper =====
+async function ghApi(endpoint, method = 'GET', body = null) {
+    const opts = {
+        method,
+        headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' }
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(`${API}${endpoint}`, opts);
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    return res.json();
+}
+
+// ===== UI Helpers =====
+function toggleCard(header) {
+    header.nextElementSibling.classList.toggle('collapsed');
+    const icon = header.querySelector('.fa-chevron-down, .fa-chevron-up');
+    if (icon) icon.classList.toggle('fa-chevron-down'), icon.classList.toggle('fa-chevron-up');
+}
+
+function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = `toast ${type} show`;
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
