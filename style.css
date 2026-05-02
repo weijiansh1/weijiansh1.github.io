@@ -795,22 +795,106 @@ button {
     line-height: 1.36;
 }
 
-.award-image {
-    width: min(520px, 100%);
-    margin: 0 0 16px;
-    overflow: hidden;
-    border: 1px solid rgba(79, 111, 143, 0.1);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.14);
+.pub-item-award {
+    grid-template-columns: 1fr;
+    padding-top: 0;
 }
 
-.award-image img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    object-position: center 42%;
-    opacity: 0.94;
+.award-content {
+    position: relative;
+    display: flex;
+    align-items: end;
+    min-height: clamp(320px, 46vw, 520px);
+    overflow: hidden;
+    border: 1px solid rgba(79, 111, 143, 0.1);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 26px 70px rgba(31, 45, 61, 0.07);
+}
+
+.award-stage,
+.award-scrim {
+    position: absolute;
+    inset: 0;
+}
+
+.award-stage {
+    background-position: center 42%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: scale(1.02);
+    filter: saturate(0.96) contrast(1.02);
+}
+
+.award-scrim {
+    background:
+        linear-gradient(180deg, rgba(12, 18, 28, 0.1), rgba(12, 18, 28, 0.18) 34%, rgba(12, 18, 28, 0.82)),
+        linear-gradient(90deg, rgba(12, 18, 28, 0.42), transparent 36%);
+}
+
+.award-copy {
+    position: relative;
+    z-index: 1;
+    width: min(760px, 100%);
+    padding: clamp(26px, 4vw, 40px);
+    color: #f7fbff;
+}
+
+.award-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.award-year {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 3px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: rgba(247, 251, 255, 0.92);
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.award-content .category-badge {
+    margin-top: 0;
+    border-color: rgba(255, 255, 255, 0.18);
+    color: rgba(247, 251, 255, 0.92);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.award-content h3 {
+    margin-bottom: 10px;
+    color: #f7fbff;
+    font-size: clamp(1.35rem, 2.3vw, 2rem);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+}
+
+.award-content .pub-authors {
+    max-width: 62ch;
+    color: rgba(247, 251, 255, 0.86);
+    font-size: 0.96rem;
+    line-height: 1.68;
+}
+
+.award-content .pub-links {
+    margin-top: 16px;
+}
+
+.award-content .pub-links a {
+    color: rgba(247, 251, 255, 0.88);
+}
+
+.award-content .pub-links a:hover {
+    color: #ffffff;
 }
 
 .pub-authors,
@@ -1259,6 +1343,15 @@ button {
 
     .empty-state {
         grid-template-columns: 1fr;
+    }
+
+    .award-content {
+        min-height: 280px;
+        border-radius: 22px;
+    }
+
+    .award-copy {
+        padding: 22px 20px;
     }
 }
 

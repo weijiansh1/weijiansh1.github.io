@@ -257,11 +257,6 @@ function renderFocus(focusItems) {
 
 function renderAward(item) {
     const links = Array.isArray(item.links) ? item.links : [];
-    const imageHtml = item.image ? `
-        <figure class="award-image">
-            <img src="${safeUrl(item.image)}" alt="${html(item.title)}">
-        </figure>
-    ` : '';
     const linksHtml = links.length ? `
         <div class="pub-links">
             ${links.map(link => `
@@ -272,11 +267,30 @@ function renderAward(item) {
         </div>
     ` : '';
 
+    if (item.image) {
+        return `
+            <article class="pub-item pub-item-award" data-category="${html(item.category || 'Other')}">
+                <div class="pub-content award-content">
+                    <div class="award-stage" style="background-image: url('${html(safeUrl(item.image))}')"></div>
+                    <div class="award-scrim"></div>
+                    <div class="award-copy">
+                        <div class="award-meta">
+                            <span class="award-year">${html(item.year || 'Now')}</span>
+                            ${item.category ? `<span class="category-badge">${html(item.category)}</span>` : ''}
+                        </div>
+                        <h3>${html(item.title)}</h3>
+                        ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
+                        ${linksHtml}
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+
     return `
         <article class="pub-item" data-category="${html(item.category || 'Other')}">
             <div class="pub-year">${html(item.year || 'Now')}</div>
             <div class="pub-content">
-                ${imageHtml}
                 <h3>${html(item.title)}</h3>
                 ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
                 ${item.category ? `<span class="category-badge">${html(item.category)}</span>` : ''}
