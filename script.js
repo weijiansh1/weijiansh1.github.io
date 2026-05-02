@@ -133,6 +133,7 @@ function safeUrl(value) {
     const url = String(value || '').trim();
     if (!url) return '';
     if (/^(https?:|mailto:|\/|\.\/|\.\.\/|#)/i.test(url)) return url;
+    if (!url.startsWith('//') && !/^[a-z][a-z0-9+.-]*:/i.test(url)) return url;
     return '#';
 }
 
