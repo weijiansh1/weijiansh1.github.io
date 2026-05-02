@@ -280,15 +280,14 @@ function renderAward(item) {
 
     if (item.image) {
         const imageUrl = safeUrl(item.image);
-        const imagePosition = String(item.imagePosition || '78% 56%');
+        const imagePosition = String(item.imagePosition || '50% 50%');
         return `
             <article
                 class="pub-item pub-item-award"
                 data-category="${html(item.category || 'Other')}"
-                data-image="${html(imageUrl)}"
-                data-image-position="${html(imagePosition)}"
             >
                 <div class="pub-content award-content">
+                    <div class="award-visual" style="background-image: url('${html(imageUrl)}'); background-position: ${html(imagePosition)};"></div>
                     <div class="award-copy">
                         <div class="award-meta">
                             <span class="award-year">${html(item.year || 'Now')}</span>
@@ -296,9 +295,9 @@ function renderAward(item) {
                         </div>
                         <h3>${html(item.title)}</h3>
                         ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
+                        ${asideHtml}
                         ${linksHtml}
                     </div>
-                    ${asideHtml}
                 </div>
             </article>
         `;

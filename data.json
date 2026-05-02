@@ -73,18 +73,18 @@
     {
       "year": "2026",
       "title": "AI Hackathon Tour 2026 · Fudan University Station — 6th Place & Finalist",
-      "detail": "Team Yuanlü (缘旅) · Project: Yuanlü / Wanderlace. Advanced to the national final in Nanjing after placing 6th at the Fudan University station; the project received positive feedback and recognition during the final showcase.",
+      "detail": "A student AI hackathon co-organized by ModelScope and Datawhale. Our team, Yuanlü, advanced from the Fudan University station to the final in Nanjing with the project Wanderlace.",
       "category": "AI",
       "image": "assets/hackathon-wanderlace.jpg",
-      "imagePosition": "82% 52%",
+      "imagePosition": "56% 42%",
       "aside": [
         {
-          "label": "Event",
-          "value": "AI Hackathon Tour 2026"
+          "label": "Date",
+          "value": "April 2026"
         },
         {
-          "label": "Team",
-          "value": "Yuanlü (缘旅)"
+          "label": "Result",
+          "value": "6th Place · Finalist"
         },
         {
           "label": "Project",
@@ -92,7 +92,7 @@
         },
         {
           "label": "Route",
-          "value": "Fudan Station → Nanjing Final"
+          "value": "Fudan → Nanjing Final"
         }
       ],
       "links": [

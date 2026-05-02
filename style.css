@@ -860,24 +860,45 @@ button {
 .award-content {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.72fr);
-    gap: clamp(28px, 4.5vw, 68px);
-    align-items: end;
-    min-height: clamp(320px, 36vw, 440px);
-    padding: clamp(104px, 15vw, 176px) 0 0;
-    overflow: visible;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1fr);
+    gap: 0;
+    align-items: stretch;
+    min-height: clamp(320px, 38vw, 460px);
+    overflow: hidden;
+    border: 1px solid rgba(81, 105, 127, 0.08);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.12);
     box-shadow: none;
+    backdrop-filter: blur(14px) saturate(112%);
+}
+
+.award-visual {
+    position: relative;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.award-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.03) 40%, rgba(237, 241, 243, 0.18) 72%, rgba(237, 241, 243, 0.9) 100%),
+        linear-gradient(180deg, rgba(237, 241, 243, 0.06) 0%, rgba(237, 241, 243, 0.16) 100%);
 }
 
 .award-copy {
     position: relative;
     z-index: 1;
-    width: min(640px, 100%);
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: clamp(30px, 4.2vw, 54px);
     color: var(--text);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
 }
 
 .award-copy::before {
@@ -885,7 +906,7 @@ button {
     display: block;
     width: 82px;
     height: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     background: linear-gradient(90deg, rgba(79, 111, 143, 0.46), transparent);
 }
 
@@ -922,8 +943,8 @@ button {
 }
 
 .award-content h3 {
-    margin-bottom: 10px;
-    max-width: 16ch;
+    margin-bottom: 14px;
+    max-width: 15ch;
     color: var(--text);
     font-size: clamp(1.55rem, 2.6vw, 2.4rem);
     line-height: 1.12;
@@ -931,10 +952,10 @@ button {
 }
 
 .award-content .pub-authors {
-    max-width: 54ch;
+    max-width: 46ch;
     color: var(--text-secondary);
     font-size: 0.98rem;
-    line-height: 1.82;
+    line-height: 1.8;
 }
 
 .award-content .pub-links {
@@ -962,24 +983,17 @@ button {
 }
 
 .award-aside {
-    position: relative;
     display: grid;
-    gap: 18px;
-    align-self: stretch;
-    padding: 12px 0 8px clamp(20px, 3vw, 32px);
-    border-left: 1px solid rgba(81, 105, 127, 0.12);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 20px;
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(81, 105, 127, 0.1);
 }
 
 .award-fact {
     display: grid;
-    gap: 6px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(81, 105, 127, 0.1);
-}
-
-.award-fact:first-child {
-    padding-top: 0;
-    border-top: 0;
+    gap: 5px;
 }
 
 .award-fact span {
@@ -998,11 +1012,22 @@ button {
 }
 
 [data-theme="dark"] .award-aside {
-    border-left-color: rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="dark"] .award-fact {
-    border-top-color: rgba(255, 255, 255, 0.08);
+[data-theme="dark"] .award-content {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(13, 17, 28, 0.16);
+}
+
+[data-theme="dark"] .award-visual::after {
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.12) 40%, rgba(13, 17, 28, 0.22) 72%, rgba(13, 17, 28, 0.92) 100%),
+        linear-gradient(180deg, rgba(13, 17, 28, 0.06) 0%, rgba(13, 17, 28, 0.18) 100%);
+}
+
+[data-theme="dark"] .award-copy {
+    background: linear-gradient(180deg, rgba(13, 17, 28, 0.2), rgba(13, 17, 28, 0.08));
 }
 
 .pub-authors,
@@ -1316,24 +1341,21 @@ button {
 
     .award-content {
         grid-template-columns: 1fr;
-        gap: 24px;
-        min-height: 260px;
-        padding-top: 148px;
+        min-height: auto;
     }
 
-    .award-aside {
-        gap: 14px;
-        padding: 20px 0 0;
-        border-top: 1px solid rgba(81, 105, 127, 0.12);
-        border-left: 0;
+    .award-visual {
+        min-height: 300px;
     }
 
-    [data-theme="dark"] .award-aside {
-        border-top-color: rgba(255, 255, 255, 0.08);
+    .award-visual::after {
+        background:
+            linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(237, 241, 243, 0.08) 56%, rgba(237, 241, 243, 0.92) 100%);
     }
 
-    .award-fact {
-        padding-top: 12px;
+    [data-theme="dark"] .award-visual::after {
+        background:
+            linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(13, 17, 28, 0.16) 56%, rgba(13, 17, 28, 0.94) 100%);
     }
 
     .research-grid,
@@ -1463,12 +1485,11 @@ button {
     }
 
     .award-content {
-        min-height: 220px;
-        padding-top: 128px;
+        border-radius: 24px;
     }
 
-    .award-copy {
-        width: 100%;
+    .award-visual {
+        min-height: 240px;
     }
 
     .award-content h3 {
@@ -1478,6 +1499,18 @@ button {
     .award-content .pub-authors {
         max-width: 100%;
         font-size: 0.95rem;
+    }
+
+    .award-copy {
+        width: 100%;
+        padding: 24px 20px 22px;
+    }
+
+    .award-aside {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 22px;
+        padding-top: 16px;
     }
 
     .page.page-has-artwork::before {
