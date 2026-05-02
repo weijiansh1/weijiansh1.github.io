@@ -419,13 +419,16 @@ function initPageExperience() {
     const pages = $$('.home-page .page[id]');
     if (!pages.length) return;
 
-    const pageFlip = $('#page-flip');
     const pageIndicator = $('#page-indicator');
     const prevButton = $('#prev-page');
     const nextButton = $('#next-page');
     const railButtons = $$('.rail-dot[data-target]');
     const navAnchors = $$('.nav-links a[href^="#"], .page-link[href^="#"]');
     let currentPage = 0;
+    let isPaging = false;
+    let wheelDelta = 0;
+    let touchStartY = 0;
+    let touchStartX = 0;
 
     function setActivePage(index) {
         currentPage = Math.max(0, Math.min(index, pages.length - 1));
@@ -446,11 +449,14 @@ function initPageExperience() {
         });
     }
 
-    function playPageTurn(direction, targetPage) {
-        if (!pageFlip || prefersReducedMotion.matches) return;
-        pageFlip.classList.remove('slide-next', 'slide-prev');
-        void pageFlip.offsetWidth;
-        pageFlip.classList.add(direction === 'prev' ? 'slide-prev' : 'slide-next');
+    function playPageTurn(direction, targetPage, sourcePage) {
+        if (prefersReducedMotion.matches) return;
+        if (sourcePage) {
+            sourcePage.classList.remove('page-exit-next', 'page-exit-prev');
+            void sourcePage.offsetWidth;
+            sourcePage.classList.add(direction === 'prev' ? 'page-exit-prev' : 'page-exit-next');
+            window.setTimeout(() => sourcePage.classList.remove('page-exit-next', 'page-exit-prev'), 820);
+        }
 
         if (targetPage) {
             targetPage.classList.remove('page-arrive-next', 'page-arrive-prev');
@@ -458,20 +464,62 @@ function initPageExperience() {
             targetPage.classList.add(direction === 'prev' ? 'page-arrive-prev' : 'page-arrive-next');
             window.setTimeout(() => targetPage.classList.remove('page-arrive-next', 'page-arrive-prev'), 820);
         }
+    }
 
-        window.setTimeout(() => pageFlip.classList.remove('slide-next', 'slide-prev'), 700);
+    function easedProgress(progress) {
+        const clamped = Math.min(Math.max(progress, 0), 1);
+        if (clamped < 0.72) {
+            return 1.03 * (1 - Math.pow(1 - clamped / 0.72, 3));
+        }
+        const settle = (clamped - 0.72) / 0.28;
+        return 1.03 - 0.03 * (1 - Math.pow(1 - settle, 3));
+    }
+
+    function scrollToPage(page, done) {
+        const navHeight = $('#navbar')?.offsetHeight || 0;
+        const startY = window.scrollY;
+        const targetY = Math.max(0, page.offsetTop - navHeight + 1);
+        const distance = targetY - startY;
+        if (prefersReducedMotion.matches || Math.abs(distance) < 2) {
+            window.scrollTo(0, targetY);
+            done?.();
+            return;
+        }
+
+        const duration = Math.min(920, Math.max(620, Math.abs(distance) * 0.45));
+        const startTime = performance.now();
+
+        function step(now) {
+            const progress = (now - startTime) / duration;
+            const nextY = startY + distance * easedProgress(progress);
+            window.scrollTo(0, nextY);
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+                return;
+            }
+
+            window.scrollTo(0, targetY);
+            done?.();
+        }
+
+        requestAnimationFrame(step);
     }
 
     function goToPage(index, direction) {
         const targetIndex = Math.max(0, Math.min(index, pages.length - 1));
-        if (targetIndex === currentPage) return;
+        if (targetIndex === currentPage || isPaging) return;
 
         const resolvedDirection = direction || (targetIndex > currentPage ? 'next' : 'prev');
-        playPageTurn(resolvedDirection, pages[targetIndex]);
+        const sourcePage = pages[currentPage];
+        isPaging = true;
+        document.body.classList.add('is-section-turning');
+        playPageTurn(resolvedDirection, pages[targetIndex], sourcePage);
         setActivePage(targetIndex);
-        pages[targetIndex].scrollIntoView({
-            behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
-            block: 'start'
+        scrollToPage(pages[targetIndex], () => {
+            isPaging = false;
+            wheelDelta = 0;
+            document.body.classList.remove('is-section-turning');
         });
     }
 
@@ -480,7 +528,7 @@ function initPageExperience() {
             .filter(entry => entry.isIntersecting)
             .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (visible) setActivePage(pages.indexOf(visible.target));
+        if (visible && !isPaging) setActivePage(pages.indexOf(visible.target));
     }, {
         threshold: [0.35, 0.55, 0.75]
     });
@@ -506,6 +554,43 @@ function initPageExperience() {
 
     prevButton?.addEventListener('click', () => goToPage(currentPage - 1, 'prev'));
     nextButton?.addEventListener('click', () => goToPage(currentPage + 1, 'next'));
+
+    window.addEventListener('wheel', event => {
+        if (window.innerWidth < 860 || prefersReducedMotion.matches) return;
+        event.preventDefault();
+        if (isPaging) {
+            return;
+        }
+
+        wheelDelta += event.deltaY;
+        if (Math.abs(wheelDelta) < 150) return;
+
+        const direction = wheelDelta > 0 ? 'next' : 'prev';
+        const targetIndex = currentPage + (direction === 'next' ? 1 : -1);
+        if (targetIndex < 0 || targetIndex >= pages.length) {
+            wheelDelta = 0;
+            return;
+        }
+
+        goToPage(targetIndex, direction);
+    }, { passive: false });
+
+    window.addEventListener('touchstart', event => {
+        const touch = event.touches[0];
+        touchStartY = touch.clientY;
+        touchStartX = touch.clientX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', event => {
+        if (isPaging || prefersReducedMotion.matches) return;
+        const touch = event.changedTouches[0];
+        const deltaY = touchStartY - touch.clientY;
+        const deltaX = touchStartX - touch.clientX;
+        if (Math.abs(deltaY) < 88 || Math.abs(deltaX) > 70) return;
+
+        const direction = deltaY > 0 ? 'next' : 'prev';
+        goToPage(currentPage + (direction === 'next' ? 1 : -1), direction);
+    }, { passive: true });
 
     setActivePage(0);
 }
