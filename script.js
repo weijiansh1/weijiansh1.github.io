@@ -426,7 +426,6 @@ function initPageExperience() {
     const railButtons = $$('.rail-dot[data-target]');
     const navAnchors = $$('.nav-links a[href^="#"], .page-link[href^="#"]');
     let currentPage = 0;
-    let turnLocked = false;
 
     function setActivePage(index) {
         currentPage = Math.max(0, Math.min(index, pages.length - 1));
@@ -528,29 +527,6 @@ function initPageExperience() {
             goToPage(currentPage + keys[event.key], keys[event.key] > 0 ? 'next' : 'prev');
         }
     });
-
-    window.addEventListener('wheel', event => {
-        if (window.innerWidth < 900 || prefersReducedMotion.matches) return;
-        if (Math.abs(event.deltaY) < 44 || turnLocked) return;
-
-        const currentSection = pages[currentPage];
-        const rect = currentSection.getBoundingClientRect();
-        const sectionTallerThanViewport = currentSection.offsetHeight > window.innerHeight + 24;
-        const scrollingDownInsideSection = event.deltaY > 0 && sectionTallerThanViewport && rect.bottom > window.innerHeight + 36;
-        const scrollingUpInsideSection = event.deltaY < 0 && sectionTallerThanViewport && rect.top < -36;
-
-        if (scrollingDownInsideSection || scrollingUpInsideSection) return;
-
-        const target = currentPage + (event.deltaY > 0 ? 1 : -1);
-        if (target < 0 || target >= pages.length) return;
-
-        event.preventDefault();
-        turnLocked = true;
-        goToPage(target, event.deltaY > 0 ? 'next' : 'prev');
-        window.setTimeout(() => {
-            turnLocked = false;
-        }, 940);
-    }, { passive: false });
 
     setActivePage(0);
 }
