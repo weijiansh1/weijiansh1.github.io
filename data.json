@@ -1,0 +1,71 @@
+{
+  "profile": {
+    "name": "Weijian Shi",
+    "name_cn": "石伟建",
+    "title": "Fudan University · Undergraduate, Class of 2029",
+    "subtitle": "B.E. in Aircraft Design and Engineering & B.S. in Information and Computational Science",
+    "avatar": "avatar.jpg",
+    "bio": [
+      "Hi! I'm <strong>Weijian Shi</strong> (石伟建), a freshman at <strong>Fudan University</strong>, enrolled in the Academy of Intelligent Robotics and Advanced Manufacturing Innovation, Department of Aerospace Engineering.",
+      "I am pursuing a dual degree in <strong>Aircraft Design and Engineering</strong> and <strong>Information and Computational Science</strong>. I am passionate about exploring the intersection of aerospace, artificial intelligence, and intelligent systems."
+    ],
+    "education": [
+      {
+        "date": "2025 - Present",
+        "school": "Fudan University",
+        "degree": "B.E. Aircraft Design and Engineering\nB.S. Information and Computational Science",
+        "detail": "Academy of Intelligent Robotics and Advanced Manufacturing Innovation\nDepartment of Aerospace Engineering"
+      }
+    ],
+    "skills": ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux"]
+  },
+  "research": [
+    {
+      "icon": "fa-plane",
+      "title": "Aerospace Engineering",
+      "desc": "Coming soon."
+    },
+    {
+      "icon": "fa-robot",
+      "title": "Artificial Intelligence",
+      "desc": "Coming soon."
+    },
+    {
+      "icon": "fa-calculator",
+      "title": "Computational Science",
+      "desc": "Coming soon."
+    }
+  ],
+  "awards": [
+    {
+      "year": "2025",
+      "title": "Coming soon.",
+      "detail": "",
+      "category": "AI"
+    }
+  ],
+  "publications": [
+    {
+      "year": "",
+      "title": "Coming soon.",
+      "authors": "",
+      "venue": "",
+      "category": "AI",
+      "links": []
+    }
+  ],
+  "blog": [
+    {
+      "date": "2026-05-01",
+      "title": "How to Build a GitHub Pages Personal Website",
+      "desc": "A step-by-step guide to building a modern personal homepage from scratch and deploying it on GitHub Pages.",
+      "url": "blog/post1.html",
+      "tags": ["Tutorial", "GitHub"]
+    }
+  ],
+  "contact": {
+    "email": "",
+    "github": "https://github.com/weijiansh1",
+    "location": "Shanghai, China\nFudan University"
+  }
+}
