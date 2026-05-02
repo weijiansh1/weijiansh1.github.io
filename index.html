@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - 个人主页</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#home" class="nav-logo">weijiansh1</a>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于</a></li>
+            <li><a href="#research">研究</a></li>
+            <li><a href="#publications">论文</a></li>
+            <li><a href="#blog">博客</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+        <button id="theme-toggle" aria-label="切换主题">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button class="nav-toggle" aria-label="菜单">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- 首页 Hero -->
+<section id="home" class="hero">
+    <div class="hero-content">
+        <div class="hero-avatar">
+            <img src="avatar.jpg" alt="头像" onerror="this.src='https://ui-avatars.com/api/?name=YN&size=200&background=4f46e5&color=fff&rounded=true'">
+        </div>
+        <h1>你的名字</h1>
+        <p class="hero-title">XX大学 · XX学院 · 硕士/博士研究生</p>
+        <p class="hero-desc">研究方向：机器学习 / 深度学习 / 自然语言处理</p>
+        <div class="hero-links">
+            <a href="https://github.com/weijiansh1" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://scholar.google.com/" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+            <a href="mailto:your@email.com"><i class="fas fa-envelope"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- 关于我 -->
+<section id="about" class="section">
+    <div class="container">
+        <h2 class="section-title">关于我</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    你好！我是 <strong>你的名字</strong>，目前就读于XX大学XX学院，
+                    师从XX教授。我的研究兴趣主要集中在机器学习和深度学习领域。
+                </p>
+                <p>
+                    在此之前，我于20XX年在XX大学获得学士学位。
+                    我热衷于用技术解决实际问题，并乐于在开源社区中分享我的研究成果和技术心得。
+                </p>
+            </div>
+            <div class="about-info">
+                <h3>教育经历</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">20XX - 至今</span>
+                        <h4>XX大学 · 硕士/博士</h4>
+                        <p>计算机科学与技术</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">20XX - 20XX</span>
+                        <h4>XX大学 · 学士</h4>
+                        <p>计算机科学与技术</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="skills-title">技能</h3>
+        <div class="skills">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">C/C++</span>
+            <span class="skill-tag">Linux</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">LaTeX</span>
+        </div>
+    </div>
+</section>
+
+<!-- 研究方向 -->
+<section id="research" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">研究方向</h2>
+        <div class="research-grid">
+            <div class="research-card">
+                <div class="research-icon"><i class="fas fa-brain"></i></div>
+                <h3>深度学习</h3>
+                <p>探索神经网络架构设计与优化方法，致力于提升模型的性能和效率。</p>
+            </div>
+            <div class="research-card">
+                <div class="research-icon"><i class="fas fa-language"></i></div>
+                <h3>自然语言处理</h3>
+                <p>研究文本理解与生成技术，包括大语言模型、信息抽取等方向。</p>
+            </div>
+            <div class="research-card">
+                <div class="research-icon"><i class="fas fa-project-diagram"></i></div>
+                <h3>混合专家模型</h3>
+                <p>研究 Mixture of Experts (MoE) 架构，探索高效的模型扩展方案。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 论文发表 -->
+<section id="publications" class="section">
+    <div class="container">
+        <h2 class="section-title">发表论文</h2>
+        <div class="pub-list">
+            <div class="pub-item">
+                <div class="pub-year">2026</div>
+                <div class="pub-content">
+                    <h3>论文标题示例：A Novel Approach to XXX</h3>
+                    <p class="pub-authors"><strong>你的名字</strong>, 合作者A, 合作者B, 导师</p>
+                    <p class="pub-venue">会议/期刊名称 (CCF-A)</p>
+                    <div class="pub-links">
+                        <a href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                        <a href="#"><i class="fab fa-github"></i> Code</a>
+                        <a href="#"><i class="fas fa-quote-right"></i> BibTeX</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pub-item">
+                <div class="pub-year">2025</div>
+                <div class="pub-content">
+                    <h3>另一篇论文标题示例：Efficient Methods for XXX</h3>
+                    <p class="pub-authors"><strong>你的名字</strong>, 合作者C, 导师</p>
+                    <p class="pub-venue">会议/期刊名称 (CCF-B)</p>
+                    <div class="pub-links">
+                        <a href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                        <a href="#"><i class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 博客 -->
+<section id="blog" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">技术博客</h2>
+        <div class="blog-grid">
+            <article class="blog-card">
+                <div class="blog-date">2026-05-01</div>
+                <h3><a href="blog/post1.html">如何搭建 GitHub Pages 个人网站</a></h3>
+                <p>从零开始搭建一个现代化的个人学术主页，包括自定义域名和 HTTPS 配置。</p>
+                <div class="blog-tags">
+                    <span>教程</span>
+                    <span>GitHub</span>
+                </div>
+            </article>
+            <article class="blog-card">
+                <div class="blog-date">2026-04-15</div>
+                <h3><a href="blog/post2.html">PyTorch 分布式训练实践</a></h3>
+                <p>总结在多 GPU 环境下使用 PyTorch DDP 进行分布式训练的经验与踩坑记录。</p>
+                <div class="blog-tags">
+                    <span>PyTorch</span>
+                    <span>分布式</span>
+                </div>
+            </article>
+            <article class="blog-card">
+                <div class="blog-date">2026-03-20</div>
+                <h3><a href="blog/post3.html">Mixture of Experts 模型综述</a></h3>
+                <p>梳理 MoE 模型的发展历程、核心思想和最新进展。</p>
+                <div class="blog-tags">
+                    <span>MoE</span>
+                    <span>综述</span>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 联系方式 -->
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">联系我</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="fas fa-envelope"></i>
+                <h3>邮箱</h3>
+                <a href="mailto:your@email.com">your@email.com</a>
+            </div>
+            <div class="contact-card">
+                <i class="fab fa-github"></i>
+                <h3>GitHub</h3>
+                <a href="https://github.com/weijiansh1" target="_blank">github.com/weijiansh1</a>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Google Scholar</h3>
+                <a href="#" target="_blank">Scholar Profile</a>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>地址</h3>
+                <p>XX省XX市XX区<br>XX大学XX楼XX室</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+    <div class="container">
+        <p>&copy; 2026 你的名字. All rights reserved.</p>
+        <p>Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
