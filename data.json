@@ -3,11 +3,12 @@
     "name": "Weijian Shi",
     "name_cn": "石伟建",
     "title": "Fudan University · Undergraduate, Class of 2029",
-    "subtitle": "B.E. in Aircraft Design and Engineering & B.S. in Information and Computational Science",
+    "subtitle": "Aircraft Design and Engineering · Information and Computational Science",
     "avatar": "avatar.jpg",
     "bio": [
-      "Hi! I'm <strong>Weijian Shi</strong> (石伟建), a freshman at <strong>Fudan University</strong>, enrolled in the Academy of Intelligent Robotics and Advanced Manufacturing Innovation, Department of Aerospace Engineering.",
-      "I am pursuing a dual degree in <strong>Aircraft Design and Engineering</strong> and <strong>Information and Computational Science</strong>. I am passionate about exploring the intersection of aerospace, artificial intelligence, and intelligent systems."
+      "Hi! I'm <strong>Weijian Shi</strong> (石伟建), an undergraduate student at <strong>Fudan University</strong>, studying in the Academy of Intelligent Robotics and Advanced Manufacturing Innovation, Department of Aerospace Engineering.",
+      "I am pursuing a dual-degree path across <strong>Aircraft Design and Engineering</strong> and <strong>Information and Computational Science</strong>. My current interests sit at the intersection of aerospace systems, artificial intelligence, and scientific computing.",
+      "This homepage is designed as a living notebook: a place to collect projects, research notes, milestones, and the questions I am learning to ask better."
     ],
     "education": [
       {
@@ -17,50 +18,66 @@
         "detail": "Academy of Intelligent Robotics and Advanced Manufacturing Innovation\nDepartment of Aerospace Engineering"
       }
     ],
-    "skills": ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux"]
+    "skills": ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux", "Numerical Methods", "Scientific Computing"],
+    "highlights": [
+      {
+        "label": "University",
+        "value": "Fudan University"
+      },
+      {
+        "label": "Track",
+        "value": "Aerospace + Computing"
+      },
+      {
+        "label": "Base",
+        "value": "Shanghai, China"
+      },
+      {
+        "label": "Theme",
+        "value": "Intelligent engineering"
+      }
+    ],
+    "focus": [
+      {
+        "label": "Near Term",
+        "text": "Build strong foundations in mathematics, programming, mechanics, and engineering design."
+      },
+      {
+        "label": "Build Habit",
+        "text": "Turn coursework, experiments, and small projects into clear public notes."
+      },
+      {
+        "label": "Long View",
+        "text": "Explore reliable intelligent systems for aerospace and robotics applications."
+      }
+    ]
   },
   "research": [
     {
       "icon": "fa-plane",
       "title": "Aerospace Engineering",
-      "desc": "Coming soon."
+      "desc": "Learning flight mechanics, aircraft design fundamentals, and the systems view behind modern aerospace engineering."
     },
     {
       "icon": "fa-robot",
       "title": "Artificial Intelligence",
-      "desc": "Coming soon."
+      "desc": "Exploring how data-driven methods, learning algorithms, and control can support intelligent engineering systems."
     },
     {
       "icon": "fa-calculator",
       "title": "Computational Science",
-      "desc": "Coming soon."
+      "desc": "Practicing numerical methods, optimization, modeling, and scientific programming as tools for rigorous problem solving."
     }
   ],
-  "awards": [
-    {
-      "year": "2025",
-      "title": "Coming soon.",
-      "detail": "",
-      "category": "AI"
-    }
-  ],
-  "publications": [
-    {
-      "year": "",
-      "title": "Coming soon.",
-      "authors": "",
-      "venue": "",
-      "category": "AI",
-      "links": []
-    }
-  ],
+  "awards": [],
+  "publications": [],
   "blog": [
     {
       "date": "2026-05-01",
       "title": "How to Build a GitHub Pages Personal Website",
-      "desc": "A step-by-step guide to building a modern personal homepage from scratch and deploying it on GitHub Pages.",
+      "desc": "A concise build log for creating a personal homepage with HTML, CSS, JavaScript, and GitHub Pages.",
       "url": "blog/post1.html",
-      "tags": ["Tutorial", "GitHub"]
+      "tags": ["Tutorial", "GitHub", "Web"]
     }
   ],
   "contact": {

@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="homepage-shell">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weijian Shi - Personal Homepage</title>
+    <meta name="description" content="Weijian Shi's personal academic homepage. Aerospace engineering, intelligent systems, and computational science.">
+    <title>Weijian Shi · Personal Homepage</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="home-page">
+<div class="site-ambient" aria-hidden="true"></div>
+<div id="page-flip" class="page-flip" aria-hidden="true"></div>
 
-<!-- Navigation -->
-<nav id="navbar">
+<nav id="navbar" class="site-nav" aria-label="Primary navigation">
     <div class="nav-container">
-        <a href="#home" class="nav-logo">Weijian Shi</a>
+        <a href="#home" class="nav-logo" aria-label="Go to homepage">
+            <span class="nav-mark">WS</span>
+            <span>Weijian Shi</span>
+        </a>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
@@ -22,93 +27,189 @@
             <li><a href="#blog">Blog</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <button id="theme-toggle" aria-label="Toggle theme">
+        <button id="theme-toggle" class="icon-button" aria-label="Toggle theme">
             <i class="fas fa-moon"></i>
         </button>
-        <button class="nav-toggle" aria-label="Menu">
+        <button class="nav-toggle icon-button" aria-label="Open menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
     </div>
 </nav>
 
-<!-- Hero -->
-<section id="home" class="hero">
-    <div class="hero-content">
-        <div class="hero-avatar">
-            <img id="hero-avatar-img" src="avatar.jpg" alt="Avatar" onerror="this.src='https://ui-avatars.com/api/?name=WS&size=200&background=4f46e5&color=fff&rounded=true'">
-        </div>
-        <h1 id="hero-name"></h1>
-        <p class="hero-title" id="hero-title"></p>
-        <p class="hero-desc" id="hero-subtitle"></p>
-        <div class="hero-links" id="hero-links"></div>
-    </div>
-</section>
+<aside class="page-rail" aria-label="Page navigation">
+    <button class="rail-dot active" data-target="home"><span>01</span><strong>Home</strong></button>
+    <button class="rail-dot" data-target="about"><span>02</span><strong>About</strong></button>
+    <button class="rail-dot" data-target="research"><span>03</span><strong>Research</strong></button>
+    <button class="rail-dot" data-target="awards"><span>04</span><strong>Awards</strong></button>
+    <button class="rail-dot" data-target="publications"><span>05</span><strong>Papers</strong></button>
+    <button class="rail-dot" data-target="blog"><span>06</span><strong>Blog</strong></button>
+    <button class="rail-dot" data-target="contact"><span>07</span><strong>Contact</strong></button>
+</aside>
 
-<!-- About -->
-<section id="about" class="section">
-    <div class="container">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-grid">
-            <div class="about-text" id="about-bio"></div>
-            <div class="about-info">
-                <h3>Education</h3>
-                <div class="timeline" id="about-education"></div>
+<div class="page-controls" aria-label="Turn pages">
+    <button id="prev-page" class="page-control" aria-label="Previous page"><i class="fas fa-arrow-up"></i></button>
+    <span id="page-indicator">01 / 07</span>
+    <button id="next-page" class="page-control" aria-label="Next page"><i class="fas fa-arrow-down"></i></button>
+</div>
+
+<main>
+    <section id="home" class="page hero" data-page-title="Home">
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <p class="eyebrow">Fudan University · Aerospace · Intelligent Systems</p>
+                <h1 id="hero-name">Weijian Shi</h1>
+                <p class="hero-title" id="hero-title">Undergraduate · Fudan University</p>
+                <p class="hero-desc" id="hero-subtitle">Exploring the intersection of aircraft design, computation, and AI.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary page-link" href="#about">Start Reading</a>
+                    <a class="btn btn-ghost page-link" href="#contact">Connect</a>
+                </div>
+                <div class="hero-links" id="hero-links" aria-label="Social links"></div>
+            </div>
+
+            <div class="hero-visual" aria-label="Profile visual">
+                <div class="orbit-card">
+                    <div class="orbit-ring orbit-ring-one"></div>
+                    <div class="orbit-ring orbit-ring-two"></div>
+                    <div class="hero-avatar">
+                        <img id="hero-avatar-img" src="avatar.jpg" alt="Weijian Shi avatar" onerror="this.closest('.hero-avatar').classList.add('avatar-fallback'); this.remove();">
+                        <span>WS</span>
+                    </div>
+                    <div class="floating-note note-one">
+                        <strong>Now</strong>
+                        <span>Building foundations in flight, math, and code.</span>
+                    </div>
+                    <div class="floating-note note-two">
+                        <strong>Focus</strong>
+                        <span>Aerospace × AI × Scientific computing.</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <h3 class="skills-title">Skills</h3>
-        <div class="skills" id="about-skills"></div>
-    </div>
-</section>
+        <a class="scroll-cue page-link" href="#about" aria-label="Turn to the next page">
+            <span>Scroll to turn</span>
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
 
-<!-- Research Interests -->
-<section id="research" class="section section-alt">
-    <div class="container">
-        <h2 class="section-title">Research Interests</h2>
-        <div class="research-grid" id="research-grid"></div>
-    </div>
-</section>
+    <section id="about" class="page" data-page-title="About">
+        <div class="container page-grid">
+            <div class="page-kicker">
+                <span>02</span>
+                <p>About Me</p>
+            </div>
+            <div class="page-main">
+                <div class="section-heading">
+                    <p class="eyebrow">Profile</p>
+                    <h2>Learning to connect flight, computation, and intelligent systems.</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="story-card">
+                        <div class="about-text" id="about-bio"></div>
+                    </div>
+                    <div class="stacked-cards">
+                        <article class="mini-card">
+                            <h3>Education</h3>
+                            <div class="timeline" id="about-education"></div>
+                        </article>
+                        <article class="mini-card">
+                            <h3>Toolkit</h3>
+                            <div class="skills" id="about-skills"></div>
+                        </article>
+                    </div>
+                </div>
+                <div class="highlight-grid" id="profile-highlights"></div>
+            </div>
+        </div>
+    </section>
 
-<!-- Awards & Honors -->
-<section id="awards" class="section">
-    <div class="container">
-        <h2 class="section-title">Awards &amp; Honors</h2>
-        <div class="filter-tabs" id="awards-filters"></div>
-        <div class="pub-list" id="awards-list"></div>
-    </div>
-</section>
+    <section id="research" class="page page-tinted" data-page-title="Research">
+        <div class="container page-grid">
+            <div class="page-kicker">
+                <span>03</span>
+                <p>Research</p>
+            </div>
+            <div class="page-main">
+                <div class="section-heading">
+                    <p class="eyebrow">Direction</p>
+                    <h2>Small steps toward rigorous, useful intelligent engineering.</h2>
+                </div>
+                <div class="research-grid" id="research-grid"></div>
+                <div class="focus-panel" id="focus-list"></div>
+            </div>
+        </div>
+    </section>
 
-<!-- Publications -->
-<section id="publications" class="section section-alt">
-    <div class="container">
-        <h2 class="section-title">Publications</h2>
-        <div class="filter-tabs" id="pub-filters"></div>
-        <div class="pub-list" id="pub-list"></div>
-    </div>
-</section>
+    <section id="awards" class="page" data-page-title="Awards">
+        <div class="container page-grid">
+            <div class="page-kicker">
+                <span>04</span>
+                <p>Awards</p>
+            </div>
+            <div class="page-main">
+                <div class="section-heading">
+                    <p class="eyebrow">Milestones</p>
+                    <h2>A concise space for honors, competitions, and selected recognition.</h2>
+                </div>
+                <div class="filter-tabs" id="awards-filters"></div>
+                <div class="pub-list" id="awards-list"></div>
+            </div>
+        </div>
+    </section>
 
-<!-- Blog -->
-<section id="blog" class="section">
-    <div class="container">
-        <h2 class="section-title">Blog</h2>
-        <div class="blog-grid" id="blog-grid"></div>
-    </div>
-</section>
+    <section id="publications" class="page page-tinted" data-page-title="Publications">
+        <div class="container page-grid">
+            <div class="page-kicker">
+                <span>05</span>
+                <p>Papers</p>
+            </div>
+            <div class="page-main">
+                <div class="section-heading">
+                    <p class="eyebrow">Writing</p>
+                    <h2>Publications and technical notes will live here as they mature.</h2>
+                </div>
+                <div class="filter-tabs" id="pub-filters"></div>
+                <div class="pub-list" id="pub-list"></div>
+            </div>
+        </div>
+    </section>
 
-<!-- Contact -->
-<section id="contact" class="section section-alt">
-    <div class="container">
-        <h2 class="section-title">Contact</h2>
-        <div class="contact-grid" id="contact-grid"></div>
-    </div>
-</section>
+    <section id="blog" class="page" data-page-title="Blog">
+        <div class="container page-grid">
+            <div class="page-kicker">
+                <span>06</span>
+                <p>Blog</p>
+            </div>
+            <div class="page-main">
+                <div class="section-heading">
+                    <p class="eyebrow">Notes</p>
+                    <h2>Short reflections, build logs, and learning notes.</h2>
+                </div>
+                <div class="blog-grid" id="blog-grid"></div>
+            </div>
+        </div>
+    </section>
 
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <p>&copy; 2026 Weijian Shi. All rights reserved.</p>
-        <p>Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-    </div>
-</footer>
+    <section id="contact" class="page page-tinted contact-page" data-page-title="Contact">
+        <div class="container page-grid">
+            <div class="page-kicker">
+                <span>07</span>
+                <p>Contact</p>
+            </div>
+            <div class="page-main">
+                <div class="section-heading">
+                    <p class="eyebrow">Connect</p>
+                    <h2>Thanks for turning the pages. Let’s keep the conversation moving.</h2>
+                </div>
+                <div class="contact-grid" id="contact-grid"></div>
+                <footer class="footer">
+                    <p>&copy; 2026 Weijian Shi. All rights reserved.</p>
+                    <p>Built for <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>.</p>
+                </footer>
+            </div>
+        </div>
+    </section>
+</main>
 
 <script src="script.js"></script>
 </body>
