@@ -503,6 +503,41 @@ function initPageExperience() {
     let touchStartY = 0;
     let touchStartX = 0;
 
+    function pageScrollBounds(page) {
+        const navHeight = $('#navbar')?.offsetHeight || 0;
+        const start = Math.max(0, page.offsetTop - navHeight + 1);
+        const end = Math.max(start, page.offsetTop + page.offsetHeight - window.innerHeight);
+        return { start, end, navHeight };
+    }
+
+    function pageCanScrollInternally(page, direction) {
+        const { start, end } = pageScrollBounds(page);
+        if (end - start < 6) return false;
+        const current = window.scrollY;
+        return direction === 'next'
+            ? current < end - 2
+            : current > start + 2;
+    }
+
+    function scrollInsidePage(page, direction, amount, smooth = false) {
+        const { start, end } = pageScrollBounds(page);
+        const current = window.scrollY;
+        const next = Math.min(
+            end,
+            Math.max(start, current + (direction === 'next' ? amount : -amount))
+        );
+
+        if (Math.abs(next - current) < 2) return false;
+
+        if (smooth && !prefersReducedMotion.matches) {
+            window.scrollTo({ top: next, behavior: 'smooth' });
+        } else {
+            window.scrollTo(0, next);
+        }
+
+        return true;
+    }
+
     function setActivePage(index) {
         currentPage = Math.max(0, Math.min(index, pages.length - 1));
         const activeId = pages[currentPage].id;
@@ -611,13 +646,40 @@ function initPageExperience() {
         });
     });
 
-    prevButton?.addEventListener('click', () => goToPage(currentPage - 1, 'prev'));
-    nextButton?.addEventListener('click', () => goToPage(currentPage + 1, 'next'));
+    prevButton?.addEventListener('click', () => {
+        const page = pages[currentPage];
+        const step = Math.max(180, Math.round((window.innerHeight - (($('#navbar')?.offsetHeight || 0) + 24)) * 0.72));
+        if (page && pageCanScrollInternally(page, 'prev')) {
+            scrollInsidePage(page, 'prev', step, true);
+            return;
+        }
+
+        goToPage(currentPage - 1, 'prev');
+    });
+
+    nextButton?.addEventListener('click', () => {
+        const page = pages[currentPage];
+        const step = Math.max(180, Math.round((window.innerHeight - (($('#navbar')?.offsetHeight || 0) + 24)) * 0.72));
+        if (page && pageCanScrollInternally(page, 'next')) {
+            scrollInsidePage(page, 'next', step, true);
+            return;
+        }
+
+        goToPage(currentPage + 1, 'next');
+    });
 
     window.addEventListener('wheel', event => {
         if (window.innerWidth < 860 || prefersReducedMotion.matches) return;
         event.preventDefault();
         if (isPaging) return;
+
+        const activePage = pages[currentPage];
+        const direction = event.deltaY > 0 ? 'next' : 'prev';
+        if (activePage && pageCanScrollInternally(activePage, direction)) {
+            wheelDelta = 0;
+            scrollInsidePage(activePage, direction, Math.abs(event.deltaY), false);
+            return;
+        }
 
         window.clearTimeout(wheelResetTimer);
         wheelResetTimer = window.setTimeout(() => {
@@ -628,14 +690,14 @@ function initPageExperience() {
         wheelDelta += normalizedDelta;
         if (Math.abs(wheelDelta) < 96) return;
 
-        const direction = wheelDelta > 0 ? 'next' : 'prev';
-        const targetIndex = currentPage + (direction === 'next' ? 1 : -1);
+        const pageDirection = wheelDelta > 0 ? 'next' : 'prev';
+        const targetIndex = currentPage + (pageDirection === 'next' ? 1 : -1);
         if (targetIndex < 0 || targetIndex >= pages.length) {
             wheelDelta = 0;
             return;
         }
 
-        goToPage(targetIndex, direction);
+        goToPage(targetIndex, pageDirection);
     }, { passive: false });
 
     window.addEventListener('touchstart', event => {
@@ -652,6 +714,13 @@ function initPageExperience() {
         if (Math.abs(deltaY) < 88 || Math.abs(deltaX) > 70) return;
 
         const direction = deltaY > 0 ? 'next' : 'prev';
+        const activePage = pages[currentPage];
+        if (activePage && pageCanScrollInternally(activePage, direction)) {
+            const step = Math.max(180, Math.round((window.innerHeight - (($('#navbar')?.offsetHeight || 0) + 24)) * 0.72));
+            scrollInsidePage(activePage, direction, step, true);
+            return;
+        }
+
         goToPage(currentPage + (direction === 'next' ? 1 : -1), direction);
     }, { passive: true });
 

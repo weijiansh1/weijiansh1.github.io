@@ -67,7 +67,7 @@ html {
 }
 
 html.homepage-shell {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: none;
 }
 
 body {
@@ -231,8 +231,6 @@ button {
     align-items: center;
     min-height: calc(100svh - 68px);
     padding: clamp(52px, 7vw, 88px) 0;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     isolation: isolate;
 }
 
