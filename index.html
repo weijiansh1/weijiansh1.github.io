@@ -10,6 +10,7 @@
 </head>
 <body class="home-page">
 <div class="site-ambient" aria-hidden="true"></div>
+<div id="page-flip" class="page-flip" aria-hidden="true"></div>
 
 <nav id="navbar" class="site-nav" aria-label="Primary navigation">
     <div class="nav-container">
@@ -52,19 +53,19 @@
 
             <div class="hero-visual" aria-label="Profile visual">
                 <div class="orbit-card">
-                    <div class="orbit-ring orbit-ring-one"></div>
-                    <div class="orbit-ring orbit-ring-two"></div>
                     <div class="hero-avatar">
                         <img id="hero-avatar-img" src="avatar.jpg" alt="Weijian Shi avatar" onerror="this.closest('.hero-avatar').classList.add('avatar-fallback'); this.remove();">
                         <span>WS</span>
                     </div>
-                    <div class="floating-note note-one">
-                        <strong>Now</strong>
-                        <span>Building foundations in flight, math, and code.</span>
+                    <div class="profile-card-copy">
+                        <p>Profile</p>
+                        <strong>Weijian Shi</strong>
+                        <span>Fudan University · Aerospace + Computing</span>
                     </div>
-                    <div class="floating-note note-two">
-                        <strong>Focus</strong>
-                        <span>Aerospace × AI × Scientific computing.</span>
+                    <div class="profile-card-tags" aria-label="Focus tags">
+                        <span>AI</span>
+                        <span>Flight</span>
+                        <span>Computation</span>
                     </div>
                 </div>
             </div>
@@ -189,6 +190,16 @@
         </div>
     </section>
 </main>
+
+<div class="page-turner" aria-label="Section navigation">
+    <button id="prev-page" class="page-turn-button" type="button" aria-label="Previous section">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <span id="page-indicator">01 / 07</span>
+    <button id="next-page" class="page-turn-button" type="button" aria-label="Next section">
+        <i class="fas fa-arrow-down"></i>
+    </button>
+</div>
 
 <script src="script.js"></script>
 </body>
