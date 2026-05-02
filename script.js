@@ -446,12 +446,20 @@ function initPageExperience() {
         });
     }
 
-    function playPageTurn(direction) {
+    function playPageTurn(direction, targetPage) {
         if (!pageFlip || prefersReducedMotion.matches) return;
-        pageFlip.classList.remove('flip-next', 'flip-prev');
+        pageFlip.classList.remove('slide-next', 'slide-prev');
         void pageFlip.offsetWidth;
-        pageFlip.classList.add(direction === 'prev' ? 'flip-prev' : 'flip-next');
-        window.setTimeout(() => pageFlip.classList.remove('flip-next', 'flip-prev'), 560);
+        pageFlip.classList.add(direction === 'prev' ? 'slide-prev' : 'slide-next');
+
+        if (targetPage) {
+            targetPage.classList.remove('page-arrive-next', 'page-arrive-prev');
+            void targetPage.offsetWidth;
+            targetPage.classList.add(direction === 'prev' ? 'page-arrive-prev' : 'page-arrive-next');
+            window.setTimeout(() => targetPage.classList.remove('page-arrive-next', 'page-arrive-prev'), 820);
+        }
+
+        window.setTimeout(() => pageFlip.classList.remove('slide-next', 'slide-prev'), 700);
     }
 
     function goToPage(index, direction) {
@@ -459,7 +467,7 @@ function initPageExperience() {
         if (targetIndex === currentPage) return;
 
         const resolvedDirection = direction || (targetIndex > currentPage ? 'next' : 'prev');
-        playPageTurn(resolvedDirection);
+        playPageTurn(resolvedDirection, pages[targetIndex]);
         setActivePage(targetIndex);
         pages[targetIndex].scrollIntoView({
             behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
