@@ -268,11 +268,16 @@ function renderAward(item) {
     ` : '';
 
     if (item.image) {
+        const imageUrl = safeUrl(item.image);
+        const imagePosition = String(item.imagePosition || '78% 56%');
         return `
-            <article class="pub-item pub-item-award" data-category="${html(item.category || 'Other')}">
+            <article
+                class="pub-item pub-item-award"
+                data-category="${html(item.category || 'Other')}"
+                data-image="${html(imageUrl)}"
+                data-image-position="${html(imagePosition)}"
+            >
                 <div class="pub-content award-content">
-                    <div class="award-stage" style="background-image: url('${html(safeUrl(item.image))}')"></div>
-                    <div class="award-scrim"></div>
                     <div class="award-copy">
                         <div class="award-meta">
                             <span class="award-year">${html(item.year || 'Now')}</span>
@@ -333,6 +338,26 @@ function renderFilteredList(items, filterId, listId, renderItem, emptyState) {
 
     filterElement.innerHTML = '';
 
+    const syncSectionArtwork = () => {
+        const page = listElement.closest('.page');
+        if (!page) return;
+
+        const activeItem = [...listElement.querySelectorAll('.pub-item[data-image]')]
+            .find(item => !item.hidden && item.dataset.image);
+
+        if (!activeItem) {
+            page.classList.remove('page-has-artwork');
+            page.style.removeProperty('--page-artwork');
+            page.style.removeProperty('--page-artwork-position');
+            return;
+        }
+
+        const imageUrl = activeItem.dataset.image.replace(/"/g, '\\"');
+        page.classList.add('page-has-artwork');
+        page.style.setProperty('--page-artwork', `url("${imageUrl}")`);
+        page.style.setProperty('--page-artwork-position', activeItem.dataset.imagePosition || '78% 56%');
+    };
+
     if (!items.length) {
         listElement.innerHTML = `
             <div class="empty-state fade-in">
@@ -343,6 +368,7 @@ function renderFilteredList(items, filterId, listId, renderItem, emptyState) {
                 </div>
             </div>
         `;
+        syncSectionArtwork();
         return;
     }
 
@@ -360,11 +386,14 @@ function renderFilteredList(items, filterId, listId, renderItem, emptyState) {
                 listElement.querySelectorAll('.pub-item').forEach(item => {
                     item.hidden = filter !== 'all' && item.dataset.category !== filter;
                 });
+
+                syncSectionArtwork();
             });
         });
     }
 
     listElement.innerHTML = items.map(renderItem).join('');
+    syncSectionArtwork();
 }
 
 function renderBlog(posts) {

@@ -224,6 +224,8 @@ button {
 
 /* ===== Section System ===== */
 .page {
+    --page-artwork: none;
+    --page-artwork-position: 78% 56%;
     position: relative;
     display: flex;
     align-items: center;
@@ -232,6 +234,40 @@ button {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     isolation: isolate;
+}
+
+.page.page-has-artwork::before,
+.page.page-has-artwork::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.page.page-has-artwork::before {
+    z-index: -2;
+    background-image:
+        radial-gradient(circle at 78% 44%, rgba(123, 160, 189, 0.16), transparent 26rem),
+        linear-gradient(90deg, rgba(246, 248, 251, 0.98) 0%, rgba(246, 248, 251, 0.95) 28%, rgba(246, 248, 251, 0.76) 56%, rgba(246, 248, 251, 0.9) 100%),
+        linear-gradient(180deg, rgba(246, 248, 251, 0.08) 0%, rgba(246, 248, 251, 0.24) 68%, rgba(246, 248, 251, 0.9) 100%),
+        var(--page-artwork);
+    background-repeat: no-repeat;
+    background-size: cover, cover, cover, cover;
+    background-position: center, center, center, var(--page-artwork-position);
+    opacity: 1;
+}
+
+.page.page-has-artwork::after {
+    z-index: -1;
+    inset: 4% -2% -4% 34%;
+    background-image: var(--page-artwork);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: var(--page-artwork-position);
+    filter: blur(54px) saturate(0.92);
+    opacity: 0.18;
+    transform: scale(1.04);
+    mask-image: radial-gradient(circle at 58% 50%, #000 0, #000 36%, transparent 76%);
 }
 
 .page + .page {
@@ -244,6 +280,19 @@ button {
 
 [data-theme="dark"] .page-tinted {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0));
+}
+
+[data-theme="dark"] .page.page-has-artwork::before {
+    background-image:
+        radial-gradient(circle at 78% 44%, rgba(123, 160, 189, 0.14), transparent 26rem),
+        linear-gradient(90deg, rgba(13, 17, 28, 0.96) 0%, rgba(13, 17, 28, 0.92) 28%, rgba(13, 17, 28, 0.72) 58%, rgba(13, 17, 28, 0.92) 100%),
+        linear-gradient(180deg, rgba(13, 17, 28, 0.12) 0%, rgba(13, 17, 28, 0.38) 70%, rgba(13, 17, 28, 0.9) 100%),
+        var(--page-artwork);
+}
+
+[data-theme="dark"] .page.page-has-artwork::after {
+    opacity: 0.14;
+    filter: blur(60px) saturate(0.82);
 }
 
 .page-grid {
@@ -804,40 +853,30 @@ button {
     position: relative;
     display: flex;
     align-items: end;
-    min-height: clamp(320px, 46vw, 520px);
-    overflow: hidden;
-    border: 1px solid rgba(79, 111, 143, 0.1);
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.18);
-    box-shadow: 0 26px 70px rgba(31, 45, 61, 0.07);
-}
-
-.award-stage,
-.award-scrim {
-    position: absolute;
-    inset: 0;
-}
-
-.award-stage {
-    background-position: center 42%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    transform: scale(1.02);
-    filter: saturate(0.96) contrast(1.02);
-}
-
-.award-scrim {
-    background:
-        linear-gradient(180deg, rgba(12, 18, 28, 0.1), rgba(12, 18, 28, 0.18) 34%, rgba(12, 18, 28, 0.82)),
-        linear-gradient(90deg, rgba(12, 18, 28, 0.42), transparent 36%);
+    min-height: clamp(280px, 34vw, 420px);
+    padding: clamp(112px, 16vw, 190px) 0 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .award-copy {
     position: relative;
     z-index: 1;
-    width: min(760px, 100%);
-    padding: clamp(26px, 4vw, 40px);
-    color: #f7fbff;
+    width: min(660px, 100%);
+    padding: 0;
+    color: var(--text);
+}
+
+.award-copy::before {
+    content: "";
+    display: block;
+    width: 82px;
+    height: 1px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, rgba(79, 111, 143, 0.46), transparent);
 }
 
 .award-meta {
@@ -853,10 +892,11 @@ button {
     align-items: center;
     min-height: 28px;
     padding: 3px 11px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(79, 111, 143, 0.14);
     border-radius: 999px;
-    color: rgba(247, 251, 255, 0.92);
-    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.34);
+    backdrop-filter: blur(14px) saturate(128%);
     font-size: 0.76rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -865,36 +905,50 @@ button {
 
 .award-content .category-badge {
     margin-top: 0;
-    border-color: rgba(255, 255, 255, 0.18);
-    color: rgba(247, 251, 255, 0.92);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(79, 111, 143, 0.12);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(14px) saturate(128%);
 }
 
 .award-content h3 {
     margin-bottom: 10px;
-    color: #f7fbff;
-    font-size: clamp(1.35rem, 2.3vw, 2rem);
+    max-width: 18ch;
+    color: var(--text);
+    font-size: clamp(1.45rem, 2.5vw, 2.2rem);
     line-height: 1.18;
     letter-spacing: -0.03em;
 }
 
 .award-content .pub-authors {
-    max-width: 62ch;
-    color: rgba(247, 251, 255, 0.86);
+    max-width: 58ch;
+    color: var(--text-secondary);
     font-size: 0.96rem;
     line-height: 1.68;
 }
 
 .award-content .pub-links {
-    margin-top: 16px;
+    margin-top: 18px;
 }
 
 .award-content .pub-links a {
-    color: rgba(247, 251, 255, 0.88);
+    color: var(--text);
+    font-weight: 720;
 }
 
 .award-content .pub-links a:hover {
-    color: #ffffff;
+    color: var(--primary-dark);
+}
+
+[data-theme="dark"] .award-copy::before {
+    background: linear-gradient(90deg, rgba(143, 178, 208, 0.5), transparent);
+}
+
+[data-theme="dark"] .award-year,
+[data-theme="dark"] .award-content .category-badge {
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--text);
+    background: rgba(13, 17, 28, 0.26);
 }
 
 .pub-authors,
@@ -1346,12 +1400,31 @@ button {
     }
 
     .award-content {
-        min-height: 280px;
-        border-radius: 22px;
+        min-height: 220px;
+        padding-top: 120px;
     }
 
     .award-copy {
-        padding: 22px 20px;
+        width: 100%;
+    }
+
+    .page.page-has-artwork::before {
+        background-image:
+            linear-gradient(180deg, rgba(246, 248, 251, 0.76) 0%, rgba(246, 248, 251, 0.9) 38%, rgba(246, 248, 251, 0.96) 100%),
+            var(--page-artwork);
+        background-size: cover, cover;
+        background-position: center, 66% 46%;
+    }
+
+    .page.page-has-artwork::after {
+        inset: 12% -10% 10% 18%;
+        opacity: 0.13;
+    }
+
+    [data-theme="dark"] .page.page-has-artwork::before {
+        background-image:
+            linear-gradient(180deg, rgba(13, 17, 28, 0.6) 0%, rgba(13, 17, 28, 0.84) 40%, rgba(13, 17, 28, 0.96) 100%),
+            var(--page-artwork);
     }
 }
 
