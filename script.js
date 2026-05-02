@@ -255,13 +255,31 @@ function renderFocus(focusItems) {
 }
 
 function renderAward(item) {
+    const links = Array.isArray(item.links) ? item.links : [];
+    const imageHtml = item.image ? `
+        <figure class="award-image">
+            <img src="${safeUrl(item.image)}" alt="${html(item.title)}">
+        </figure>
+    ` : '';
+    const linksHtml = links.length ? `
+        <div class="pub-links">
+            ${links.map(link => `
+                <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">
+                    <i class="${html(solidIcon(link.icon, 'fa-link'))}"></i> ${html(link.label || 'Link')}
+                </a>
+            `).join('')}
+        </div>
+    ` : '';
+
     return `
         <article class="pub-item" data-category="${html(item.category || 'Other')}">
             <div class="pub-year">${html(item.year || 'Now')}</div>
             <div class="pub-content">
+                ${imageHtml}
                 <h3>${html(item.title)}</h3>
                 ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
                 ${item.category ? `<span class="category-badge">${html(item.category)}</span>` : ''}
+                ${linksHtml}
             </div>
         </article>
     `;

@@ -795,6 +795,24 @@ button {
     line-height: 1.36;
 }
 
+.award-image {
+    width: min(520px, 100%);
+    margin: 0 0 16px;
+    overflow: hidden;
+    border: 1px solid rgba(79, 111, 143, 0.1);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.award-image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: center 42%;
+    opacity: 0.94;
+}
+
 .pub-authors,
 .pub-venue {
     color: var(--text-secondary);

@@ -69,7 +69,22 @@
       "desc": "Practicing numerical methods, optimization, modeling, and scientific programming as tools for rigorous problem solving."
     }
   ],
-  "awards": [],
+  "awards": [
+    {
+      "year": "2026",
+      "title": "AI Hackathon Tour 2026 · Fudan University Station — 6th Place & Finalist",
+      "detail": "Team Yuanlü (缘旅) · Project: Yuanlü / Wanderlace. Advanced to the national final in Nanjing after placing 6th at the Fudan University station; the project received positive feedback and recognition during the final showcase.",
+      "category": "AI",
+      "image": "assets/hackathon-wanderlace.jpg",
+      "links": [
+        {
+          "label": "Fudan News",
+          "url": "https://news.fudan.edu.cn/2026/0413/c239a148675/page.htm",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  ],
   "publications": [],
   "blog": [
     {
