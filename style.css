@@ -282,8 +282,12 @@ button {
     align-items: end;
     max-width: 900px;
     margin-top: 34px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(82, 92, 104, 0.14);
+    padding: 24px 26px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.18));
+    box-shadow: 0 18px 48px rgba(110, 122, 136, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px) saturate(120%);
 }
 
 .hero-facts {
@@ -381,8 +385,7 @@ button {
 
 .work-list {
     display: grid;
-    gap: 0;
-    border-top: 1px solid var(--line);
+    gap: 14px;
 }
 
 .experience-item {
@@ -390,8 +393,12 @@ button {
     grid-template-columns: minmax(92px, 0.14fr) minmax(0, 1fr) minmax(260px, 0.34fr);
     gap: 28px 34px;
     align-items: start;
-    padding: 34px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.14));
+    box-shadow: 0 18px 44px rgba(110, 122, 136, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px) saturate(120%);
 }
 
 .experience-meta {
@@ -588,16 +595,18 @@ button {
 
 .research-grid {
     display: grid;
-    gap: 0;
-    border-top: 1px solid var(--line);
+    gap: 12px;
 }
 
 .research-entry {
     display: grid;
     grid-template-columns: 68px minmax(0, 1fr);
     gap: 24px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 20px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.12));
+    backdrop-filter: blur(16px) saturate(120%);
 }
 
 .research-entry-index {
@@ -694,8 +703,12 @@ button {
 .profile-card {
     display: grid;
     gap: 18px;
-    padding-left: 18px;
-    border-left: 1px solid var(--line);
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.16));
+    box-shadow: 0 18px 44px rgba(110, 122, 136, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px) saturate(120%);
 }
 
 .about-caption {
@@ -787,8 +800,8 @@ button {
 }
 
 .timeline-list {
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: 12px;
 }
 
 .timeline-item {
@@ -796,12 +809,15 @@ button {
     grid-template-columns: minmax(96px, 0.18fr) minmax(0, 1fr) minmax(140px, 0.28fr);
     gap: 18px;
     align-items: start;
-    padding: 18px 0;
-    border-top: 1px solid var(--line);
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.12));
+    backdrop-filter: blur(16px) saturate(120%);
 }
 
 .timeline-item:first-child {
-    border-top: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .timeline-date {
@@ -828,7 +844,8 @@ button {
 }
 
 .notes-grid {
-    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 12px;
 }
 
 .note-row {
@@ -836,8 +853,11 @@ button {
     grid-template-columns: minmax(120px, 0.16fr) minmax(0, 1fr) minmax(180px, 0.24fr);
     gap: 24px;
     align-items: start;
-    padding: 22px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 20px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
+    backdrop-filter: blur(16px) saturate(120%);
     transition: border-color 220ms ease;
 }
 
@@ -953,12 +973,15 @@ button {
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px 36px;
+    gap: 16px 20px;
 }
 
 .contact-item {
-    padding-top: 14px;
-    border-top: 1px solid var(--line);
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.14));
+    backdrop-filter: blur(16px) saturate(120%);
 }
 
 .contact-item .label {
