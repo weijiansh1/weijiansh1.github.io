@@ -56,11 +56,69 @@ function render(data) {
 
 function renderHero(profile, contact) {
     const school = profile.education?.[0]?.school || "Fudan University";
-    const summary = `I study at ${school}, focusing on ${profile.subtitle || "aerospace, computation, and AI"}. This site collects projects, competition work, and ongoing notes.`;
+    const subtitle = stripHtml(profile.subtitle || "aerospace, computation, and AI");
+    const title = stripHtml(profile.title || "Undergraduate");
+    const summary = `${title} at ${school}, working across ${subtitle}. This site collects selected projects, competition work, and ongoing notes.`;
     const place = (contact.location || "Shanghai, China").split("\n")[0];
 
     setText("hero-summary", summary);
-    setText("hero-status", `${place} · Fudan University`);
+    setText("hero-status", `${place} · ${title}`);
+
+    const heroFacts = $("#hero-facts");
+    const heroLinks = $("#hero-links");
+    const factItems = Array.isArray(profile.highlights) && profile.highlights.length
+        ? profile.highlights
+        : [
+            { label: "University", value: school },
+            { label: "Track", value: subtitle },
+            { label: "Base", value: place },
+            { label: "Status", value: title }
+        ];
+
+    if (heroFacts) {
+        heroFacts.innerHTML = factItems.map(item => `
+            <div class="hero-fact">
+                <span>${html(item.label || "")}</span>
+                <strong>${html(item.value || "")}</strong>
+            </div>
+        `).join("");
+    }
+
+    if (heroLinks) {
+        const linkItems = [];
+        if (contact.github) {
+            linkItems.push({
+                label: "GitHub",
+                value: contact.github.replace(/^https?:\/\//, ""),
+                url: contact.github
+            });
+        }
+        if (contact.email) {
+            linkItems.push({
+                label: "Email",
+                value: contact.email,
+                url: `mailto:${contact.email}`
+            });
+        } else {
+            linkItems.push({
+                label: "Selected Work",
+                value: "See highlights",
+                url: "#work"
+            });
+        }
+        linkItems.push({
+            label: "Contact",
+            value: "Reach out",
+            url: "#contact"
+        });
+
+        heroLinks.innerHTML = linkItems.map(item => `
+            <a class="hero-link" href="${safeUrl(item.url)}" ${safeUrl(item.url).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>
+                <span>${html(item.label)}</span>
+                <strong>${html(item.value)}</strong>
+            </a>
+        `).join("");
+    }
 
     const heroImage = "assets/hero-landscape.jpg";
     const heroMedia = $("#hero-media");
@@ -81,67 +139,43 @@ function renderWork(awards) {
         return;
     }
 
-    const [featured, ...rest] = awards;
-    const featuredFacts = Array.isArray(featured.aside) ? featured.aside : [];
-    const featuredLinks = Array.isArray(featured.links) ? featured.links : [];
+    workList.innerHTML = awards.map(item => {
+        const facts = Array.isArray(item.aside) ? item.aside : [];
+        const links = Array.isArray(item.links) ? item.links : [];
 
-    const featuredHtml = `
-        <article class="highlight-feature reveal">
-            <div class="highlight-media">
-                <div class="highlight-image" style="background-image:url('${safeUrl(featured.image || "")}'); background-position:${html(featured.imagePosition || "center")}"></div>
-            </div>
-            <div class="highlight-copy">
-                <div class="highlight-topline">
-                    <span>${html(featured.category || "Highlight")}</span>
-                    <span>${html(featured.year || "Now")}</span>
+        return `
+            <article class="experience-item reveal">
+                <div class="experience-meta">
+                    <span>${html(item.year || "Now")}</span>
+                    <span>${html(item.category || "Highlight")}</span>
                 </div>
-                <h3>${html(featured.title || "Selected highlight")}</h3>
-                ${featured.detail ? `<p>${html(featured.detail)}</p>` : ""}
-                ${featuredFacts.length ? `
-                    <div class="highlight-facts">
-                        ${featuredFacts.map(fact => `
-                            <div class="highlight-fact">
-                                <span>${html(fact.label || "")}</span>
-                                <strong>${html(fact.value || "")}</strong>
-                            </div>
-                        `).join("")}
-                    </div>
-                ` : ""}
-                ${featuredLinks.length ? `
-                    <div class="highlight-links">
-                        ${featuredLinks.map(link => `
-                            <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")} ↗</a>
-                        `).join("")}
-                    </div>
-                ` : ""}
-            </div>
-        </article>
-    `;
-
-    const restHtml = rest.length ? `
-        <div class="highlight-list">
-            ${rest.map(item => {
-                const links = Array.isArray(item.links) ? item.links : [];
-                return `
-                    <article class="highlight-row reveal">
-                        <div class="highlight-row-meta">
-                            <span>${html(item.year || "Now")}</span>
-                            <span>${html(item.category || "Highlight")}</span>
+                <div class="experience-main">
+                    <h3>${html(item.title || "Selected highlight")}</h3>
+                    ${item.detail ? `<p>${html(item.detail)}</p>` : ""}
+                    ${facts.length ? `
+                        <div class="experience-facts">
+                            ${facts.map(fact => `
+                                <div class="experience-fact">
+                                    <span>${html(fact.label || "")}</span>
+                                    <strong>${html(fact.value || "")}</strong>
+                                </div>
+                            `).join("")}
                         </div>
-                        <div class="highlight-row-main">
-                            <h4>${html(item.title || "Selected highlight")}</h4>
-                            ${item.detail ? `<p>${html(item.detail)}</p>` : ""}
+                    ` : ""}
+                    ${links.length ? `
+                        <div class="experience-links">
+                            ${links.map(link => `
+                                <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")} ↗</a>
+                            `).join("")}
                         </div>
-                        <div class="highlight-row-links">
-                            ${links.map(link => `<a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")}</a>`).join("")}
-                        </div>
-                    </article>
-                `;
-            }).join("")}
-        </div>
-    ` : "";
-
-    workList.innerHTML = featuredHtml + restHtml;
+                    ` : ""}
+                </div>
+                <div class="experience-visual">
+                    ${item.image ? `<div class="experience-thumb" style="background-image:url('${safeUrl(item.image)}'); background-position:${html(item.imagePosition || "center")}"></div>` : ""}
+                </div>
+            </article>
+        `;
+    }).join("");
 }
 
 function renderPractice(research, profile) {
@@ -156,30 +190,40 @@ function renderPractice(research, profile) {
 
     if (focusElement) {
         const focusItems = profile.focus || [];
-        focusElement.innerHTML = focusItems.map(item => `
-            <div class="focus-item">
-                <strong>${html(item.label || "")}</strong>
-                <span>${html(item.text || "")}</span>
-            </div>
-        `).join("");
+        focusElement.innerHTML = `
+            <p class="subsection-label">Direction</p>
+            ${focusItems.map(item => `
+                <div class="focus-item">
+                    <strong>${html(item.label || "")}</strong>
+                    <span>${html(item.text || "")}</span>
+                </div>
+            `).join("")}
+        `;
     }
 
     if (researchGrid) {
         const items = research.length ? research : fallbackData.research;
         researchGrid.innerHTML = items.map((item, index) => `
-            <article class="research-card">
-                <div class="card-index">${html(item.title || `Area ${index + 1}`)}</div>
-                <h3>${html(item.title || "Research")}</h3>
-                <p>${html(item.desc || "")}</p>
+            <article class="research-entry">
+                <div class="research-entry-index">${String(index + 1).padStart(2, "0")}</div>
+                <div class="research-entry-main">
+                    <h3>${html(item.title || "Research")}</h3>
+                    <p>${html(item.desc || "")}</p>
+                </div>
             </article>
         `).join("");
     }
 
     if (skillsCloud) {
         const skills = profile.skills || [];
-        skillsCloud.innerHTML = skills.map(skill => `
-            <span class="skill-pill">${html(skill)}</span>
-        `).join("");
+        skillsCloud.innerHTML = `
+            <p class="subsection-label">Tools</p>
+            <div class="skills-list">
+                ${skills.map(skill => `
+                    <span class="skill-pill">${html(skill)}</span>
+                `).join("")}
+            </div>
+        `;
     }
 }
 
@@ -188,18 +232,35 @@ function renderAbout(profile, contact) {
     const lead = $("#about-lead");
     const body = $("#about-body");
     const education = $("#about-education");
+    const facts = $("#profile-facts");
 
     setText("about-caption", `${profile.name || "Weijian Shi"} — ${(profile.education?.[0]?.school || "Fudan University")}`);
     setText("about-place", (contact.location || "Shanghai, China").split("\n")[0]);
 
     if (lead) {
-        const leadText = stripHtml(bio[1] || bio[0] || "");
+        const leadText = firstSentence(stripHtml(bio[1] || bio[0] || ""));
         lead.textContent = leadText || "I am building a foundation across aerospace engineering, mathematics, and computation.";
     }
 
     if (body) {
         const paragraphs = bio.length > 1 ? bio.filter((_, index) => index !== 1) : bio;
         body.innerHTML = paragraphs.map(item => `<p>${item}</p>`).join("");
+    }
+
+    if (facts) {
+        const factItems = [
+            { label: "University", value: profile.education?.[0]?.school || "Fudan University" },
+            { label: "Program", value: profile.subtitle || "Aerospace and Computation" },
+            { label: "Base", value: (contact.location || "Shanghai, China").split("\n")[0] },
+            { label: "Status", value: profile.title || "Undergraduate" }
+        ];
+
+        facts.innerHTML = factItems.map(item => `
+            <div class="profile-fact">
+                <span>${html(item.label)}</span>
+                <strong>${html(item.value)}</strong>
+            </div>
+        `).join("");
     }
 
     if (education) {
@@ -264,6 +325,7 @@ function renderContact(contact, profile) {
     if (contact.github) items.push({ label: "GitHub", value: contact.github.replace(/^https?:\/\//, ""), href: contact.github });
     if (contact.email) items.push({ label: "Email", value: contact.email, href: `mailto:${contact.email}` });
     items.push({ label: "University", value: profile.education?.[0]?.school || "Fudan University" });
+    items.push({ label: "Field", value: stripHtml(profile.subtitle || "Aerospace and Computation") });
     items.push({ label: "Base", value: (contact.location || "Shanghai, China").split("\n")[0] });
 
     grid.innerHTML = items.map(item => `
