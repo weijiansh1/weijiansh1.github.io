@@ -30,12 +30,10 @@ html {
 }
 
 body {
+    position: relative;
+    isolation: isolate;
     margin: 0;
-    background:
-        radial-gradient(circle at top left, rgba(111, 128, 146, 0.12), transparent 28rem),
-        radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.62), transparent 26rem),
-        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.26), transparent 30rem),
-        linear-gradient(180deg, var(--bg), var(--bg-soft));
+    background: linear-gradient(180deg, var(--bg), var(--bg-soft));
     color: var(--text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -45,6 +43,29 @@ body {
     line-height: 1.6;
     font-feature-settings: "ss01", "cv11";
     font-optical-sizing: auto;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+body::before {
+    z-index: -2;
+    background:
+        url("assets/hero-aerospace.jpg") center center / cover no-repeat;
+}
+
+body::after {
+    z-index: -1;
+    background:
+        linear-gradient(180deg, rgba(239, 241, 243, 0.74) 0%, rgba(239, 241, 243, 0.84) 30%, rgba(236, 239, 242, 0.9) 56%, rgba(232, 236, 240, 0.95) 100%),
+        radial-gradient(circle at top left, rgba(111, 128, 146, 0.12), transparent 28rem),
+        radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.42), transparent 26rem),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.18), transparent 30rem);
 }
 
 ::selection {
@@ -205,19 +226,13 @@ button {
 }
 
 .hero-media {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 76% center;
-    transform: scale(1.02);
-    transition: transform 240ms ease-out;
+    display: none;
 }
 
 .hero-overlay {
     background:
-        linear-gradient(90deg, rgba(239, 241, 243, 0.92) 0%, rgba(239, 241, 243, 0.82) 18%, rgba(239, 241, 243, 0.42) 40%, rgba(239, 241, 243, 0.08) 70%, rgba(239, 241, 243, 0.02) 100%),
-        linear-gradient(180deg, rgba(228, 232, 236, 0.16) 0%, rgba(228, 232, 236, 0.03) 42%, rgba(228, 232, 236, 0.7) 100%),
-        radial-gradient(circle at 82% 26%, rgba(125, 162, 198, 0.12), transparent 22rem),
-        radial-gradient(circle at bottom right, rgba(111, 128, 146, 0.12), transparent 28rem);
+        linear-gradient(90deg, rgba(239, 241, 243, 0.4) 0%, rgba(239, 241, 243, 0.24) 18%, rgba(239, 241, 243, 0.08) 40%, rgba(239, 241, 243, 0.02) 70%, rgba(239, 241, 243, 0) 100%),
+        linear-gradient(180deg, rgba(228, 232, 236, 0.08) 0%, rgba(228, 232, 236, 0.02) 42%, rgba(228, 232, 236, 0.28) 100%);
 }
 
 .hero-inner {
