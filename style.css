@@ -12,6 +12,10 @@
     --accent-soft: rgba(111, 128, 146, 0.14);
     --panel: rgba(255, 255, 255, 0.38);
     --panel-hover: rgba(255, 255, 255, 0.62);
+    --glass-fill: rgba(255, 255, 255, 0.12);
+    --glass-fill-strong: rgba(255, 255, 255, 0.18);
+    --glass-border: rgba(255, 255, 255, 0.56);
+    --glass-shadow: rgba(110, 122, 136, 0.06);
     --container: 1240px;
     --font-display: "Instrument Serif", "Times New Roman", serif;
     --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -74,9 +78,10 @@ button {
 }
 
 .site-nav.is-scrolled {
-    background: rgba(255, 255, 255, 0.34);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.34);
-    backdrop-filter: blur(16px) saturate(120%);
+    background: rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.48);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.36);
+    backdrop-filter: none;
 }
 
 .nav-container {
@@ -283,11 +288,30 @@ button {
     max-width: 900px;
     margin-top: 34px;
     padding: 24px 26px;
-    border: 1px solid rgba(255, 255, 255, 0.34);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
     border-radius: 26px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.18));
-    box-shadow: 0 18px 48px rgba(110, 122, 136, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(18px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
+    box-shadow: 0 18px 42px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.66), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: none;
+}
+
+.hero-rail::before,
+.experience-item::before,
+.research-entry::before,
+.profile-card::before,
+.timeline-item::before,
+.note-row::before,
+.contact-item::before,
+.empty-copy::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 46%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 72%);
+    pointer-events: none;
 }
 
 .hero-facts {
@@ -394,11 +418,13 @@ button {
     gap: 28px 34px;
     align-items: start;
     padding: 26px;
-    border: 1px solid rgba(255, 255, 255, 0.34);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
     border-radius: 24px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.14));
-    box-shadow: 0 18px 44px rgba(110, 122, 136, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(16px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
+    box-shadow: 0 16px 34px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.62), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: none;
 }
 
 .experience-meta {
@@ -484,8 +510,8 @@ button {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    outline: 1px solid rgba(255, 255, 255, 0.34);
-    box-shadow: 0 10px 30px rgba(110, 122, 136, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    outline: 1px solid rgba(255, 255, 255, 0.44);
+    box-shadow: 0 10px 30px rgba(110, 122, 136, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.36);
 }
 
 .experience-thumb::after {
@@ -503,10 +529,10 @@ button {
     border-radius: 18px;
     background:
         radial-gradient(circle at top left, rgba(111, 128, 146, 0.12), transparent 13rem),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.24));
-    outline: 1px solid rgba(255, 255, 255, 0.38);
-    box-shadow: 0 16px 40px rgba(110, 122, 136, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(18px) saturate(120%);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 14px 30px rgba(110, 122, 136, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.58), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: none;
 }
 
 .experience-fallback-kicker {
@@ -603,10 +629,13 @@ button {
     grid-template-columns: 68px minmax(0, 1fr);
     gap: 24px;
     padding: 20px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.12));
-    backdrop-filter: blur(16px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.07));
+    box-shadow: 0 14px 28px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+    backdrop-filter: none;
 }
 
 .research-entry-index {
@@ -704,11 +733,13 @@ button {
     display: grid;
     gap: 18px;
     padding: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.34);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
     border-radius: 22px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.16));
-    box-shadow: 0 18px 44px rgba(110, 122, 136, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(18px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+    box-shadow: 0 16px 34px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.62), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: none;
 }
 
 .about-caption {
@@ -810,10 +841,13 @@ button {
     gap: 18px;
     align-items: start;
     padding: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.48);
     border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.12));
-    backdrop-filter: blur(16px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+    box-shadow: 0 12px 24px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
+    backdrop-filter: none;
 }
 
 .timeline-item:first-child {
@@ -854,10 +888,13 @@ button {
     gap: 24px;
     align-items: start;
     padding: 20px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.48);
     border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
-    backdrop-filter: blur(16px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.06));
+    box-shadow: 0 12px 26px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+    backdrop-filter: none;
     transition: border-color 220ms ease;
 }
 
@@ -978,10 +1015,13 @@ button {
 
 .contact-item {
     padding: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.32);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.48);
     border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.14));
-    backdrop-filter: blur(16px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07));
+    box-shadow: 0 12px 24px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+    backdrop-filter: none;
 }
 
 .contact-item .label {
@@ -1036,10 +1076,14 @@ button {
 
 .empty-copy {
     padding: 24px;
+    position: relative;
+    overflow: hidden;
     border: 1px solid var(--line);
+    border-radius: 18px;
     color: var(--text-soft);
-    background: var(--panel);
-    backdrop-filter: blur(16px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+    box-shadow: 0 12px 24px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
+    backdrop-filter: none;
 }
 
 @media (max-width: 1080px) {
@@ -1085,9 +1129,10 @@ button {
         align-items: flex-start;
         gap: 18px;
         padding: 20px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.48);
-        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.54);
+        background: rgba(255, 255, 255, 0.16);
+        box-shadow: 0 14px 28px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
+        backdrop-filter: none;
     }
 
     .nav-links.is-open {
