@@ -39,16 +39,16 @@
     ],
     "focus": [
       {
-        "label": "Near Term",
-        "text": "Build strong foundations in mathematics, programming, mechanics, and engineering design."
+        "label": "Foundation",
+        "text": "Strengthen the mathematical, computational, and engineering base needed to move comfortably between theory, code, and physical systems."
       },
       {
-        "label": "Build Habit",
-        "text": "Turn coursework, experiments, and small projects into clear public notes."
+        "label": "Practice",
+        "text": "Turn courses, experiments, and small projects into reproducible work, clearer notes, and better habits of explanation."
       },
       {
-        "label": "Long View",
-        "text": "Explore reliable intelligent systems for aerospace and robotics applications."
+        "label": "Horizon",
+        "text": "Work toward dependable intelligent systems for aerospace, robotics, and other safety-conscious engineering settings."
       }
     ]
   },
@@ -56,17 +56,17 @@
     {
       "icon": "fa-plane",
       "title": "Aerospace Engineering",
-      "desc": "Learning flight mechanics, aircraft design fundamentals, and the systems view behind modern aerospace engineering."
+      "desc": "I care about how aircraft are understood as integrated systems — where mechanics, control, performance, and design tradeoffs have to be read together rather than in isolation."
     },
     {
       "icon": "fa-robot",
       "title": "Artificial Intelligence",
-      "desc": "Exploring how data-driven methods, learning algorithms, and control can support intelligent engineering systems."
+      "desc": "I am interested in using learning, perception, and decision-making methods to build engineering systems that are not only capable, but also useful, interpretable, and reliable."
     },
     {
       "icon": "fa-calculator",
       "title": "Computational Science",
-      "desc": "Practicing numerical methods, optimization, modeling, and scientific programming as tools for rigorous problem solving."
+      "desc": "I use numerical methods, modeling, optimization, and scientific programming to turn physical questions into computational form and study them with rigor."
     }
   ],
   "projects": [

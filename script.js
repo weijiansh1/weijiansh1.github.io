@@ -25,7 +25,7 @@ const fallbackData = {
 };
 
 if (document.body.classList.contains("home-page")) {
-    fetch("data.json")
+    fetch("data.json?v=20260503d")
         .then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.json();
@@ -228,7 +228,7 @@ function renderPractice(research, profile) {
     const skillsCloud = $("#skills-cloud");
 
     if (intro) {
-        intro.textContent = "My current interests sit between aerospace systems, applied AI, and scientific computing — especially where rigorous engineering meets data-driven methods.";
+        intro.textContent = "I am drawn to problems where physical systems, learning methods, and computation have to work together — especially when engineering judgment matters as much as model performance.";
     }
 
     if (focusElement) {
