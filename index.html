@@ -1,180 +1,145 @@
 <!DOCTYPE html>
-<html lang="en" class="homepage-shell">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Weijian Shi's personal academic homepage. Aerospace engineering, intelligent systems, and computational science.">
+    <meta name="description" content="Weijian Shi's personal homepage. Aerospace engineering, intelligent systems, and computational science.">
     <title>Weijian Shi · Personal Homepage</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="home-page">
-<div class="site-ambient" aria-hidden="true"></div>
-
 <nav id="navbar" class="site-nav" aria-label="Primary navigation">
     <div class="nav-container">
         <a href="#home" class="nav-logo" aria-label="Go to homepage">
-            <span class="nav-mark">WS</span>
-            <span>Weijian Shi</span>
+            Weijian<span>.</span>
         </a>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#awards">Awards</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#blog">Blog</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button id="theme-toggle" class="icon-button" aria-label="Toggle theme">
-            <i class="fas fa-moon"></i>
-        </button>
-        <button class="nav-toggle icon-button" aria-label="Open menu" aria-expanded="false">
-            <i class="fas fa-bars"></i>
+        <div class="nav-links" id="nav-links">
+            <a href="#work">Work</a>
+            <a href="#practice">Practice</a>
+            <a href="#about">About</a>
+            <a href="#notes">Notes</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <a href="#contact" class="nav-cta">Say hello →</a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
         </button>
     </div>
 </nav>
 
 <main>
-    <section id="home" class="page hero" data-page-title="Home">
-        <div class="container hero-grid">
-            <div class="hero-copy">
-                <p class="eyebrow">Fudan University · Aerospace · Intelligent Systems</p>
-                <h1 id="hero-name">Weijian Shi</h1>
-                <p class="hero-title" id="hero-title">Undergraduate · Fudan University</p>
-                <p class="hero-desc" id="hero-subtitle">Exploring the intersection of aircraft design, computation, and AI.</p>
-                <div class="hero-links" id="hero-links" aria-label="Social links"></div>
+    <section id="home" class="hero">
+        <div class="hero-media" id="hero-media" aria-hidden="true"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="container hero-inner">
+            <p class="hero-kicker reveal">✦ Fudan University · Aerospace · Intelligent Systems</p>
+            <h1 class="hero-heading reveal">
+                <span>Building</span>
+                <span class="accent">intelligent</span>
+                <span>flight systems.</span>
+            </h1>
+            <div class="hero-meta reveal">
+                <p class="hero-summary" id="hero-summary">
+                    I'm Weijian Shi — an undergraduate exploring aircraft design, computational science, and AI.
+                </p>
+                <div class="hero-status">
+                    <span class="status-dot"></span>
+                    <span id="hero-status">Shanghai · Available for research and collaboration</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="page" data-page-title="About">
-        <div class="container page-grid">
-            <div class="page-kicker">
-                <span>02</span>
-                <p>About Me</p>
-            </div>
-            <div class="page-main">
-                <div class="section-heading">
-                    <p class="eyebrow">Profile</p>
-                    <h2>Learning to connect flight, computation, and intelligent systems.</h2>
+    <section id="work" class="section section-work">
+        <div class="container">
+            <div class="section-head reveal">
+                <div>
+                    <p class="section-kicker">✦ 001 — Selected Work</p>
+                    <h2 class="display-title">
+                        Recent milestones, <span class="accent">made carefully</span>
+                    </h2>
                 </div>
-                <div class="about-grid">
-                    <div class="story-card">
-                        <div class="about-text" id="about-bio"></div>
-                    </div>
-                    <div class="stacked-cards">
-                        <article class="mini-card">
-                            <h3>Education</h3>
-                            <div class="timeline" id="about-education"></div>
-                        </article>
-                        <article class="mini-card">
-                            <h3>Toolkit</h3>
-                            <div class="skills" id="about-skills"></div>
-                        </article>
-                    </div>
-                </div>
-                <div class="highlight-grid" id="profile-highlights"></div>
+                <span class="section-range">2025 — 2026</span>
             </div>
+            <div id="work-list" class="work-list"></div>
         </div>
     </section>
 
-    <section id="research" class="page page-tinted" data-page-title="Research">
-        <div class="container page-grid">
-            <div class="page-kicker">
-                <span>03</span>
-                <p>Research</p>
+    <section id="practice" class="section section-practice">
+        <div class="container practice-layout">
+            <div class="practice-copy reveal">
+                <p class="section-kicker">✦ 002 — Practice</p>
+                <h2 class="display-subtitle">
+                    A constellation of things I keep <span class="accent">sharpening</span>.
+                </h2>
+                <p class="practice-intro" id="practice-intro"></p>
+                <div class="practice-focus" id="practice-focus"></div>
             </div>
-            <div class="page-main">
-                <div class="section-heading">
-                    <p class="eyebrow">Direction</p>
-                    <h2>Small steps toward rigorous, useful intelligent engineering.</h2>
-                </div>
+            <div class="practice-panel reveal">
                 <div class="research-grid" id="research-grid"></div>
-                <div class="focus-panel" id="focus-list"></div>
+                <div class="skills-cloud" id="skills-cloud"></div>
             </div>
         </div>
     </section>
 
-    <section id="awards" class="page" data-page-title="Awards">
-        <div class="container page-grid">
-            <div class="page-kicker">
-                <span>04</span>
-                <p>Awards</p>
+    <section id="about" class="section section-about">
+        <div class="container">
+            <div class="section-top reveal">
+                <span class="section-kicker">✦ 003 — About</span>
+                <span class="section-place" id="about-place">Shanghai, China</span>
             </div>
-            <div class="page-main">
-                <div class="section-heading">
-                    <p class="eyebrow">Milestones</p>
-                    <h2>A concise space for honors, competitions, and selected recognition.</h2>
+            <div class="about-layout">
+                <div class="about-visual reveal">
+                    <div class="about-monogram">WS</div>
+                    <p class="about-caption" id="about-caption">Weijian Shi — Fudan University</p>
                 </div>
-                <div class="filter-tabs" id="awards-filters"></div>
-                <div class="pub-list" id="awards-list"></div>
+                <div class="about-copy reveal">
+                    <p class="about-lead" id="about-lead"></p>
+                    <div class="about-body" id="about-body"></div>
+                    <div class="timeline-wrap">
+                        <p class="timeline-label">Trajectory</p>
+                        <div class="timeline-list" id="about-education"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="publications" class="page page-tinted" data-page-title="Publications">
-        <div class="container page-grid">
-            <div class="page-kicker">
-                <span>05</span>
-                <p>Papers</p>
-            </div>
-            <div class="page-main">
-                <div class="section-heading">
-                    <p class="eyebrow">Writing</p>
-                    <h2>Publications and technical notes will live here as they mature.</h2>
+    <section id="notes" class="section section-notes">
+        <div class="container">
+            <div class="section-head reveal">
+                <div>
+                    <p class="section-kicker">✦ 004 — Notes</p>
+                    <h2 class="display-title">
+                        Short logs, reflections, <span class="accent">and build notes</span>
+                    </h2>
                 </div>
-                <div class="filter-tabs" id="pub-filters"></div>
-                <div class="pub-list" id="pub-list"></div>
             </div>
+            <div class="notes-grid" id="notes-grid"></div>
         </div>
     </section>
 
-    <section id="blog" class="page" data-page-title="Blog">
-        <div class="container page-grid">
-            <div class="page-kicker">
-                <span>06</span>
-                <p>Blog</p>
-            </div>
-            <div class="page-main">
-                <div class="section-heading">
-                    <p class="eyebrow">Notes</p>
-                    <h2>Short reflections, build logs, and learning notes.</h2>
-                </div>
-                <div class="blog-grid" id="blog-grid"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="page page-tinted contact-page" data-page-title="Contact">
-        <div class="container page-grid">
-            <div class="page-kicker">
-                <span>07</span>
-                <p>Contact</p>
-            </div>
-            <div class="page-main">
-                <div class="section-heading">
-                    <p class="eyebrow">Connect</p>
-                    <h2>Thanks for turning the pages. Let’s keep the conversation moving.</h2>
-                </div>
-                <div class="contact-grid" id="contact-grid"></div>
-                <footer class="footer">
-                    <p>&copy; 2026 Weijian Shi. All rights reserved.</p>
-                    <p>Built for <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>.</p>
-                </footer>
-            </div>
+    <section id="contact" class="section section-contact">
+        <div class="contact-backdrop" aria-hidden="true"></div>
+        <div class="container contact-inner">
+            <p class="section-kicker reveal">✦ 005 — Contact</p>
+            <h2 class="contact-title reveal">
+                Let's build
+                <br>
+                something <span class="accent">worth keeping</span>.
+            </h2>
+            <a id="contact-primary" class="contact-primary reveal" href="https://github.com/weijiansh1" target="_blank" rel="noreferrer">
+                github.com/weijiansh1 <span>→</span>
+            </a>
+            <div class="contact-grid" id="contact-grid"></div>
+            <footer class="footer reveal">
+                <p>© 2026 Weijian Shi</p>
+                <p class="footer-note" id="footer-note">Shanghai, crafted with care</p>
+            </footer>
         </div>
     </section>
 </main>
-
-<div class="page-turner" aria-label="Section navigation">
-    <button id="prev-page" class="page-turn-button" type="button" aria-label="Previous section">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-    <button id="next-page" class="page-turn-button" type="button" aria-label="Next section">
-        <i class="fas fa-arrow-down"></i>
-    </button>
-</div>
 
 <script src="script.js"></script>
 </body>

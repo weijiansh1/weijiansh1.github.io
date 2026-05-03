@@ -1,118 +1,348 @@
 const $ = (selector, scope = document) => scope.querySelector(selector);
 const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const fallbackData = {
     profile: {
-        name: 'Weijian Shi',
-        name_cn: '石伟建',
-        title: 'Fudan University · Aerospace Engineering + Computational Science',
-        subtitle: 'Exploring intelligent flight, robotics, and scientific computing.',
-        avatar: 'avatar.jpg',
+        name: "Weijian Shi",
+        name_cn: "石伟建",
+        title: "Fudan University · Undergraduate",
+        subtitle: "Aircraft Design and Engineering · Information and Computational Science",
         bio: [
-            'Hi! I am <strong>Weijian Shi</strong> (石伟建), an undergraduate student at <strong>Fudan University</strong>.',
-            'I am building a foundation across aircraft design, computational science, and intelligent systems.'
+            "Hi! I'm Weijian Shi, an undergraduate at Fudan University exploring aerospace systems, AI, and scientific computing."
         ],
         education: [],
-        skills: ['Python', 'C/C++', 'MATLAB', 'LaTeX', 'Git', 'Linux']
+        skills: ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux"],
+        focus: []
     },
     research: [],
     awards: [],
-    publications: [],
     blog: [],
     contact: {
-        github: 'https://github.com/weijiansh1',
-        location: 'Shanghai, China'
+        github: "https://github.com/weijiansh1",
+        location: "Shanghai, China"
     }
 };
 
-// ===== Theme Toggle =====
-const themeToggle = $('#theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', savedTheme);
-updateThemeIcon(savedTheme);
-
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        updateThemeIcon(next);
-    });
-}
-
-function updateThemeIcon(theme) {
-    const icon = themeToggle?.querySelector('i');
-    if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-}
-
-// ===== Mobile Menu =====
-const navToggle = $('.nav-toggle');
-const navLinks = $('.nav-links');
-
-if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('active');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            navToggle.setAttribute('aria-expanded', 'false');
-        });
-    });
-}
-
-// ===== Homepage Data =====
-const isHomepage = document.body.classList.contains('home-page');
-
-if (isHomepage) {
-    fetch('data.json')
+if (document.body.classList.contains("home-page")) {
+    fetch("data.json")
         .then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.json();
         })
-        .then(data => render(data))
+        .then(data => {
+            render(data);
+            initChrome(data);
+            initReveal();
+        })
         .catch(error => {
-            console.warn('Failed to load data.json; using fallback content.', error);
+            console.warn("Failed to load data.json; using fallback content.", error);
             render(fallbackData);
+            initChrome(fallbackData);
+            initReveal();
         });
-
-    initPageExperience();
 }
 
 function render(data) {
     const profile = data.profile || fallbackData.profile;
+    const contact = data.contact || fallbackData.contact;
 
-    setText('hero-name', profile.name);
-    setText('hero-title', profile.title);
-    setText('hero-subtitle', profile.subtitle);
+    renderHero(profile, contact, data.awards || []);
+    renderWork(data.awards || []);
+    renderPractice(data.research || [], profile);
+    renderAbout(profile, contact);
+    renderNotes(data.blog || []);
+    renderContact(contact, profile);
+}
 
-    const avatar = $('#hero-avatar-img');
-    if (avatar && profile.avatar) avatar.src = profile.avatar;
+function renderHero(profile, contact, awards) {
+    const school = profile.education?.[0]?.school || "Fudan University";
+    const summary = `I'm ${profile.name || "Weijian Shi"} — an undergraduate at ${school}, building a foundation across ${profile.subtitle || "aerospace, computation, and AI"}.`;
+    const place = (contact.location || "Shanghai, China").split("\n")[0];
 
-    renderHeroLinks(data.contact || {});
-    renderBio(profile.bio || []);
-    renderEducation(profile.education || []);
-    renderSkills(profile.skills || []);
-    renderHighlights(profile, data.contact || {});
-    renderResearch(data.research || []);
-    renderFocus(profile.focus || defaultFocus());
-    renderFilteredList(data.awards || [], 'awards-filters', 'awards-list', renderAward, {
-        icon: 'fa-award',
-        title: 'Awards section is ready.',
-        text: 'Add honors, competition results, or scholarships when you want to publish them.'
+    setText("hero-summary", summary);
+    setText("hero-status", `${place} · Available for research and collaboration`);
+
+    const firstAwardImage = awards.find(item => item.image)?.image;
+    const heroMedia = $("#hero-media");
+    if (heroMedia && firstAwardImage) {
+        heroMedia.style.backgroundImage = `
+            radial-gradient(circle at 20% 25%, rgba(232, 168, 124, 0.14), transparent 22rem),
+            linear-gradient(180deg, rgba(8, 8, 8, 0.18), rgba(8, 8, 8, 0.28)),
+            url('${safeUrl(firstAwardImage)}')
+        `;
+        heroMedia.style.backgroundPosition = `center, center, center 22%`;
+    }
+}
+
+function renderWork(awards) {
+    const workList = $("#work-list");
+    if (!workList) return;
+
+    if (!awards.length) {
+        workList.innerHTML = `<div class="empty-copy reveal">Selected milestones will appear here.</div>`;
+        return;
+    }
+
+    workList.innerHTML = awards.map((item, index) => {
+        const facts = Array.isArray(item.aside) ? item.aside : [];
+        const links = Array.isArray(item.links) ? item.links : [];
+        const image = item.image ? `
+            <div class="work-media" style="background-image:url('${safeUrl(item.image)}'); background-position:${html(item.imagePosition || "center")}"></div>
+        ` : `
+            <div class="work-media" style="background-image:linear-gradient(135deg, rgba(232,168,124,.24), rgba(255,255,255,.04))"></div>
+        `;
+
+        return `
+            <article class="work-item reveal ${index % 2 === 1 ? "is-offset" : ""}">
+                <div class="work-frame">
+                    ${image}
+                </div>
+                <div class="work-meta">
+                    <div>
+                        <p class="work-type">0${index + 1} · ${html(item.category || "Milestone")}</p>
+                        <h3 class="work-title">${html(item.title || "Selected work")}</h3>
+                    </div>
+                    <span class="work-year">${html(item.year || "Now")}</span>
+                </div>
+                ${item.detail ? `<p class="work-detail">${html(item.detail)}</p>` : ""}
+                ${facts.length ? `
+                    <div class="work-facts">
+                        ${facts.map(fact => `
+                            <div class="work-fact">
+                                <span>${html(fact.label || "")}</span>
+                                <strong>${html(fact.value || "")}</strong>
+                            </div>
+                        `).join("")}
+                    </div>
+                ` : ""}
+                ${links.length ? `
+                    <div class="work-links">
+                        ${links.map(link => `
+                            <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")} ↗</a>
+                        `).join("")}
+                    </div>
+                ` : ""}
+            </article>
+        `;
+    }).join("");
+}
+
+function renderPractice(research, profile) {
+    const intro = $("#practice-intro");
+    const focusElement = $("#practice-focus");
+    const researchGrid = $("#research-grid");
+    const skillsCloud = $("#skills-cloud");
+
+    if (intro) {
+        intro.textContent = "Three loose orbits — aerospace, artificial intelligence, and computation — that keep finding each other in the way I learn and build.";
+    }
+
+    if (focusElement) {
+        const focusItems = profile.focus || [];
+        focusElement.innerHTML = focusItems.map(item => `
+            <div class="focus-item">
+                <strong>${html(item.label || "")}</strong>
+                <span>${html(item.text || "")}</span>
+            </div>
+        `).join("");
+    }
+
+    if (researchGrid) {
+        const items = research.length ? research : fallbackData.research;
+        researchGrid.innerHTML = items.map((item, index) => `
+            <article class="research-card">
+                <div class="card-index">0${index + 1}</div>
+                <h3>${html(item.title || "Research")}</h3>
+                <p>${html(item.desc || "")}</p>
+            </article>
+        `).join("");
+    }
+
+    if (skillsCloud) {
+        const skills = profile.skills || [];
+        skillsCloud.innerHTML = skills.map(skill => `
+            <span class="skill-pill">${html(skill)}</span>
+        `).join("");
+    }
+}
+
+function renderAbout(profile, contact) {
+    const bio = profile.bio || [];
+    const lead = $("#about-lead");
+    const body = $("#about-body");
+    const education = $("#about-education");
+
+    setText("about-caption", `${profile.name || "Weijian Shi"} — ${(profile.education?.[0]?.school || "Fudan University")}`);
+    setText("about-place", (contact.location || "Shanghai, China").split("\n")[0]);
+
+    if (lead) {
+        const leadText = stripHtml(bio[1] || bio[0] || "");
+        lead.textContent = leadText || "I work at the seam between engineering, computation, and intelligent systems.";
+    }
+
+    if (body) {
+        const paragraphs = bio.length > 1 ? bio.filter((_, index) => index !== 1) : bio;
+        body.innerHTML = paragraphs.map(item => `<p>${item}</p>`).join("");
+    }
+
+    if (education) {
+        const items = profile.education || [];
+        education.innerHTML = items.length ? items.map(item => `
+            <div class="timeline-item">
+                <div class="timeline-date">${html(item.date || "Now")}</div>
+                <div class="timeline-main">
+                    <h4>${html(item.school || "")}</h4>
+                    ${item.degree ? `<p>${html(item.degree).replace(/\n/g, "<br>")}</p>` : ""}
+                </div>
+                <div class="timeline-side">${html(item.detail || "").replace(/\n/g, "<br>")}</div>
+            </div>
+        `).join("") : `<div class="empty-copy">Education details will appear here.</div>`;
+    }
+}
+
+function renderNotes(posts) {
+    const notesGrid = $("#notes-grid");
+    if (!notesGrid) return;
+
+    if (!posts.length) {
+        notesGrid.innerHTML = `<div class="empty-copy reveal">Short logs and study notes will appear here.</div>`;
+        return;
+    }
+
+    notesGrid.innerHTML = posts.map(post => `
+        <a class="note-card reveal" href="${safeUrl(post.url || "#")}">
+            <span class="note-date">${html(post.date || "Draft")}</span>
+            <h3>${html(post.title || "Untitled note")}</h3>
+            <p>${html(post.desc || "")}</p>
+            <div class="note-tags">
+                ${(post.tags || []).map(tag => `<span>${html(tag)}</span>`).join("")}
+            </div>
+        </a>
+    `).join("");
+}
+
+function renderContact(contact, profile) {
+    const primary = $("#contact-primary");
+    const grid = $("#contact-grid");
+
+    const primaryHref = contact.email ? `mailto:${contact.email}` : (contact.github || "https://github.com/weijiansh1");
+    const primaryText = contact.email || (contact.github ? contact.github.replace(/^https?:\/\//, "") : "github.com/weijiansh1");
+
+    if (primary) {
+        primary.href = safeUrl(primaryHref);
+        if (safeUrl(primaryHref).startsWith("http")) {
+            primary.target = "_blank";
+            primary.rel = "noreferrer";
+        }
+        primary.innerHTML = `${html(primaryText)} <span>→</span>`;
+    }
+
+    setText("footer-note", `${(contact.location || "Shanghai").split("\n")[0]}, crafted with care`);
+
+    if (!grid) return;
+
+    const items = [];
+    if (contact.github) items.push({ label: "GitHub", value: contact.github.replace(/^https?:\/\//, ""), href: contact.github });
+    if (contact.email) items.push({ label: "Email", value: contact.email, href: `mailto:${contact.email}` });
+    items.push({ label: "University", value: profile.education?.[0]?.school || "Fudan University" });
+    items.push({ label: "Base", value: (contact.location || "Shanghai, China").split("\n")[0] });
+
+    grid.innerHTML = items.map(item => `
+        <div class="contact-item reveal">
+            <div class="label">${html(item.label)}</div>
+            ${item.href
+                ? `<a class="value" href="${safeUrl(item.href)}" ${safeUrl(item.href).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>${html(item.value)}</a>`
+                : `<div class="value">${html(item.value)}</div>`
+            }
+        </div>
+    `).join("");
+}
+
+function initChrome(data) {
+    initNav();
+    initActiveLinks();
+    initHeroParallax();
+}
+
+function initNav() {
+    const navbar = $("#navbar");
+    const navToggle = $("#nav-toggle");
+    const navLinks = $("#nav-links");
+
+    const updateScrolled = () => {
+        navbar?.classList.toggle("is-scrolled", window.scrollY > 40);
+    };
+
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+
+    navToggle?.addEventListener("click", () => {
+        const isOpen = navLinks?.classList.toggle("is-open");
+        navToggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
     });
-    renderFilteredList(data.publications || [], 'pub-filters', 'pub-list', renderPublication, {
-        icon: 'fa-pen-nib',
-        title: 'Publications are in progress.',
-        text: 'This space is prepared for papers, preprints, reports, and technical notes.'
+
+    navLinks?.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("is-open");
+            navToggle?.setAttribute("aria-expanded", "false");
+        });
     });
-    renderBlog(data.blog || []);
-    renderContact(data.contact || {});
-    initAnimations();
+}
+
+function initActiveLinks() {
+    const sections = $$("main section[id]");
+    const links = $$(".nav-links a");
+    if (!sections.length || !links.length) return;
+
+    const observer = new IntersectionObserver(entries => {
+        const active = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!active) return;
+        const id = active.target.id;
+        links.forEach(link => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+        });
+    }, {
+        rootMargin: "-20% 0px -45% 0px",
+        threshold: [0.2, 0.45, 0.7]
+    });
+
+    sections.forEach(section => observer.observe(section));
+}
+
+function initHeroParallax() {
+    const hero = $("#hero-media");
+    if (!hero) return;
+
+    const onScroll = () => {
+        const offset = Math.min(window.scrollY, 800);
+        const translate = offset * 0.18;
+        const scale = 1.02 + offset * 0.00012;
+        hero.style.transform = `translateY(${translate}px) scale(${scale})`;
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+function initReveal() {
+    const revealNodes = $$(".reveal");
+    if (!revealNodes.length) return;
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+        });
+    }, {
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.08
+    });
+
+    revealNodes.forEach(node => observer.observe(node));
 }
 
 function setText(id, value) {
@@ -121,634 +351,29 @@ function setText(id, value) {
 }
 
 function html(value) {
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 function safeUrl(value) {
-    const url = String(value || '').trim();
-    if (!url) return '';
+    const url = String(value || "").trim();
+    if (!url) return "#";
     if (/^(https?:|mailto:|\/|\.\/|\.\.\/|#)/i.test(url)) return url;
-    if (!url.startsWith('//') && !/^[a-z][a-z0-9+.-]*:/i.test(url)) return url;
-    return '#';
+    if (!url.startsWith("//") && !/^[a-z][a-z0-9+.-]*:/i.test(url)) return url;
+    return "#";
 }
 
-function solidIcon(icon, fallback = 'fa-link') {
-    const value = String(icon || fallback).trim();
-    return value.startsWith('fa-') ? `fas ${value}` : `fas fa-${value}`;
+function stripHtml(value) {
+    return String(value || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
-function renderHeroLinks(contact) {
-    const heroLinks = $('#hero-links');
-    if (!heroLinks) return;
-
-    const links = contactLinks(contact);
-    heroLinks.innerHTML = links.map(link => `
-        <a href="${safeUrl(link.href)}" ${link.external ? 'target="_blank" rel="noreferrer"' : ''} aria-label="${html(link.label)}">
-            <i class="${html(link.icon)}"></i>
-        </a>
-    `).join('');
-}
-
-function contactLinks(contact) {
-    const links = [];
-    if (contact.github) links.push({ label: 'GitHub', href: contact.github, icon: 'fab fa-github', external: true });
-    if (contact.email) links.push({ label: 'Email', href: `mailto:${contact.email}`, icon: 'fas fa-envelope', external: false });
-    if (contact.scholar) links.push({ label: 'Google Scholar', href: contact.scholar, icon: 'fas fa-graduation-cap', external: true });
-    if (contact.linkedin) links.push({ label: 'LinkedIn', href: contact.linkedin, icon: 'fab fa-linkedin', external: true });
-    if (contact.website) links.push({ label: 'Website', href: contact.website, icon: 'fas fa-globe', external: true });
-    return links;
-}
-
-function renderBio(bio) {
-    const bioElement = $('#about-bio');
-    if (!bioElement) return;
-    bioElement.innerHTML = bio.length
-        ? bio.map(paragraph => `<p>${paragraph}</p>`).join('')
-        : '<p>Profile details will be added soon.</p>';
-}
-
-function renderEducation(education) {
-    const educationElement = $('#about-education');
-    if (!educationElement) return;
-
-    educationElement.innerHTML = education.length ? education.map(item => `
-        <div class="timeline-item">
-            ${item.date ? `<span class="timeline-date">${html(item.date)}</span>` : ''}
-            <h4>${html(item.school || 'Education')}</h4>
-            ${item.degree ? `<p>${html(item.degree).replace(/\n/g, '<br>')}</p>` : ''}
-            ${item.detail ? `<p>${html(item.detail).replace(/\n/g, '<br>')}</p>` : ''}
-        </div>
-    `).join('') : `
-        <div class="timeline-item">
-            <span class="timeline-date">Now</span>
-            <h4>Learning in progress</h4>
-            <p>Education details will be updated here.</p>
-        </div>
-    `;
-}
-
-function renderSkills(skills) {
-    const skillsElement = $('#about-skills');
-    if (!skillsElement) return;
-    skillsElement.innerHTML = skills.map(skill => `<span class="skill-tag">${html(skill)}</span>`).join('');
-}
-
-function renderHighlights(profile, contact) {
-    const highlightElement = $('#profile-highlights');
-    if (!highlightElement) return;
-
-    const highlights = profile.highlights || [
-        { label: 'University', value: 'Fudan University' },
-        { label: 'Track', value: 'Aerospace + Computing' },
-        { label: 'Base', value: contact.location ? contact.location.split('\n')[0] : 'Shanghai, China' },
-        { label: 'Mode', value: 'Curious builder' }
-    ];
-
-    highlightElement.innerHTML = highlights.map(item => `
-        <article class="highlight-card fade-in">
-            <span>${html(item.label)}</span>
-            <strong>${html(item.value)}</strong>
-        </article>
-    `).join('');
-}
-
-function renderResearch(researchItems) {
-    const researchElement = $('#research-grid');
-    if (!researchElement) return;
-
-    const items = researchItems.length ? researchItems : [
-        { icon: 'fa-plane', title: 'Aerospace Engineering', desc: 'Flight mechanics, aircraft design, and systems thinking.' },
-        { icon: 'fa-robot', title: 'Artificial Intelligence', desc: 'Learning models and methods for intelligent engineering systems.' },
-        { icon: 'fa-calculator', title: 'Computational Science', desc: 'Numerical methods, optimization, and scientific programming.' }
-    ];
-
-    researchElement.innerHTML = items.map(item => `
-        <article class="research-card">
-            <div class="research-icon"><i class="${html(solidIcon(item.icon, 'fa-flask'))}"></i></div>
-            <h3>${html(item.title)}</h3>
-            <p>${html(item.desc)}</p>
-        </article>
-    `).join('');
-}
-
-function defaultFocus() {
-    return [
-        { label: 'Near Term', text: 'Strengthen math, programming, and engineering fundamentals.' },
-        { label: 'Build Habit', text: 'Document experiments, notes, and project iterations publicly.' },
-        { label: 'Long View', text: 'Explore reliable intelligent systems for aerospace applications.' }
-    ];
-}
-
-function renderFocus(focusItems) {
-    const focusElement = $('#focus-list');
-    if (!focusElement) return;
-    focusElement.innerHTML = focusItems.map(item => `
-        <article class="focus-item fade-in">
-            <strong>${html(item.label)}</strong>
-            <span>${html(item.text)}</span>
-        </article>
-    `).join('');
-}
-
-function renderAward(item) {
-    const links = Array.isArray(item.links) ? item.links : [];
-    const asideItems = Array.isArray(item.aside) ? item.aside : [];
-    const linksHtml = links.length ? `
-        <div class="pub-links">
-            ${links.map(link => `
-                <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">
-                    <i class="${html(solidIcon(link.icon, 'fa-link'))}"></i> ${html(link.label || 'Link')}
-                </a>
-            `).join('')}
-        </div>
-    ` : '';
-    const asideHtml = asideItems.length ? `
-        <aside class="award-aside" aria-label="Award details">
-            ${asideItems.map(entry => `
-                <div class="award-fact">
-                    <span>${html(entry.label || '')}</span>
-                    <strong>${html(entry.value || '')}</strong>
-                </div>
-            `).join('')}
-        </aside>
-    ` : '';
-
-    if (item.image) {
-        const imageUrl = safeUrl(item.image);
-        const imagePosition = String(item.imagePosition || '50% 50%');
-        return `
-            <article
-                class="pub-item pub-item-award"
-                data-category="${html(item.category || 'Other')}"
-            >
-                <div class="pub-content award-content">
-                    <div class="award-visual" style="background-image: url('${html(imageUrl)}'); background-position: ${html(imagePosition)};"></div>
-                    <div class="award-copy">
-                        <div class="award-meta">
-                            <span class="award-year">${html(item.year || 'Now')}</span>
-                            ${item.category ? `<span class="category-badge">${html(item.category)}</span>` : ''}
-                        </div>
-                        <h3>${html(item.title)}</h3>
-                        ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
-                        ${asideHtml}
-                        ${linksHtml}
-                    </div>
-                </div>
-            </article>
-        `;
-    }
-
-    return `
-        <article class="pub-item" data-category="${html(item.category || 'Other')}">
-            <div class="pub-year">${html(item.year || 'Now')}</div>
-            <div class="pub-content">
-                <h3>${html(item.title)}</h3>
-                ${item.detail ? `<p class="pub-authors">${html(item.detail)}</p>` : ''}
-                ${item.category ? `<span class="category-badge">${html(item.category)}</span>` : ''}
-                ${linksHtml}
-            </div>
-        </article>
-    `;
-}
-
-function renderPublication(item) {
-    const links = Array.isArray(item.links) ? item.links : [];
-    const linksHtml = links.length ? `
-        <div class="pub-links">
-            ${links.map(link => `
-                <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">
-                    <i class="${html(solidIcon(link.icon, 'fa-link'))}"></i> ${html(link.label || 'Link')}
-                </a>
-            `).join('')}
-        </div>
-    ` : '';
-
-    return `
-        <article class="pub-item" data-category="${html(item.category || 'Other')}">
-            <div class="pub-year">${html(item.year || 'Draft')}</div>
-            <div class="pub-content">
-                <h3>${html(item.title)}</h3>
-                ${item.authors ? `<p class="pub-authors">${html(item.authors)}</p>` : ''}
-                ${item.venue ? `<p class="pub-venue">${html(item.venue)}</p>` : ''}
-                ${item.category ? `<span class="category-badge">${html(item.category)}</span>` : ''}
-                ${linksHtml}
-            </div>
-        </article>
-    `;
-}
-
-function renderFilteredList(items, filterId, listId, renderItem, emptyState) {
-    const filterElement = document.getElementById(filterId);
-    const listElement = document.getElementById(listId);
-    if (!filterElement || !listElement) return;
-
-    filterElement.innerHTML = '';
-
-    const syncSectionArtwork = () => {
-        const page = listElement.closest('.page');
-        if (!page) return;
-
-        const activeItem = [...listElement.querySelectorAll('.pub-item[data-image]')]
-            .find(item => !item.hidden && item.dataset.image);
-
-        if (!activeItem) {
-            page.classList.remove('page-has-artwork');
-            page.style.removeProperty('--page-artwork');
-            page.style.removeProperty('--page-artwork-position');
-            return;
-        }
-
-        const imageUrl = activeItem.dataset.image.replace(/"/g, '\\"');
-        page.classList.add('page-has-artwork');
-        page.style.setProperty('--page-artwork', `url("${imageUrl}")`);
-        page.style.setProperty('--page-artwork-position', activeItem.dataset.imagePosition || '78% 56%');
-    };
-
-    if (!items.length) {
-        listElement.innerHTML = `
-            <div class="empty-state fade-in">
-                <i class="fas ${html(emptyState.icon)}"></i>
-                <div>
-                    <strong>${html(emptyState.title)}</strong>
-                    <span>${html(emptyState.text)}</span>
-                </div>
-            </div>
-        `;
-        syncSectionArtwork();
-        return;
-    }
-
-    const categories = [...new Set(items.map(item => item.category || 'Other'))];
-    if (categories.length > 1) {
-        filterElement.innerHTML = `<button class="filter-btn active" data-filter="all">All</button>` +
-            categories.map(category => `<button class="filter-btn" data-filter="${html(category)}">${html(category)}</button>`).join('');
-
-        filterElement.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                filterElement.querySelectorAll('.filter-btn').forEach(item => item.classList.remove('active'));
-                button.classList.add('active');
-
-                const filter = button.dataset.filter;
-                listElement.querySelectorAll('.pub-item').forEach(item => {
-                    item.hidden = filter !== 'all' && item.dataset.category !== filter;
-                });
-
-                syncSectionArtwork();
-            });
-        });
-    }
-
-    listElement.innerHTML = items.map(renderItem).join('');
-    syncSectionArtwork();
-}
-
-function renderBlog(posts) {
-    const blogElement = $('#blog-grid');
-    if (!blogElement) return;
-
-    if (!posts.length) {
-        blogElement.innerHTML = `
-            <div class="empty-state fade-in">
-                <i class="fas fa-book-open"></i>
-                <div>
-                    <strong>Blog is ready.</strong>
-                    <span>Learning notes and project logs will appear here.</span>
-                </div>
-            </div>
-        `;
-        return;
-    }
-
-    blogElement.innerHTML = posts.map(post => `
-        <article class="blog-card">
-            <div class="blog-date">${html(post.date)}</div>
-            <h3><a href="${safeUrl(post.url)}">${html(post.title)}</a></h3>
-            <p>${html(post.desc)}</p>
-            <div class="blog-tags">
-                ${(post.tags || []).map(tag => `<span>${html(tag)}</span>`).join('')}
-            </div>
-        </article>
-    `).join('');
-}
-
-function renderContact(contact) {
-    const contactElement = $('#contact-grid');
-    if (!contactElement) return;
-
-    const cards = [];
-    if (contact.email) {
-        cards.push({
-            icon: 'fas fa-envelope',
-            label: 'Email',
-            body: `<a href="mailto:${html(contact.email)}">${html(contact.email)}</a>`
-        });
-    }
-    if (contact.github) {
-        cards.push({
-            icon: 'fab fa-github',
-            label: 'GitHub',
-            body: `<a href="${safeUrl(contact.github)}" target="_blank" rel="noreferrer">${html(contact.github.replace(/^https?:\/\//, ''))}</a>`
-        });
-    }
-    if (contact.scholar) {
-        cards.push({
-            icon: 'fas fa-graduation-cap',
-            label: 'Scholar',
-            body: `<a href="${safeUrl(contact.scholar)}" target="_blank" rel="noreferrer">Google Scholar</a>`
-        });
-    }
-    if (contact.location) {
-        cards.push({
-            icon: 'fas fa-location-dot',
-            label: 'Location',
-            body: `<p>${html(contact.location).replace(/\n/g, '<br>')}</p>`
-        });
-    }
-
-    contactElement.innerHTML = cards.length ? cards.map(card => `
-        <article class="contact-card">
-            <i class="${html(card.icon)}"></i>
-            <h3>${html(card.label)}</h3>
-            ${card.body}
-        </article>
-    `).join('') : `
-        <div class="empty-state fade-in">
-            <i class="fas fa-paper-plane"></i>
-            <div>
-                <strong>Contact details coming soon.</strong>
-                <span>Add email, GitHub, or location in data.json.</span>
-            </div>
-        </div>
-    `;
-}
-
-// ===== Page Turning =====
-function initPageExperience() {
-    const pages = $$('.home-page .page[id]');
-    if (!pages.length) return;
-
-    const prevButton = $('#prev-page');
-    const nextButton = $('#next-page');
-    const railButtons = $$('.rail-dot[data-target]');
-    const navAnchors = $$('.nav-links a[href^="#"], .page-link[href^="#"]');
-    let currentPage = 0;
-    let isPaging = false;
-    let wheelDelta = 0;
-    let wheelResetTimer = 0;
-    let touchStartY = 0;
-    let touchStartX = 0;
-
-    function pageScrollBounds(page) {
-        const navHeight = $('#navbar')?.offsetHeight || 0;
-        const start = Math.max(0, page.offsetTop - navHeight + 1);
-        const end = Math.max(start, page.offsetTop + page.offsetHeight - window.innerHeight);
-        return { start, end, navHeight };
-    }
-
-    function pageCanScrollInternally(page, direction) {
-        const { start, end } = pageScrollBounds(page);
-        if (end - start < 6) return false;
-        const current = window.scrollY;
-        return direction === 'next'
-            ? current < end - 2
-            : current > start + 2;
-    }
-
-    function scrollInsidePage(page, direction, amount, smooth = false) {
-        const { start, end } = pageScrollBounds(page);
-        const current = window.scrollY;
-        const next = Math.min(
-            end,
-            Math.max(start, current + (direction === 'next' ? amount : -amount))
-        );
-
-        if (Math.abs(next - current) < 2) return false;
-
-        if (smooth && !prefersReducedMotion.matches) {
-            window.scrollTo({ top: next, behavior: 'smooth' });
-        } else {
-            window.scrollTo(0, next);
-        }
-
-        return true;
-    }
-
-    function setActivePage(index) {
-        currentPage = Math.max(0, Math.min(index, pages.length - 1));
-        const activeId = pages[currentPage].id;
-        if (prevButton) prevButton.disabled = currentPage === 0;
-        if (nextButton) nextButton.disabled = currentPage === pages.length - 1;
-
-        $$('.nav-links a[href^="#"]').forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
-        });
-
-        railButtons.forEach(button => {
-            button.classList.toggle('active', button.dataset.target === activeId);
-        });
-    }
-
-    function playPageTurn(direction, targetPage) {
-        if (prefersReducedMotion.matches) return;
-        if (targetPage) {
-            targetPage.classList.remove('page-arrive-next', 'page-arrive-prev');
-            void targetPage.offsetWidth;
-            targetPage.classList.add(direction === 'prev' ? 'page-arrive-prev' : 'page-arrive-next');
-            window.setTimeout(() => targetPage.classList.remove('page-arrive-next', 'page-arrive-prev'), 760);
-        }
-    }
-
-    function easedProgress(progress) {
-        const clamped = Math.min(Math.max(progress, 0), 1);
-        return clamped < 0.5
-            ? 4 * clamped * clamped * clamped
-            : 1 - Math.pow(-2 * clamped + 2, 3) / 2;
-    }
-
-    function scrollToPage(page, done) {
-        const navHeight = $('#navbar')?.offsetHeight || 0;
-        const startY = window.scrollY;
-        const targetY = Math.max(0, page.offsetTop - navHeight + 1);
-        const distance = targetY - startY;
-        if (prefersReducedMotion.matches || Math.abs(distance) < 2) {
-            window.scrollTo(0, targetY);
-            done?.();
-            return;
-        }
-
-        const duration = Math.min(780, Math.max(540, Math.abs(distance) * 0.32));
-        const startTime = performance.now();
-
-        function step(now) {
-            const progress = (now - startTime) / duration;
-            const nextY = startY + distance * easedProgress(progress);
-            window.scrollTo(0, nextY);
-
-            if (progress < 1) {
-                requestAnimationFrame(step);
-                return;
-            }
-
-            window.scrollTo(0, targetY);
-            done?.();
-        }
-
-        requestAnimationFrame(step);
-    }
-
-    function goToPage(index, direction) {
-        const targetIndex = Math.max(0, Math.min(index, pages.length - 1));
-        if (targetIndex === currentPage || isPaging) return;
-
-        const resolvedDirection = direction || (targetIndex > currentPage ? 'next' : 'prev');
-        isPaging = true;
-        document.body.classList.add('is-section-turning');
-        playPageTurn(resolvedDirection, pages[targetIndex]);
-        setActivePage(targetIndex);
-        scrollToPage(pages[targetIndex], () => {
-            isPaging = false;
-            wheelDelta = 0;
-            document.body.classList.remove('is-section-turning');
-        });
-    }
-
-    const observer = new IntersectionObserver(entries => {
-        const visible = entries
-            .filter(entry => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible && !isPaging) setActivePage(pages.indexOf(visible.target));
-    }, {
-        threshold: [0.35, 0.55, 0.75]
-    });
-
-    pages.forEach(page => observer.observe(page));
-
-    navAnchors.forEach(anchor => {
-        anchor.addEventListener('click', event => {
-            const id = anchor.getAttribute('href')?.slice(1);
-            const index = pages.findIndex(page => page.id === id);
-            if (index === -1) return;
-            event.preventDefault();
-            goToPage(index);
-        });
-    });
-
-    railButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const index = pages.findIndex(page => page.id === button.dataset.target);
-            if (index !== -1) goToPage(index);
-        });
-    });
-
-    prevButton?.addEventListener('click', () => {
-        const page = pages[currentPage];
-        const step = Math.max(180, Math.round((window.innerHeight - (($('#navbar')?.offsetHeight || 0) + 24)) * 0.72));
-        if (page && pageCanScrollInternally(page, 'prev')) {
-            scrollInsidePage(page, 'prev', step, true);
-            return;
-        }
-
-        goToPage(currentPage - 1, 'prev');
-    });
-
-    nextButton?.addEventListener('click', () => {
-        const page = pages[currentPage];
-        const step = Math.max(180, Math.round((window.innerHeight - (($('#navbar')?.offsetHeight || 0) + 24)) * 0.72));
-        if (page && pageCanScrollInternally(page, 'next')) {
-            scrollInsidePage(page, 'next', step, true);
-            return;
-        }
-
-        goToPage(currentPage + 1, 'next');
-    });
-
-    window.addEventListener('wheel', event => {
-        if (window.innerWidth < 860 || prefersReducedMotion.matches) return;
-        event.preventDefault();
-        if (isPaging) return;
-
-        const activePage = pages[currentPage];
-        const direction = event.deltaY > 0 ? 'next' : 'prev';
-        if (activePage && pageCanScrollInternally(activePage, direction)) {
-            wheelDelta = 0;
-            scrollInsidePage(activePage, direction, Math.abs(event.deltaY), false);
-            return;
-        }
-
-        window.clearTimeout(wheelResetTimer);
-        wheelResetTimer = window.setTimeout(() => {
-            wheelDelta = 0;
-        }, 140);
-
-        const normalizedDelta = Math.max(-90, Math.min(90, event.deltaY));
-        wheelDelta += normalizedDelta;
-        if (Math.abs(wheelDelta) < 96) return;
-
-        const pageDirection = wheelDelta > 0 ? 'next' : 'prev';
-        const targetIndex = currentPage + (pageDirection === 'next' ? 1 : -1);
-        if (targetIndex < 0 || targetIndex >= pages.length) {
-            wheelDelta = 0;
-            return;
-        }
-
-        goToPage(targetIndex, pageDirection);
-    }, { passive: false });
-
-    window.addEventListener('touchstart', event => {
-        const touch = event.touches[0];
-        touchStartY = touch.clientY;
-        touchStartX = touch.clientX;
-    }, { passive: true });
-
-    window.addEventListener('touchend', event => {
-        if (isPaging || prefersReducedMotion.matches) return;
-        const touch = event.changedTouches[0];
-        const deltaY = touchStartY - touch.clientY;
-        const deltaX = touchStartX - touch.clientX;
-        if (Math.abs(deltaY) < 88 || Math.abs(deltaX) > 70) return;
-
-        const direction = deltaY > 0 ? 'next' : 'prev';
-        const activePage = pages[currentPage];
-        if (activePage && pageCanScrollInternally(activePage, direction)) {
-            const step = Math.max(180, Math.round((window.innerHeight - (($('#navbar')?.offsetHeight || 0) + 24)) * 0.72));
-            scrollInsidePage(activePage, direction, step, true);
-            return;
-        }
-
-        goToPage(currentPage + (direction === 'next' ? 1 : -1), direction);
-    }, { passive: true });
-
-    setActivePage(0);
-}
-
-function initAnimations() {
-    const fadeElements = $$(
-        '.section-heading, .story-card, .mini-card, .research-card, .pub-item, .blog-card, .contact-card, .highlight-card, .focus-item, .empty-state'
-    );
-
-    if (!fadeElements.length) return;
-
-    fadeElements.forEach(element => element.classList.add('fade-in'));
-
-    if (prefersReducedMotion.matches) {
-        fadeElements.forEach(element => element.classList.add('visible'));
-        return;
-    }
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.12 });
-
-    fadeElements.forEach(element => observer.observe(element));
+function firstSentence(value) {
+    const text = String(value || "").trim();
+    if (!text) return "";
+    const match = text.match(/.*?[.!?](?:\s|$)/);
+    return (match ? match[0] : text).trim();
 }
