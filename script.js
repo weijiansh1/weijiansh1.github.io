@@ -66,10 +66,9 @@ function renderHero(profile, contact) {
     const heroMedia = $("#hero-media");
     if (heroMedia) {
         heroMedia.style.backgroundImage = `
-            linear-gradient(90deg, rgba(14, 13, 10, 0.92) 0%, rgba(14, 13, 10, 0.74) 14%, rgba(14, 13, 10, 0.2) 34%, rgba(14, 13, 10, 0.08) 100%),
             url('${safeUrl(heroImage)}')
         `;
-        heroMedia.style.backgroundPosition = `center, 74% center`;
+        heroMedia.style.backgroundPosition = `76% center`;
     }
 }
 
