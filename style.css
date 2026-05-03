@@ -603,20 +603,40 @@ button {
 
 .practice-layout {
     display: grid;
-    gap: 44px;
-    grid-template-columns: minmax(260px, 0.36fr) minmax(0, 1fr);
+    gap: 48px;
+    grid-template-columns: 1fr;
+}
+
+.research-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+    gap: 18px 56px;
+    align-items: end;
+}
+
+.research-intro .section-label,
+.research-intro .section-title {
+    grid-column: 1;
 }
 
 .research-intro .section-copy,
 .practice-intro {
-    max-width: 420px;
-    margin-top: 18px;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: end;
+    justify-self: end;
+    width: 100%;
+    max-width: 42ch;
+    margin-top: 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
     color: var(--text-soft);
-    line-height: 1.8;
+    font-size: 1.04rem;
+    line-height: 1.86;
 }
 
 .focus-item {
-    padding: 14px 0 0;
+    padding: 16px 0 0;
     border-top: 1px solid var(--line);
 }
 
@@ -630,70 +650,102 @@ button {
 
 .focus-item span {
     color: var(--text-soft);
-    line-height: 1.72;
+    line-height: 1.78;
 }
 
 .research-panel {
     display: grid;
-    gap: 32px;
+    gap: 38px;
 }
 
 .research-grid {
     display: grid;
-    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 28px;
     border-top: 1px solid var(--line);
 }
 
 .research-entry {
     display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
-    gap: 20px;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--line);
-    border-left: 0;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    min-height: 248px;
+    padding: 30px 24px 26px 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
     background: none;
     box-shadow: none;
 }
 
+.research-entry:last-child {
+    border-right: 0;
+    padding-right: 0;
+}
+
 .research-entry-index {
-    padding-top: 4px;
+    padding-top: 0;
     color: var(--accent);
-    font-size: 0.74rem;
+    font-size: 0.76rem;
     font-weight: 600;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 
 .research-entry-main h3 {
-    margin: 0 0 10px;
-    font-size: 1.08rem;
-    font-weight: 600;
-    line-height: 1.4;
+    max-width: 11ch;
+    margin: 0 0 14px;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+.research-entry-main h3 .accent {
+    display: inline;
+}
+
+.research-entry-main::before {
+    content: "";
+    display: block;
+    width: 38px;
+    height: 1px;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0));
 }
 
 .research-entry-main p {
-    max-width: 62ch;
+    max-width: 30ch;
     margin: 0;
     color: var(--text-soft);
-    font-size: 1.02rem;
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.82;
 }
 
 .research-bottom {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 34px;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
+    gap: 40px 56px;
     align-items: start;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+}
+
+.practice-focus,
+.skills-cloud {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding-top: 0;
 }
 
 .practice-focus {
-    display: grid;
-    gap: 14px;
-    padding-top: 2px;
+    max-width: 34rem;
 }
 
 .subsection-label {
-    margin: 0 0 14px;
+    margin: 0 0 8px;
     color: var(--text-faint);
     font-size: 0.72rem;
     font-weight: 500;
@@ -704,11 +756,12 @@ button {
 .skills-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 14px;
+    gap: 12px 18px;
+    max-width: 34rem;
 }
 
 .skills-cloud {
-    padding-top: 2px;
+    justify-items: start;
 }
 
 .skill-pill {
@@ -721,8 +774,8 @@ button {
     border-radius: 0;
     color: var(--text-soft);
     background: none;
-    font-size: 0.92rem;
-    font-weight: 500;
+    font-size: 0.98rem;
+    font-weight: 600;
     letter-spacing: 0.01em;
     transition: color 220ms ease;
 }
@@ -1097,11 +1150,35 @@ button {
 }
 
 @media (max-width: 1080px) {
-    .practice-layout,
     .profile-shell,
     .research-bottom,
     .contact-shell {
         grid-template-columns: 1fr;
+    }
+
+    .research-intro,
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .research-intro .section-copy,
+    .practice-intro {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: start;
+        max-width: 48ch;
+        margin-top: 10px;
+    }
+
+    .research-entry {
+        min-height: 0;
+        padding-right: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .research-entry:last-child {
+        border-bottom: 0;
     }
 
     .experience-item {
