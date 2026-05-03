@@ -46,7 +46,7 @@ function render(data) {
     const profile = data.profile || fallbackData.profile;
     const contact = data.contact || fallbackData.contact;
 
-    renderHero(profile, contact, data.awards || []);
+    renderHero(profile, contact);
     renderWork(data.awards || []);
     renderPractice(data.research || [], profile);
     renderAbout(profile, contact);
@@ -54,23 +54,22 @@ function render(data) {
     renderContact(contact, profile);
 }
 
-function renderHero(profile, contact, awards) {
+function renderHero(profile, contact) {
     const school = profile.education?.[0]?.school || "Fudan University";
-    const summary = `I'm ${profile.name || "Weijian Shi"} — an undergraduate at ${school}, building a foundation across ${profile.subtitle || "aerospace, computation, and AI"}.`;
+    const summary = `I study at ${school}, focusing on ${profile.subtitle || "aerospace, computation, and AI"}. This site collects projects, competition work, and ongoing notes.`;
     const place = (contact.location || "Shanghai, China").split("\n")[0];
 
     setText("hero-summary", summary);
-    setText("hero-status", `${place} · Available for research and collaboration`);
+    setText("hero-status", `${place} · Fudan University`);
 
-    const firstAwardImage = awards.find(item => item.image)?.image;
+    const heroImage = "assets/hero-landscape.jpg";
     const heroMedia = $("#hero-media");
-    if (heroMedia && firstAwardImage) {
+    if (heroMedia) {
         heroMedia.style.backgroundImage = `
-            radial-gradient(circle at 20% 25%, rgba(232, 168, 124, 0.14), transparent 22rem),
-            linear-gradient(180deg, rgba(8, 8, 8, 0.18), rgba(8, 8, 8, 0.28)),
-            url('${safeUrl(firstAwardImage)}')
+            linear-gradient(90deg, rgba(14, 13, 10, 0.92) 0%, rgba(14, 13, 10, 0.74) 14%, rgba(14, 13, 10, 0.2) 34%, rgba(14, 13, 10, 0.08) 100%),
+            url('${safeUrl(heroImage)}')
         `;
-        heroMedia.style.backgroundPosition = `center, center, center 22%`;
+        heroMedia.style.backgroundPosition = `center, 74% center`;
     }
 }
 
@@ -134,7 +133,7 @@ function renderPractice(research, profile) {
     const skillsCloud = $("#skills-cloud");
 
     if (intro) {
-        intro.textContent = "Three loose orbits — aerospace, artificial intelligence, and computation — that keep finding each other in the way I learn and build.";
+        intro.textContent = "My current interests sit between aerospace systems, applied AI, and scientific computing — especially where rigorous engineering meets data-driven methods.";
     }
 
     if (focusElement) {
@@ -177,7 +176,7 @@ function renderAbout(profile, contact) {
 
     if (lead) {
         const leadText = stripHtml(bio[1] || bio[0] || "");
-        lead.textContent = leadText || "I work at the seam between engineering, computation, and intelligent systems.";
+        lead.textContent = leadText || "I am building a foundation across aerospace engineering, mathematics, and computation.";
     }
 
     if (body) {
@@ -237,7 +236,7 @@ function renderContact(contact, profile) {
         primary.innerHTML = `${html(primaryText)} <span>→</span>`;
     }
 
-    setText("footer-note", `${(contact.location || "Shanghai").split("\n")[0]}, crafted with care`);
+    setText("footer-note", `${(contact.location || "Shanghai").split("\n")[0]} · Fudan University`);
 
     if (!grid) return;
 
