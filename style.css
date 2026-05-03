@@ -791,25 +791,61 @@ button {
 
 .profile-shell {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.6fr);
-    gap: 42px;
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.56fr);
+    gap: 56px;
     align-items: start;
 }
 
-.profile-main {
+.section-about {
+    background:
+        radial-gradient(circle at 18% 24%, rgba(111, 128, 146, 0.08), transparent 20rem),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+}
+
+.profile-main,
+.profile-side {
     min-width: 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+}
+
+.profile-opening {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px 28px;
+    align-items: baseline;
+    margin: 30px 0 26px;
+}
+
+.profile-nameplate {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+    font-style: italic;
+    letter-spacing: -0.02em;
+}
+
+.profile-trackline {
+    margin: 0;
+    color: var(--text-faint);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
 }
 
 .profile-side {
     display: grid;
-    gap: 22px;
+    gap: 28px;
 }
 
 .profile-card {
     display: grid;
-    gap: 18px;
-    padding-left: 18px;
-    border-left: 1px solid rgba(255, 255, 255, 0.46);
+    gap: 8px;
+    padding-left: 0;
+    border-left: 0;
 }
 
 .about-caption {
@@ -823,56 +859,68 @@ button {
 
 .profile-facts {
     display: grid;
-    gap: 16px;
+    gap: 0;
 }
 
 .profile-fact {
-    padding-top: 14px;
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    padding: 16px 0;
     border-top: 1px solid var(--line);
 }
 
 .profile-fact span {
     display: block;
-    margin-bottom: 6px;
+    margin: 0;
     color: var(--text-faint);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
 }
 
 .profile-fact strong {
     color: var(--text);
-    font-size: 0.96rem;
-    line-height: 1.55;
+    font-size: 0.98rem;
+    line-height: 1.62;
     font-weight: 500;
 }
 
 .profile-meta {
-    padding-top: 2px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
 }
 
 .profile-place {
-    color: var(--text-faint);
-    font-size: 0.92rem;
+    color: var(--text-soft);
+    font-size: 1rem;
+    line-height: 1.7;
 }
 
 .about-lead {
-    max-width: 42ch;
+    max-width: 16ch;
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: clamp(1.34rem, 2.1vw, 1.74rem);
-    font-weight: 500;
-    line-height: 1.66;
-    letter-spacing: -0.015em;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
 }
 
 .about-body {
-    max-width: 64ch;
-    margin-top: 22px;
+    max-width: none;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    column-count: 2;
+    column-gap: 44px;
 }
 
 .about-body p {
+    break-inside: avoid;
     margin: 0 0 18px;
     color: var(--text-soft);
     font-size: 1.03rem;
@@ -889,7 +937,9 @@ button {
 }
 
 .timeline-wrap {
-    margin-top: 40px;
+    margin-top: 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
 }
 
 .timeline-label {
@@ -910,8 +960,8 @@ button {
 
 .timeline-item {
     display: grid;
-    grid-template-columns: minmax(96px, 0.18fr) minmax(0, 1fr) minmax(140px, 0.28fr);
-    gap: 18px;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 10px 18px;
     align-items: start;
     padding: 20px 0;
     border-top: 1px solid var(--line);
@@ -925,13 +975,16 @@ button {
 
 .timeline-date {
     color: var(--accent);
-    font-size: 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 .timeline-main h4 {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.02rem;
+    font-weight: 600;
 }
 
 .timeline-main p {
@@ -941,9 +994,11 @@ button {
 }
 
 .timeline-side {
+    grid-column: 2;
     color: var(--text-faint);
     font-size: 0.92rem;
-    text-align: right;
+    line-height: 1.72;
+    text-align: left;
 }
 
 .notes-grid {
@@ -1179,6 +1234,18 @@ button {
 
     .research-entry:last-child {
         border-bottom: 0;
+    }
+
+    .profile-opening {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-trackline {
+        text-align: left;
+    }
+
+    .about-body {
+        column-count: 1;
     }
 
     .experience-item {

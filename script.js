@@ -25,7 +25,7 @@ const fallbackData = {
 };
 
 if (document.body.classList.contains("home-page")) {
-    fetch("data.json?v=20260503d")
+    fetch("data.json?v=20260503f")
         .then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.json();
@@ -279,6 +279,8 @@ function renderAbout(profile, contact) {
 
     setText("about-caption", `${profile.name || "Weijian Shi"} — ${(profile.education?.[0]?.school || "Fudan University")}`);
     setText("about-place", (contact.location || "Shanghai, China").split("\n")[0]);
+    setText("profile-nameplate", `${profile.name_cn || "石伟建"} / ${profile.name || "Weijian Shi"}`);
+    setText("profile-trackline", stripHtml(profile.subtitle || profile.title || "Aerospace and Computation"));
 
     if (lead) {
         const leadText = firstSentence(stripHtml(bio[1] || bio[0] || ""));
