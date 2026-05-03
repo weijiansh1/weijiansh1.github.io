@@ -129,7 +129,7 @@ function renderHero(profile, contact) {
         heroMedia.style.backgroundImage = `
             url('${safeUrl(heroImage)}')
         `;
-        heroMedia.style.backgroundPosition = `70% 38%`;
+        heroMedia.style.backgroundPosition = `50% 50%`;
     }
 }
 
