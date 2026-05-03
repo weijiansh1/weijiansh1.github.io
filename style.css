@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap");
 
 :root {
     --bg: #eff1f3;
@@ -6,8 +6,8 @@
     --text: rgba(34, 40, 47, 0.96);
     --text-soft: rgba(63, 72, 82, 0.82);
     --text-faint: rgba(98, 108, 119, 0.68);
-    --line: rgba(82, 92, 104, 0.14);
-    --line-strong: rgba(82, 92, 104, 0.24);
+    --line: rgba(82, 92, 104, 0.11);
+    --line-strong: rgba(82, 92, 104, 0.18);
     --accent: #6f8092;
     --accent-soft: rgba(111, 128, 146, 0.14);
     --panel: rgba(255, 255, 255, 0.38);
@@ -18,7 +18,7 @@
     --glass-shadow: rgba(110, 122, 136, 0.06);
     --container: 1240px;
     --font-display: "Instrument Serif", "Times New Roman", serif;
-    --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-sans: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * {
@@ -41,6 +41,10 @@ body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    font-size: 17px;
+    line-height: 1.6;
+    font-feature-settings: "ss01", "cv11";
+    font-optical-sizing: auto;
 }
 
 ::selection {
@@ -78,9 +82,9 @@ button {
 }
 
 .site-nav.is-scrolled {
-    background: rgba(255, 255, 255, 0.14);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.48);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.36);
+    background: linear-gradient(180deg, rgba(239, 241, 243, 0.78), rgba(239, 241, 243, 0.48));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+    box-shadow: none;
     backdrop-filter: none;
 }
 
@@ -255,8 +259,8 @@ button {
     max-width: 600px;
     margin: 0;
     color: var(--text-soft);
-    font-size: 1rem;
-    line-height: 1.82;
+    font-size: 1.05rem;
+    line-height: 1.88;
 }
 
 .hero-status {
@@ -282,42 +286,37 @@ button {
 
 .hero-rail {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.44fr);
-    gap: 36px;
-    align-items: end;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.42fr);
+    gap: 30px;
+    align-items: start;
     max-width: 900px;
-    margin-top: 34px;
-    padding: 24px 26px;
+    margin-top: 38px;
+    padding: 18px 0 0;
     position: relative;
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    border-radius: 26px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
-    box-shadow: 0 18px 42px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.66), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    overflow: visible;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.56);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
     backdrop-filter: none;
 }
 
-.hero-rail::before,
-.experience-item::before,
-.research-entry::before,
-.profile-card::before,
-.timeline-item::before,
-.note-row::before,
-.contact-item::before,
-.empty-copy::before {
+.hero-rail::before {
     content: "";
     position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 46%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 72%);
+    top: -1px;
+    left: 0;
+    width: min(240px, 42%);
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0));
     pointer-events: none;
 }
 
 .hero-facts {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px 26px;
+    gap: 20px 30px;
 }
 
 .hero-fact span {
@@ -348,7 +347,7 @@ button {
     align-items: baseline;
     justify-content: space-between;
     gap: 18px;
-    padding-bottom: 12px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--line);
     color: var(--text-soft);
     transition: color 220ms ease, border-color 220ms ease;
@@ -411,7 +410,8 @@ button {
     max-width: 56ch;
     margin: 14px 0 0;
     color: var(--text-soft);
-    line-height: 1.76;
+    font-size: 1.07rem;
+    line-height: 1.84;
 }
 
 .section-awards {
@@ -422,22 +422,19 @@ button {
 
 .work-list {
     display: grid;
-    gap: 14px;
+    gap: 0;
+    border-top: 1px solid var(--line);
 }
 
 .experience-item {
     display: grid;
-    grid-template-columns: minmax(92px, 0.14fr) minmax(0, 1fr) minmax(260px, 0.34fr);
-    gap: 28px 34px;
+    grid-template-columns: minmax(96px, 0.14fr) minmax(0, 1fr) minmax(300px, 0.38fr);
+    gap: 32px 42px;
     align-items: start;
-    padding: 26px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
-    box-shadow: 0 16px 34px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.62), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-    backdrop-filter: none;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--line);
+    background: none;
+    box-shadow: none;
 }
 
 .experience-meta {
@@ -460,10 +457,11 @@ button {
 }
 
 .experience-main p {
-    max-width: 60ch;
+    max-width: 62ch;
     margin: 14px 0 0;
     color: var(--text-soft);
-    line-height: 1.76;
+    font-size: 1.03rem;
+    line-height: 1.84;
 }
 
 .experience-facts {
@@ -513,38 +511,46 @@ button {
 
 .experience-visual {
     min-width: 0;
+    display: grid;
+    align-self: stretch;
 }
 
 .experience-thumb {
     position: relative;
-    min-height: 190px;
+    min-height: 220px;
     overflow: hidden;
-    border-radius: 18px;
+    border-radius: 0;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    outline: 1px solid rgba(255, 255, 255, 0.44);
-    box-shadow: 0 10px 30px rgba(110, 122, 136, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.36);
+    outline: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.58);
+    border-bottom: 1px solid rgba(82, 92, 104, 0.14);
+    box-shadow: none;
 }
 
 .experience-thumb::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 56%, rgba(239, 241, 243, 0.08));
+    background:
+        linear-gradient(90deg, rgba(239, 241, 243, 0.94) 0%, rgba(239, 241, 243, 0.32) 24%, rgba(239, 241, 243, 0.08) 56%, rgba(239, 241, 243, 0.02) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
 }
 
 .experience-fallback {
     display: grid;
     align-content: end;
-    min-height: 190px;
-    padding: 22px;
-    border-radius: 18px;
+    min-height: 220px;
+    padding: 28px 18px 24px 0;
+    border-radius: 0;
     background:
-        radial-gradient(circle at top left, rgba(111, 128, 146, 0.12), transparent 13rem),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
-    outline: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 14px 30px rgba(110, 122, 136, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.58), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+        linear-gradient(90deg, rgba(239, 241, 243, 0.96) 0%, rgba(255, 255, 255, 0.36) 30%, rgba(255, 255, 255, 0.12) 66%, rgba(255, 255, 255, 0.02) 100%),
+        radial-gradient(circle at 88% 16%, rgba(111, 128, 146, 0.16), transparent 14rem);
+    outline: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.58);
+    border-bottom: 1px solid rgba(82, 92, 104, 0.14);
+    box-shadow: none;
     backdrop-filter: none;
 }
 
@@ -559,19 +565,19 @@ button {
 
 .experience-fallback strong {
     display: block;
-    max-width: 14ch;
+    max-width: 16ch;
     color: var(--text);
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     font-weight: 600;
-    line-height: 1.08;
+    line-height: 1.12;
     letter-spacing: -0.03em;
 }
 
 .experience-fallback p {
     margin: 10px 0 0;
     color: var(--text-soft);
-    font-size: 0.92rem;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    line-height: 1.72;
 }
 
 .experience-fallback-lines {
@@ -634,21 +640,19 @@ button {
 
 .research-grid {
     display: grid;
-    gap: 12px;
+    gap: 0;
+    border-top: 1px solid var(--line);
 }
 
 .research-entry {
     display: grid;
-    grid-template-columns: 68px minmax(0, 1fr);
-    gap: 24px;
-    padding: 20px 18px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.07));
-    box-shadow: 0 14px 28px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.58);
-    backdrop-filter: none;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    border-left: 0;
+    background: none;
+    box-shadow: none;
 }
 
 .research-entry-index {
@@ -671,7 +675,8 @@ button {
     max-width: 62ch;
     margin: 0;
     color: var(--text-soft);
-    line-height: 1.72;
+    font-size: 1.02rem;
+    line-height: 1.8;
 }
 
 .research-bottom {
@@ -684,24 +689,7 @@ button {
 .practice-focus {
     display: grid;
     gap: 14px;
-    position: relative;
-    overflow: hidden;
-    padding: 20px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-    box-shadow: 0 12px 26px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
-}
-
-.practice-focus::before,
-.skills-cloud::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 44%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 72%);
-    pointer-events: none;
+    padding-top: 2px;
 }
 
 .subsection-label {
@@ -720,13 +708,7 @@ button {
 }
 
 .skills-cloud {
-    position: relative;
-    overflow: hidden;
-    padding: 20px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-    box-shadow: 0 12px 26px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
+    padding-top: 2px;
 }
 
 .skill-pill {
@@ -773,14 +755,8 @@ button {
 .profile-card {
     display: grid;
     gap: 18px;
-    padding: 22px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    border-radius: 22px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
-    box-shadow: 0 16px 34px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.62), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-    backdrop-filter: none;
+    padding-left: 18px;
+    border-left: 1px solid rgba(255, 255, 255, 0.46);
 }
 
 .about-caption {
@@ -820,13 +796,7 @@ button {
 }
 
 .profile-meta {
-    position: relative;
-    overflow: hidden;
-    padding: 16px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.46);
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05));
-    box-shadow: 0 10px 22px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.54);
+    padding-top: 2px;
 }
 
 .profile-place {
@@ -838,9 +808,9 @@ button {
     max-width: 42ch;
     margin: 0;
     font-family: var(--font-sans);
-    font-size: clamp(1.28rem, 2vw, 1.65rem);
+    font-size: clamp(1.34rem, 2.1vw, 1.74rem);
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.66;
     letter-spacing: -0.015em;
 }
 
@@ -852,7 +822,8 @@ button {
 .about-body p {
     margin: 0 0 18px;
     color: var(--text-soft);
-    line-height: 1.8;
+    font-size: 1.03rem;
+    line-height: 1.84;
 }
 
 .about-body p:last-child {
@@ -879,7 +850,9 @@ button {
 
 .timeline-list {
     display: grid;
-    gap: 12px;
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
 }
 
 .timeline-item {
@@ -887,18 +860,14 @@ button {
     grid-template-columns: minmax(96px, 0.18fr) minmax(0, 1fr) minmax(140px, 0.28fr);
     gap: 18px;
     align-items: start;
-    padding: 18px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.48);
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-    box-shadow: 0 12px 24px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
-    backdrop-filter: none;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    background: none;
+    box-shadow: none;
 }
 
 .timeline-item:first-child {
-    border-top: 1px solid rgba(255, 255, 255, 0.28);
+    border-top: 0;
 }
 
 .timeline-date {
@@ -915,7 +884,7 @@ button {
 .timeline-main p {
     margin: 6px 0 0;
     color: var(--text-soft);
-    line-height: 1.7;
+    line-height: 1.78;
 }
 
 .timeline-side {
@@ -926,7 +895,8 @@ button {
 
 .notes-grid {
     display: grid;
-    gap: 12px;
+    gap: 0;
+    border-top: 1px solid var(--line);
 }
 
 .note-row {
@@ -934,19 +904,16 @@ button {
     grid-template-columns: minmax(120px, 0.16fr) minmax(0, 1fr) minmax(180px, 0.24fr);
     gap: 24px;
     align-items: start;
-    padding: 20px 18px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.48);
-    border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.06));
-    box-shadow: 0 12px 26px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.58);
-    backdrop-filter: none;
-    transition: border-color 220ms ease;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    background: none;
+    box-shadow: none;
+    transition: border-color 220ms ease, transform 220ms ease;
 }
 
 .note-row:hover {
     border-color: var(--line-strong);
+    transform: translateX(4px);
 }
 
 .note-row-date {
@@ -967,7 +934,8 @@ button {
     max-width: 56ch;
     margin: 0;
     color: var(--text-soft);
-    line-height: 1.72;
+    font-size: 1.02rem;
+    line-height: 1.8;
 }
 
 .note-row-tags {
@@ -1029,7 +997,8 @@ button {
     max-width: 38ch;
     margin: 16px 0 0;
     color: var(--text-soft);
-    line-height: 1.78;
+    font-size: 1.04rem;
+    line-height: 1.82;
 }
 
 .contact-primary {
@@ -1058,18 +1027,13 @@ button {
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 20px;
+    gap: 16px 28px;
 }
 
 .contact-item {
-    padding: 18px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.48);
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07));
-    box-shadow: 0 12px 24px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.58);
-    backdrop-filter: none;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--line);
+    background: none;
 }
 
 .contact-item .label {
@@ -1123,15 +1087,13 @@ button {
 }
 
 .empty-copy {
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 18px;
+    padding: 20px 0 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
     color: var(--text-soft);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-    box-shadow: 0 12px 24px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
-    backdrop-filter: none;
+    background: none;
+    box-shadow: none;
 }
 
 @media (max-width: 1080px) {
@@ -1176,10 +1138,11 @@ button {
         flex-direction: column;
         align-items: flex-start;
         gap: 18px;
-        padding: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.54);
-        background: rgba(255, 255, 255, 0.16);
-        box-shadow: 0 14px 28px var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.56);
+        padding: 18px 0 0;
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.58);
+        background: linear-gradient(180deg, rgba(239, 241, 243, 0.96), rgba(239, 241, 243, 0.9));
+        box-shadow: none;
         backdrop-filter: none;
     }
 
@@ -1258,7 +1221,7 @@ button {
 
     .experience-thumb {
         min-height: 156px;
-        border-radius: 16px;
+        border-radius: 0;
     }
 }
 
