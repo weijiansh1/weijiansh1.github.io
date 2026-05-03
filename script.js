@@ -142,6 +142,26 @@ function renderWork(awards) {
     workList.innerHTML = awards.map(item => {
         const facts = Array.isArray(item.aside) ? item.aside : [];
         const links = Array.isArray(item.links) ? item.links : [];
+        const visualLines = Array.isArray(item.visualLines) && item.visualLines.length
+            ? item.visualLines
+            : facts.slice(0, 3).map(fact => `${fact.label || ""} ${fact.value || ""}`.trim()).filter(Boolean);
+        const visualTitle = item.visualTitle || item.title || "Selected work";
+        const visualMeta = item.visualMeta || item.detail || item.category || "Project";
+        const visualKicker = item.visualKicker || item.category || "Project";
+        const visualMarkup = item.image
+            ? `<div class="experience-thumb" style="background-image:url('${safeUrl(item.image)}'); background-position:${html(item.imagePosition || "center")}"></div>`
+            : `
+                <div class="experience-fallback">
+                    <span class="experience-fallback-kicker">${html(visualKicker)}</span>
+                    <strong>${html(visualTitle)}</strong>
+                    <p>${html(visualMeta)}</p>
+                    ${visualLines.length ? `
+                        <div class="experience-fallback-lines">
+                            ${visualLines.map(line => `<span>${html(line)}</span>`).join("")}
+                        </div>
+                    ` : ""}
+                </div>
+            `;
 
         return `
             <article class="experience-item reveal">
@@ -171,7 +191,7 @@ function renderWork(awards) {
                     ` : ""}
                 </div>
                 <div class="experience-visual">
-                    ${item.image ? `<div class="experience-thumb" style="background-image:url('${safeUrl(item.image)}'); background-position:${html(item.imagePosition || "center")}"></div>` : ""}
+                    ${visualMarkup}
                 </div>
             </article>
         `;

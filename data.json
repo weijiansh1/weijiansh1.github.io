@@ -102,6 +102,48 @@
           "icon": "newspaper"
         }
       ]
+    },
+    {
+      "year": "2026",
+      "title": "meetingMAgent — Multi-Agent Activity Planning System",
+      "detail": "A course project for Introduction to Artificial Intelligence. I built a three-stage planning system that uses AutoGen agents, SelectorGroupChat, and a FastAPI dashboard to turn activity requirements into a structured planning workflow.",
+      "category": "Course Project",
+      "visualKicker": "Introduction to AI",
+      "visualTitle": "meetingMAgent",
+      "visualMeta": "AutoGen · DeepSeek · FastAPI",
+      "visualLines": [
+        "Three-stage planning pipeline",
+        "Dynamic multi-agent discussion",
+        "Streaming dashboard and export"
+      ],
+      "aside": [
+        {
+          "label": "Course",
+          "value": "Introduction to Artificial Intelligence"
+        },
+        {
+          "label": "Stack",
+          "value": "AutoGen · FastAPI · JavaScript"
+        },
+        {
+          "label": "Model",
+          "value": "DeepSeek"
+        },
+        {
+          "label": "Focus",
+          "value": "Multi-agent planning"
+        }
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/weijiansh1/meetingMAgent"
+        },
+        {
+          "label": "Overview",
+          "url": "https://github.com/weijiansh1/meetingMAgent/blob/main/PROJECT_OVERVIEW.md"
+        }
+      ]
     }
   ],
   "publications": [],
