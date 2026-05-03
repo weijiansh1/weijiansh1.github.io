@@ -123,13 +123,13 @@ function renderHero(profile, contact) {
         `).join("");
     }
 
-    const heroImage = "assets/hero-landscape.jpg";
+    const heroImage = "assets/hero-aerospace.jpg";
     const heroMedia = $("#hero-media");
     if (heroMedia) {
         heroMedia.style.backgroundImage = `
             url('${safeUrl(heroImage)}')
         `;
-        heroMedia.style.backgroundPosition = `76% center`;
+        heroMedia.style.backgroundPosition = `70% 38%`;
     }
 }
 
