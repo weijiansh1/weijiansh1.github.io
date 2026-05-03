@@ -7,30 +7,61 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        body {
+            min-height: 100vh;
+        }
         .post {
-            max-width: 720px;
-            margin: 100px auto 60px;
+            max-width: 840px;
+            margin: 120px auto 72px;
             padding: 0 24px;
         }
         .post-header {
-            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 18px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07));
+            box-shadow: 0 18px 40px rgba(110, 122, 136, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.58);
         }
         .post-header h1 {
-            font-size: 2rem;
-            line-height: 1.4;
-            margin-bottom: 12px;
+            margin: 0 0 12px;
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.08;
         }
         .post-meta {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: var(--text-faint);
+            font-size: 0.88rem;
             display: flex;
+            flex-wrap: wrap;
             gap: 16px;
             align-items: center;
+        }
+        .post-card {
+            position: relative;
+            overflow: hidden;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+            box-shadow: 0 18px 40px rgba(110, 122, 136, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+        }
+        .post-header::before,
+        .post-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto auto 0;
+            width: 100%;
+            height: 44%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 72%);
+            pointer-events: none;
         }
         .post-content {
             font-size: 1rem;
             line-height: 1.9;
-            color: var(--text-secondary);
+            color: var(--text-soft);
         }
         .post-content h2 {
             color: var(--text);
@@ -46,16 +77,16 @@
             margin-bottom: 16px;
         }
         .post-content code {
-            background: var(--tag-bg);
-            color: var(--tag-text);
+            background: rgba(255, 255, 255, 0.34);
+            color: var(--text);
             padding: 2px 6px;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 0.9em;
         }
         .post-content pre {
-            background: var(--bg-alt);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.46);
+            border-radius: 14px;
             padding: 16px 20px;
             overflow-x: auto;
             margin-bottom: 16px;
@@ -78,27 +109,46 @@
             gap: 6px;
             margin-bottom: 24px;
             font-size: 0.9rem;
+            color: var(--text-soft);
+        }
+        .blog-footer {
+            margin-top: 18px;
+            padding: 22px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.46);
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            color: var(--text-faint);
+        }
+        @media (max-width: 640px) {
+            .post {
+                margin-top: 104px;
+                padding: 0 14px;
+            }
+            .post-header,
+            .post-card,
+            .blog-footer {
+                padding: 20px;
+                border-radius: 22px;
+            }
         }
     </style>
 </head>
 <body>
 
-<nav id="navbar">
+<nav id="navbar" class="site-nav">
     <div class="nav-container">
-        <a href="../index.html" class="nav-logo">Weijian Shi</a>
-        <ul class="nav-links">
-            <li><a href="../index.html#home">首页</a></li>
-            <li><a href="../index.html#about">关于</a></li>
-            <li><a href="../index.html#research">研究</a></li>
-            <li><a href="../index.html#publications">论文</a></li>
-            <li><a href="../index.html#blog">博客</a></li>
-            <li><a href="../index.html#contact">联系</a></li>
-        </ul>
-        <button id="theme-toggle" aria-label="切换主题">
-            <i class="fas fa-moon"></i>
-        </button>
-        <button class="nav-toggle" aria-label="菜单">
-            <i class="fas fa-bars"></i>
+        <a href="../index.html" class="nav-logo">Weijian<span>.</span></a>
+        <div class="nav-links" id="nav-links">
+            <a href="../index.html#work">Work</a>
+            <a href="../index.html#practice">Research</a>
+            <a href="../index.html#about">Profile</a>
+            <a href="../index.html#notes">Notes</a>
+            <a href="../index.html#contact">Contact</a>
+        </div>
+        <a href="../index.html#contact" class="nav-cta">Contact →</a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
         </button>
     </div>
 </nav>
@@ -114,6 +164,7 @@
         </div>
     </header>
 
+    <div class="post-card">
     <div class="post-content">
         <p>本文将介绍如何从零开始搭建一个基于 GitHub Pages 的个人学术主页。</p>
 
@@ -143,10 +194,11 @@ git push -u origin main</code></pre>
         <h2>总结</h2>
         <p>GitHub Pages 提供了一个免费、简单的方式来托管个人网站。配合纯 HTML/CSS/JS，你可以完全控制网站的每一个细节。</p>
     </div>
+    </div>
 </article>
 
-<footer>
-    <div class="container">
+<footer class="post" style="margin-top:0">
+    <div class="blog-footer">
         <p>&copy; 2026 Weijian Shi. All rights reserved.</p>
     </div>
 </footer>
