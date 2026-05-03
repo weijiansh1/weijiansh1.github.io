@@ -234,9 +234,9 @@ function renderPractice(research, profile) {
     if (focusElement) {
         const focusItems = profile.focus || [];
         focusElement.innerHTML = `
-            <p class="subsection-label">Direction</p>
+            <p class="subsection-label reveal">Direction</p>
             ${focusItems.map(item => `
-                <div class="focus-item">
+                <div class="focus-item reveal">
                     <strong>${html(item.label || "")}</strong>
                     <span>${html(item.text || "")}</span>
                 </div>
@@ -247,7 +247,7 @@ function renderPractice(research, profile) {
     if (researchGrid) {
         const items = research.length ? research : fallbackData.research;
         researchGrid.innerHTML = items.map((item, index) => `
-            <article class="research-entry">
+            <article class="research-entry reveal">
                 <div class="research-entry-index">${String(index + 1).padStart(2, "0")}</div>
                 <div class="research-entry-main">
                     <h3>${html(item.title || "Research")}</h3>
@@ -260,10 +260,10 @@ function renderPractice(research, profile) {
     if (skillsCloud) {
         const skills = profile.skills || [];
         skillsCloud.innerHTML = `
-            <p class="subsection-label">Tools</p>
+            <p class="subsection-label reveal">Tools</p>
             <div class="skills-list">
                 ${skills.map(skill => `
-                    <span class="skill-pill">${html(skill)}</span>
+                    <span class="skill-pill reveal">${html(skill)}</span>
                 `).join("")}
             </div>
         `;
@@ -454,21 +454,28 @@ function initHeroParallax() {
 }
 
 function initReveal() {
-    const revealNodes = $$(".reveal");
-    if (!revealNodes.length) return;
+    const sections = $$("main section");
+    if (!sections.length) return;
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
+            const revealNodes = $$(".reveal", entry.target);
+            revealNodes.forEach(node => node.classList.add("is-visible"));
             observer.unobserve(entry.target);
         });
     }, {
-        rootMargin: "0px 0px -10% 0px",
-        threshold: 0.08
+        rootMargin: "0px 0px -14% 0px",
+        threshold: 0.16
     });
 
-    revealNodes.forEach(node => observer.observe(node));
+    sections.forEach(section => {
+        const revealNodes = $$(".reveal", section);
+        revealNodes.forEach((node, index) => {
+            node.style.setProperty("--reveal-delay", `${Math.min(index * 56, 420)}ms`);
+        });
+        observer.observe(section);
+    });
 }
 
 function setText(id, value) {

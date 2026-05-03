@@ -431,9 +431,7 @@ button {
 }
 
 .section-awards {
-    background:
-        radial-gradient(circle at 14% 30%, rgba(111, 128, 146, 0.06), transparent 18rem),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+    background: none;
 }
 
 .work-list {
@@ -612,9 +610,7 @@ button {
 }
 
 .section-practice {
-    background:
-        radial-gradient(circle at 80% 20%, rgba(111, 128, 146, 0.08), transparent 22rem),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+    background: none;
 }
 
 .practice-layout {
@@ -813,9 +809,7 @@ button {
 }
 
 .section-about {
-    background:
-        radial-gradient(circle at 18% 24%, rgba(111, 128, 146, 0.08), transparent 20rem),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+    background: none;
 }
 
 .profile-main,
@@ -1090,10 +1084,8 @@ button {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 18% 20%, rgba(111, 128, 146, 0.12), transparent 24rem),
-        radial-gradient(circle at 72% 54%, rgba(255, 255, 255, 0.4), transparent 28rem),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-    opacity: 1;
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02) 42%, rgba(255, 255, 255, 0.08) 100%);
+    opacity: 0.72;
 }
 
 .contact-inner {
@@ -1204,8 +1196,12 @@ button {
 
 .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 700ms cubic-bezier(.2, .8, .2, 1), transform 700ms cubic-bezier(.2, .8, .2, 1);
+    transform: translate3d(0, 22px, 0);
+    transition:
+        opacity 760ms cubic-bezier(.2, .8, .2, 1),
+        transform 760ms cubic-bezier(.2, .8, .2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
 }
 
 .reveal.is-visible {
