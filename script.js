@@ -81,48 +81,67 @@ function renderWork(awards) {
         return;
     }
 
-    workList.innerHTML = awards.map((item, index) => {
-        const facts = Array.isArray(item.aside) ? item.aside : [];
-        const links = Array.isArray(item.links) ? item.links : [];
-        const image = item.image ? `
-            <div class="work-media" style="background-image:url('${safeUrl(item.image)}'); background-position:${html(item.imagePosition || "center")}"></div>
-        ` : `
-            <div class="work-media" style="background-image:linear-gradient(135deg, rgba(232,168,124,.24), rgba(255,255,255,.04))"></div>
-        `;
+    const [featured, ...rest] = awards;
+    const featuredFacts = Array.isArray(featured.aside) ? featured.aside : [];
+    const featuredLinks = Array.isArray(featured.links) ? featured.links : [];
 
-        return `
-            <article class="work-item reveal ${index % 2 === 1 ? "is-offset" : ""}">
-                <div class="work-frame">
-                    ${image}
+    const featuredHtml = `
+        <article class="highlight-feature reveal">
+            <div class="highlight-media">
+                <div class="highlight-image" style="background-image:url('${safeUrl(featured.image || "")}'); background-position:${html(featured.imagePosition || "center")}"></div>
+            </div>
+            <div class="highlight-copy">
+                <div class="highlight-topline">
+                    <span>${html(featured.category || "Highlight")}</span>
+                    <span>${html(featured.year || "Now")}</span>
                 </div>
-                <div class="work-meta">
-                    <div>
-                        <p class="work-type">0${index + 1} · ${html(item.category || "Milestone")}</p>
-                        <h3 class="work-title">${html(item.title || "Selected work")}</h3>
-                    </div>
-                    <span class="work-year">${html(item.year || "Now")}</span>
-                </div>
-                ${item.detail ? `<p class="work-detail">${html(item.detail)}</p>` : ""}
-                ${facts.length ? `
-                    <div class="work-facts">
-                        ${facts.map(fact => `
-                            <div class="work-fact">
+                <h3>${html(featured.title || "Selected highlight")}</h3>
+                ${featured.detail ? `<p>${html(featured.detail)}</p>` : ""}
+                ${featuredFacts.length ? `
+                    <div class="highlight-facts">
+                        ${featuredFacts.map(fact => `
+                            <div class="highlight-fact">
                                 <span>${html(fact.label || "")}</span>
                                 <strong>${html(fact.value || "")}</strong>
                             </div>
                         `).join("")}
                     </div>
                 ` : ""}
-                ${links.length ? `
-                    <div class="work-links">
-                        ${links.map(link => `
+                ${featuredLinks.length ? `
+                    <div class="highlight-links">
+                        ${featuredLinks.map(link => `
                             <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")} ↗</a>
                         `).join("")}
                     </div>
                 ` : ""}
-            </article>
-        `;
-    }).join("");
+            </div>
+        </article>
+    `;
+
+    const restHtml = rest.length ? `
+        <div class="highlight-list">
+            ${rest.map(item => {
+                const links = Array.isArray(item.links) ? item.links : [];
+                return `
+                    <article class="highlight-row reveal">
+                        <div class="highlight-row-meta">
+                            <span>${html(item.year || "Now")}</span>
+                            <span>${html(item.category || "Highlight")}</span>
+                        </div>
+                        <div class="highlight-row-main">
+                            <h4>${html(item.title || "Selected highlight")}</h4>
+                            ${item.detail ? `<p>${html(item.detail)}</p>` : ""}
+                        </div>
+                        <div class="highlight-row-links">
+                            ${links.map(link => `<a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")}</a>`).join("")}
+                        </div>
+                    </article>
+                `;
+            }).join("")}
+        </div>
+    ` : "";
+
+    workList.innerHTML = featuredHtml + restHtml;
 }
 
 function renderPractice(research, profile) {
@@ -149,7 +168,7 @@ function renderPractice(research, profile) {
         const items = research.length ? research : fallbackData.research;
         researchGrid.innerHTML = items.map((item, index) => `
             <article class="research-card">
-                <div class="card-index">0${index + 1}</div>
+                <div class="card-index">${html(item.title || `Area ${index + 1}`)}</div>
                 <h3>${html(item.title || "Research")}</h3>
                 <p>${html(item.desc || "")}</p>
             </article>
@@ -208,11 +227,13 @@ function renderNotes(posts) {
     }
 
     notesGrid.innerHTML = posts.map(post => `
-        <a class="note-card reveal" href="${safeUrl(post.url || "#")}">
-            <span class="note-date">${html(post.date || "Draft")}</span>
-            <h3>${html(post.title || "Untitled note")}</h3>
-            <p>${html(post.desc || "")}</p>
-            <div class="note-tags">
+        <a class="note-row reveal" href="${safeUrl(post.url || "#")}">
+            <div class="note-row-date">${html(post.date || "Draft")}</div>
+            <div class="note-row-main">
+                <h3>${html(post.title || "Untitled note")}</h3>
+                <p>${html(post.desc || "")}</p>
+            </div>
+            <div class="note-row-tags">
                 ${(post.tags || []).map(tag => `<span>${html(tag)}</span>`).join("")}
             </div>
         </a>
