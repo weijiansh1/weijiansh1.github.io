@@ -49,23 +49,30 @@ body::before,
 body::after {
     content: "";
     position: fixed;
-    inset: 0;
     pointer-events: none;
 }
 
 body::before {
     z-index: -2;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: clamp(360px, 58vh, 760px);
     background:
-        url("assets/hero-aerospace.jpg") center center / cover no-repeat;
+        url("assets/hero-aerospace.jpg") center 58% / cover no-repeat;
+    opacity: 0.92;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.94) 56%, rgba(0, 0, 0, 0.42) 82%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.94) 56%, rgba(0, 0, 0, 0.42) 82%, rgba(0, 0, 0, 0) 100%);
 }
 
 body::after {
     z-index: -1;
+    inset: 0;
     background:
-        linear-gradient(180deg, rgba(239, 241, 243, 0.74) 0%, rgba(239, 241, 243, 0.84) 30%, rgba(236, 239, 242, 0.9) 56%, rgba(232, 236, 240, 0.95) 100%),
-        radial-gradient(circle at top left, rgba(111, 128, 146, 0.12), transparent 28rem),
-        radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.42), transparent 26rem),
-        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.18), transparent 30rem);
+        linear-gradient(180deg, rgba(239, 241, 243, 0.42) 0%, rgba(239, 241, 243, 0.68) 18%, rgba(236, 239, 242, 0.88) 36%, rgba(232, 236, 240, 0.96) 62%, rgba(228, 232, 236, 0.98) 100%),
+        radial-gradient(circle at 18% 12%, rgba(143, 176, 205, 0.12), transparent 24rem),
+        radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.22), transparent 22rem),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.14), transparent 30rem);
 }
 
 ::selection {
@@ -231,8 +238,8 @@ button {
 
 .hero-overlay {
     background:
-        linear-gradient(90deg, rgba(239, 241, 243, 0.4) 0%, rgba(239, 241, 243, 0.24) 18%, rgba(239, 241, 243, 0.08) 40%, rgba(239, 241, 243, 0.02) 70%, rgba(239, 241, 243, 0) 100%),
-        linear-gradient(180deg, rgba(228, 232, 236, 0.08) 0%, rgba(228, 232, 236, 0.02) 42%, rgba(228, 232, 236, 0.28) 100%);
+        linear-gradient(90deg, rgba(239, 241, 243, 0.56) 0%, rgba(239, 241, 243, 0.34) 18%, rgba(239, 241, 243, 0.12) 40%, rgba(239, 241, 243, 0.03) 70%, rgba(239, 241, 243, 0) 100%),
+        linear-gradient(180deg, rgba(228, 232, 236, 0.04) 0%, rgba(228, 232, 236, 0.01) 42%, rgba(228, 232, 236, 0.18) 100%);
 }
 
 .hero-inner {
