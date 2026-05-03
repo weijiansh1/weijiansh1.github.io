@@ -14,6 +14,7 @@ const fallbackData = {
         skills: ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux"],
         focus: []
     },
+    projects: [],
     research: [],
     awards: [],
     blog: [],
@@ -45,9 +46,11 @@ if (document.body.classList.contains("home-page")) {
 function render(data) {
     const profile = data.profile || fallbackData.profile;
     const contact = data.contact || fallbackData.contact;
+    const { projects, awards } = normalizeCollections(data);
 
     renderHero(profile, contact);
-    renderWork(data.awards || []);
+    renderWorkList("work-list", projects, "Selected projects will appear here.");
+    renderWorkList("awards-list", awards, "Honors and recognitions will appear here.");
     renderPractice(data.research || [], profile);
     renderAbout(profile, contact);
     renderNotes(data.blog || []);
@@ -58,7 +61,7 @@ function renderHero(profile, contact) {
     const school = profile.education?.[0]?.school || "Fudan University";
     const subtitle = stripHtml(profile.subtitle || "aerospace, computation, and AI");
     const title = stripHtml(profile.title || "Undergraduate");
-    const summary = `${title} at ${school}, working across ${subtitle}. This site collects selected projects, competition work, and ongoing notes.`;
+    const summary = `${title} at ${school}, working across ${subtitle}. This site collects selected projects, honors, and ongoing notes.`;
     const place = (contact.location || "Shanghai, China").split("\n")[0];
 
     setText("hero-summary", summary);
@@ -102,7 +105,7 @@ function renderHero(profile, contact) {
         } else {
             linkItems.push({
                 label: "Selected Work",
-                value: "See highlights",
+                value: "See projects",
                 url: "#work"
             });
         }
@@ -130,16 +133,16 @@ function renderHero(profile, contact) {
     }
 }
 
-function renderWork(awards) {
-    const workList = $("#work-list");
+function renderWorkList(targetId, items, emptyText) {
+    const workList = document.getElementById(targetId);
     if (!workList) return;
 
-    if (!awards.length) {
-        workList.innerHTML = `<div class="empty-copy reveal">Selected milestones will appear here.</div>`;
+    if (!items.length) {
+        workList.innerHTML = `<div class="empty-copy reveal">${html(emptyText || "Selected entries will appear here.")}</div>`;
         return;
     }
 
-    workList.innerHTML = awards.map(item => {
+    workList.innerHTML = items.map(item => {
         const facts = Array.isArray(item.aside) ? item.aside : [];
         const links = Array.isArray(item.links) ? item.links : [];
         const visualLines = Array.isArray(item.visualLines) && item.visualLines.length
@@ -196,6 +199,26 @@ function renderWork(awards) {
             </article>
         `;
     }).join("");
+}
+
+function normalizeCollections(data) {
+    const rawProjects = Array.isArray(data.projects) ? data.projects : [];
+    const rawAwards = Array.isArray(data.awards) ? data.awards : [];
+
+    if (rawProjects.length) {
+        return {
+            projects: rawProjects,
+            awards: rawAwards
+        };
+    }
+
+    const inferredProjects = rawAwards.filter(item => /project/i.test(String(item.category || "")));
+    const inferredAwards = rawAwards.filter(item => !/project/i.test(String(item.category || "")));
+
+    return {
+        projects: inferredProjects,
+        awards: inferredAwards
+    };
 }
 
 function renderPractice(research, profile) {

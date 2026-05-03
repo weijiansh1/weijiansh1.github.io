@@ -69,40 +69,7 @@
       "desc": "Practicing numerical methods, optimization, modeling, and scientific programming as tools for rigorous problem solving."
     }
   ],
-  "awards": [
-    {
-      "year": "2026",
-      "title": "AI Hackathon Tour 2026 · Fudan University Station — 6th Place & Finalist",
-      "detail": "A student AI hackathon co-organized by ModelScope and Datawhale. Our team, Yuanlü, advanced from the Fudan University station to the final in Nanjing with the project Wanderlace.",
-      "category": "AI",
-      "image": "assets/hackathon-wanderlace.jpg",
-      "imagePosition": "56% 42%",
-      "aside": [
-        {
-          "label": "Date",
-          "value": "April 2026"
-        },
-        {
-          "label": "Result",
-          "value": "6th Place · Finalist"
-        },
-        {
-          "label": "Project",
-          "value": "Wanderlace"
-        },
-        {
-          "label": "Route",
-          "value": "Fudan → Nanjing Final"
-        }
-      ],
-      "links": [
-        {
-          "label": "Fudan News",
-          "url": "https://news.fudan.edu.cn/2026/0413/c239a148675/page.htm",
-          "icon": "newspaper"
-        }
-      ]
-    },
+  "projects": [
     {
       "year": "2026",
       "title": "meetingMAgent — Multi-Agent Activity Planning System",
@@ -142,6 +109,41 @@
         {
           "label": "Overview",
           "url": "https://github.com/weijiansh1/meetingMAgent/blob/main/PROJECT_OVERVIEW.md"
+        }
+      ]
+    }
+  ],
+  "awards": [
+    {
+      "year": "2026",
+      "title": "AI Hackathon Tour 2026 · Fudan University Station — 6th Place & Finalist",
+      "detail": "A student AI hackathon co-organized by ModelScope and Datawhale. Our team, Yuanlü, advanced from the Fudan University station to the final in Nanjing with the project Wanderlace.",
+      "category": "AI",
+      "image": "assets/hackathon-wanderlace.jpg",
+      "imagePosition": "56% 42%",
+      "aside": [
+        {
+          "label": "Date",
+          "value": "April 2026"
+        },
+        {
+          "label": "Result",
+          "value": "6th Place · Finalist"
+        },
+        {
+          "label": "Project",
+          "value": "Wanderlace"
+        },
+        {
+          "label": "Route",
+          "value": "Fudan → Nanjing Final"
+        }
+      ],
+      "links": [
+        {
+          "label": "Fudan News",
+          "url": "https://news.fudan.edu.cn/2026/0413/c239a148675/page.htm",
+          "icon": "newspaper"
         }
       ]
     }

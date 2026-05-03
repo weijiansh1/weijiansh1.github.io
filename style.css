@@ -398,12 +398,13 @@ button {
 }
 
 .section-title {
-    max-width: 700px;
+    max-width: 680px;
     margin: 14px 0 0;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    line-height: 1.08;
+    font-size: clamp(2.3rem, 4.8vw, 3.9rem);
+    line-height: 1.02;
     letter-spacing: -0.03em;
+    text-wrap: balance;
 }
 
 .section-copy {
@@ -411,6 +412,12 @@ button {
     margin: 14px 0 0;
     color: var(--text-soft);
     line-height: 1.76;
+}
+
+.section-awards {
+    background:
+        radial-gradient(circle at 14% 30%, rgba(111, 128, 146, 0.06), transparent 18rem),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
 }
 
 .work-list {
@@ -1013,8 +1020,9 @@ button {
 
 .contact-title {
     margin: 14px 0 0;
-    font-size: clamp(2rem, 4.8vw, 3.4rem);
-    line-height: 1.06;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.02;
+    text-wrap: balance;
 }
 
 .contact-copy {
