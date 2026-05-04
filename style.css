@@ -406,7 +406,29 @@ button {
 
 .section {
     position: relative;
-    padding: 112px 0;
+    padding: 80px 0;
+}
+
+.section > .container {
+    position: relative;
+    isolation: isolate;
+    padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+    box-shadow: 0 14px 36px rgba(110, 122, 136, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.section > .container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
 }
 
 .section-lead {
@@ -1109,8 +1131,8 @@ button {
 
 .section-contact {
     overflow: hidden;
-    padding-top: 104px;
-    padding-bottom: 64px;
+    padding-top: 72px;
+    padding-bottom: 48px;
 }
 
 .contact-backdrop {
@@ -1368,7 +1390,17 @@ button {
     }
 
     .section {
-        padding: 88px 0;
+        padding: 60px 0;
+    }
+
+    .section > .container {
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .section > .container::before {
+        height: 80px;
+        border-radius: 20px 20px 0 0;
     }
 
     .hero-rail,
@@ -1429,6 +1461,16 @@ button {
     .experience-thumb {
         min-height: 156px;
         border-radius: 0;
+    }
+
+    .section > .container {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .section > .container::before {
+        height: 60px;
+        border-radius: 16px 16px 0 0;
     }
 }
 
