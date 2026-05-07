@@ -72,6 +72,39 @@
   "projects": [
     {
       "year": "2026",
+      "title": "ALEX Lab — Undergraduate Research Training",
+      "detail": "Participated in a month-long undergraduate research training program at Fudan University's ALEX research team. Worked on AI safety alignment methods including NAD (Noise-Augmented Decoding), Best-of-N sampling, and Early Stop strategies. Ranked 1st on the program leaderboard.",
+      "category": "Research",
+      "visualKicker": "ALEX Research Team · Fudan",
+      "visualTitle": "AI Safety Alignment",
+      "visualMeta": "NAD · Best-of-N · Early Stop",
+      "visualLines": [
+        "Noise-Augmented Decoding",
+        "Best-of-N sampling strategy",
+        "Leaderboard Rank #1"
+      ],
+      "aside": [
+        {
+          "label": "Lab",
+          "value": "ALEX Research Team"
+        },
+        {
+          "label": "Period",
+          "value": "Mar – Apr 2026"
+        },
+        {
+          "label": "Methods",
+          "value": "NAD · Best-of-N · Early Stop"
+        },
+        {
+          "label": "Result",
+          "value": "Leaderboard Rank #1"
+        }
+      ],
+      "links": []
+    },
+    {
+      "year": "2026",
       "title": "meetingMAgent — Multi-Agent Activity Planning System",
       "detail": "A course project for Introduction to Artificial Intelligence. I built a three-stage planning system that uses AutoGen agents, SelectorGroupChat, and a FastAPI dashboard to turn activity requirements into a structured planning workflow.",
       "category": "Course Project",
@@ -185,6 +218,31 @@
     }
   ],
   "awards": [
+    {
+      "year": "2026",
+      "title": "ALEX Lab Research Training — Leaderboard Rank #1",
+      "detail": "Achieved the top position on the leaderboard in Fudan University ALEX research team's undergraduate research training program, working on AI safety alignment with NAD, Best-of-N, and Early Stop methods.",
+      "category": "Research",
+      "aside": [
+        {
+          "label": "Lab",
+          "value": "ALEX Research Team"
+        },
+        {
+          "label": "Period",
+          "value": "Mar – Apr 2026"
+        },
+        {
+          "label": "Result",
+          "value": "Rank #1"
+        },
+        {
+          "label": "Topic",
+          "value": "AI Safety Alignment"
+        }
+      ],
+      "links": []
+    },
     {
       "year": "2026",
       "title": "AI Hackathon Tour 2026 · Fudan University Station — 6th Place & Finalist",
