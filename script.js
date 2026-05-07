@@ -60,76 +60,18 @@ function render(data) {
 }
 
 function renderHero(profile, contact) {
+    const subtitle = stripHtml(profile.subtitle || "Aerospace & Computation");
     const school = profile.education?.[0]?.school || "Fudan University";
-    const subtitle = stripHtml(profile.subtitle || "aerospace, computation, and AI");
-    const title = stripHtml(profile.title || "Undergraduate");
-    const summary = `${title} at ${school}, working across ${subtitle}. This site collects selected projects, honors, and ongoing notes.`;
-    const place = (contact.location || "Shanghai, China").split("\n")[0];
 
-    setText("hero-summary", summary);
-    setText("hero-status", `${place} · ${title}`);
+    setText("hero-summary", `${subtitle} · ${school}`);
 
-    const heroFacts = $("#hero-facts");
     const heroLinks = $("#hero-links");
-    const factItems = Array.isArray(profile.highlights) && profile.highlights.length
-        ? profile.highlights
-        : [
-            { label: "University", value: school },
-            { label: "Track", value: subtitle },
-            { label: "Base", value: place },
-            { label: "Status", value: title }
-        ];
-
-    if (heroFacts) {
-        heroFacts.innerHTML = factItems.map(item => `
-            <div class="hero-fact">
-                <span>${esc(item.label || "")}</span>
-                <strong>${esc(item.value || "")}</strong>
-            </div>
-        `).join("");
-    }
-
     if (heroLinks) {
-        const linkItems = [];
-        if (contact.github) {
-            linkItems.push({
-                label: "GitHub",
-                value: contact.github.replace(/^https?:\/\//, ""),
-                url: contact.github
-            });
-        }
-        if (contact.email) {
-            linkItems.push({
-                label: "Email",
-                value: contact.email,
-                url: `mailto:${contact.email}`
-            });
-        } else {
-            linkItems.push({
-                label: "Selected Work",
-                value: "See projects",
-                url: "#work"
-            });
-        }
-        linkItems.push({
-            label: "Contact",
-            value: "Reach out",
-            url: "#contact"
-        });
-
-        heroLinks.innerHTML = linkItems.map(item => `
-            <a class="hero-link" href="${safeUrl(item.url)}" ${safeUrl(item.url).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>
-                <span>${esc(item.label)}</span>
-                <strong>${esc(item.value)}</strong>
-            </a>
-        `).join("");
-    }
-
-    const heroImage = "assets/hero-aerospace.jpg";
-    const heroMedia = $("#hero-media");
-    if (heroMedia) {
-        heroMedia.style.backgroundImage = `url('${safeUrl(heroImage)}')`;
-        heroMedia.style.backgroundPosition = "50% 50%";
+        heroLinks.innerHTML = `
+            <a class="hero-action hero-action-primary" href="#work">Projects</a>
+            <a class="hero-action" href="#about">About Me</a>
+            ${contact.github ? `<a class="hero-action" href="${safeUrl(contact.github)}" target="_blank" rel="noreferrer">GitHub</a>` : ""}
+        `;
     }
 }
 
@@ -411,11 +353,9 @@ function renderContact(contact, profile) {
 function initChrome(data) {
     initNav();
     initActiveLinks();
-    initHeroParallax();
     initThemeToggle();
     initBackToTop();
     initReadingProgress();
-    initTypingEffect();
 }
 
 function initNav() {
@@ -466,21 +406,6 @@ function initActiveLinks() {
     sections.forEach(section => observer.observe(section));
 }
 
-function initHeroParallax() {
-    const hero = $("#hero-media");
-    if (!hero) return;
-
-    const onScroll = () => {
-        const offset = Math.min(window.scrollY, 800);
-        const translate = offset * 0.18;
-        const scale = 1.02 + offset * 0.00012;
-        hero.style.transform = `translateY(${translate}px) scale(${scale})`;
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-}
-
 function initThemeToggle() {
     const toggle = $("#theme-toggle");
     if (!toggle) return;
@@ -529,48 +454,6 @@ function initReadingProgress() {
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-}
-
-function initTypingEffect() {
-    const el = $("#hero-typed");
-    if (!el) return;
-
-    const phrases = [
-        "Exploring aerospace systems and intelligent engineering.",
-        "Building with Python, MATLAB, and scientific computing.",
-        "Dual-degree: Aircraft Design + Computational Science.",
-        "Turning ideas into reproducible projects and clear notes."
-    ];
-
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-    let timeout;
-
-    function tick() {
-        const current = phrases[phraseIndex];
-        if (!deleting) {
-            charIndex++;
-            el.textContent = current.slice(0, charIndex);
-            if (charIndex >= current.length) {
-                timeout = setTimeout(() => { deleting = true; tick(); }, 2400);
-                return;
-            }
-            timeout = setTimeout(tick, 42 + Math.random() * 30);
-        } else {
-            charIndex--;
-            el.textContent = current.slice(0, charIndex);
-            if (charIndex <= 0) {
-                deleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                timeout = setTimeout(tick, 400);
-                return;
-            }
-            timeout = setTimeout(tick, 22);
-        }
-    }
-
-    setTimeout(tick, 1200);
 }
 
 /* ===== Lightbox ===== */
