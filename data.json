@@ -8,7 +8,7 @@
     "bio": [
       "I am <strong>Weijian Shi</strong> (石伟建), an undergraduate at <strong>Fudan University</strong>, studying in the Academy of Intelligent Robotics and Advanced Manufacturing Innovation, Department of Aerospace Engineering.",
       "I am pursuing a dual-degree path across <strong>Aircraft Design and Engineering</strong> and <strong>Information and Computational Science</strong>. My current interests sit at the intersection of aerospace systems, artificial intelligence, and scientific computing.",
-      "I treat this homepage as a living notebook: a place to collect projects, research notes, milestones, and the questions I am learning to frame more clearly."
+      "Beyond coursework, I enjoy participating in hackathons, building side projects, and writing technical notes. I treat this homepage as a living notebook: a place to collect projects, research notes, milestones, and the questions I am learning to frame more clearly."
     ],
     "education": [
       {
@@ -18,7 +18,7 @@
         "detail": "Academy of Intelligent Robotics and Advanced Manufacturing Innovation\nDepartment of Aerospace Engineering"
       }
     ],
-    "skills": ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux", "Numerical Methods", "Scientific Computing"],
+    "skills": ["Python", "C/C++", "MATLAB", "LaTeX", "Git", "Linux", "Numerical Methods", "Scientific Computing", "PyTorch", "FastAPI"],
     "highlights": [
       {
         "label": "University",
@@ -111,6 +111,77 @@
           "url": "https://github.com/weijiansh1/meetingMAgent/blob/main/PROJECT_OVERVIEW.md"
         }
       ]
+    },
+    {
+      "year": "2026",
+      "title": "Personal Homepage — Design & Development",
+      "detail": "Built this personal website from scratch using vanilla HTML, CSS, and JavaScript. Features include dark mode, scroll-reveal animations, a glassmorphism design system, and a GitHub-backed admin panel for content management.",
+      "category": "Side Project",
+      "visualKicker": "Web Development",
+      "visualTitle": "Homepage",
+      "visualMeta": "HTML · CSS · JavaScript",
+      "visualLines": [
+        "Dark mode & responsive design",
+        "GitHub API admin panel",
+        "Scroll-reveal animations"
+      ],
+      "aside": [
+        {
+          "label": "Stack",
+          "value": "HTML · CSS · JavaScript"
+        },
+        {
+          "label": "Hosting",
+          "value": "GitHub Pages"
+        },
+        {
+          "label": "Features",
+          "value": "Dark mode · Admin panel"
+        },
+        {
+          "label": "Design",
+          "value": "Glassmorphism"
+        }
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/weijiansh1/weijiansh1.github.io"
+        }
+      ]
+    },
+    {
+      "year": "2026",
+      "title": "Wanderlace — AI Travel Companion",
+      "detail": "An AI-powered travel planning application built during the AI Hackathon Tour 2026. Wanderlace uses multi-agent collaboration to generate personalized travel itineraries, combining user preferences with real-time data.",
+      "category": "Hackathon",
+      "visualKicker": "AI Hackathon 2026",
+      "visualTitle": "Wanderlace",
+      "visualMeta": "Multi-Agent · LLM · Travel AI",
+      "visualLines": [
+        "Personalized itinerary generation",
+        "Multi-agent collaboration",
+        "Real-time data integration"
+      ],
+      "aside": [
+        {
+          "label": "Event",
+          "value": "AI Hackathon Tour 2026"
+        },
+        {
+          "label": "Team",
+          "value": "Yuanlü (元旅)"
+        },
+        {
+          "label": "Result",
+          "value": "6th Place · Finalist"
+        },
+        {
+          "label": "Focus",
+          "value": "LLM-based planning"
+        }
+      ],
+      "links": []
     }
   ],
   "awards": [
@@ -148,6 +219,18 @@
       ]
     }
   ],
+  "gallery": [
+    {
+      "image": "assets/hackathon-wanderlace.jpg",
+      "caption": "AI Hackathon Tour 2026 — Team Yuanlü at Fudan Station",
+      "date": "April 2026"
+    },
+    {
+      "image": "assets/hero-aerospace.jpg",
+      "caption": "Aerospace inspiration — where engineering meets the sky",
+      "date": "2025"
+    }
+  ],
   "publications": [],
   "blog": [
     {
@@ -156,6 +239,20 @@
       "desc": "A concise build log for creating a personal homepage with HTML, CSS, JavaScript, and GitHub Pages.",
       "url": "blog/post1.html",
       "tags": ["Tutorial", "GitHub", "Web"]
+    },
+    {
+      "date": "2026-04-20",
+      "title": "Reflections on AI Hackathon Tour 2026",
+      "desc": "Lessons learned from building Wanderlace with a team of four in 48 hours — multi-agent systems, rapid prototyping, and teamwork under pressure.",
+      "url": "#",
+      "tags": ["Hackathon", "AI", "Teamwork"]
+    },
+    {
+      "date": "2026-03-15",
+      "title": "Getting Started with Scientific Computing in Python",
+      "desc": "Notes on NumPy, SciPy, and Matplotlib — the essential toolkit for turning math into code.",
+      "url": "#",
+      "tags": ["Python", "SciComp", "Notes"]
     }
   ],
   "contact": {

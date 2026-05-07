@@ -18,6 +18,7 @@ const fallbackData = {
     research: [],
     awards: [],
     blog: [],
+    gallery: [],
     contact: {
         github: "https://github.com/weijiansh1",
         location: "Shanghai, China"
@@ -25,7 +26,7 @@ const fallbackData = {
 };
 
 if (document.body.classList.contains("home-page")) {
-    fetch("data.json?v=20260503f")
+    fetch("data.json?v=20260507a")
         .then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.json();
@@ -53,6 +54,7 @@ function render(data) {
     renderWorkList("awards-list", awards, "Honors and recognitions will appear here.");
     renderPractice(data.research || [], profile);
     renderAbout(profile, contact);
+    renderGallery(data.gallery || []);
     renderNotes(data.blog || []);
     renderContact(contact, profile);
 }
@@ -81,8 +83,8 @@ function renderHero(profile, contact) {
     if (heroFacts) {
         heroFacts.innerHTML = factItems.map(item => `
             <div class="hero-fact">
-                <span>${html(item.label || "")}</span>
-                <strong>${html(item.value || "")}</strong>
+                <span>${esc(item.label || "")}</span>
+                <strong>${esc(item.value || "")}</strong>
             </div>
         `).join("");
     }
@@ -117,8 +119,8 @@ function renderHero(profile, contact) {
 
         heroLinks.innerHTML = linkItems.map(item => `
             <a class="hero-link" href="${safeUrl(item.url)}" ${safeUrl(item.url).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>
-                <span>${html(item.label)}</span>
-                <strong>${html(item.value)}</strong>
+                <span>${esc(item.label)}</span>
+                <strong>${esc(item.value)}</strong>
             </a>
         `).join("");
     }
@@ -126,10 +128,8 @@ function renderHero(profile, contact) {
     const heroImage = "assets/hero-aerospace.jpg";
     const heroMedia = $("#hero-media");
     if (heroMedia) {
-        heroMedia.style.backgroundImage = `
-            url('${safeUrl(heroImage)}')
-        `;
-        heroMedia.style.backgroundPosition = `50% 50%`;
+        heroMedia.style.backgroundImage = `url('${safeUrl(heroImage)}')`;
+        heroMedia.style.backgroundPosition = "50% 50%";
     }
 }
 
@@ -138,7 +138,7 @@ function renderWorkList(targetId, items, emptyText) {
     if (!workList) return;
 
     if (!items.length) {
-        workList.innerHTML = `<div class="empty-copy reveal">${html(emptyText || "Selected entries will appear here.")}</div>`;
+        workList.innerHTML = `<div class="empty-copy reveal">${esc(emptyText || "Selected entries will appear here.")}</div>`;
         return;
     }
 
@@ -152,15 +152,15 @@ function renderWorkList(targetId, items, emptyText) {
         const visualMeta = item.visualMeta || item.detail || item.category || "Project";
         const visualKicker = item.visualKicker || item.category || "Project";
         const visualMarkup = item.image
-            ? `<div class="experience-thumb" style="background-image:url('${safeUrl(item.image)}'); background-position:${html(item.imagePosition || "center")}"></div>`
+            ? `<div class="experience-thumb" style="background-image:url('${safeUrl(item.image)}'); background-position:${esc(item.imagePosition || "center")}"></div>`
             : `
                 <div class="experience-fallback">
-                    <span class="experience-fallback-kicker">${html(visualKicker)}</span>
-                    <strong>${html(visualTitle)}</strong>
-                    <p>${html(visualMeta)}</p>
+                    <span class="experience-fallback-kicker">${esc(visualKicker)}</span>
+                    <strong>${esc(visualTitle)}</strong>
+                    <p>${esc(visualMeta)}</p>
                     ${visualLines.length ? `
                         <div class="experience-fallback-lines">
-                            ${visualLines.map(line => `<span>${html(line)}</span>`).join("")}
+                            ${visualLines.map(line => `<span>${esc(line)}</span>`).join("")}
                         </div>
                     ` : ""}
                 </div>
@@ -169,18 +169,18 @@ function renderWorkList(targetId, items, emptyText) {
         return `
             <article class="experience-item reveal">
                 <div class="experience-meta">
-                    <span>${html(item.year || "Now")}</span>
-                    <span>${html(item.category || "Highlight")}</span>
+                    <span>${esc(item.year || "Now")}</span>
+                    <span>${esc(item.category || "Highlight")}</span>
                 </div>
                 <div class="experience-main">
-                    <h3>${html(item.title || "Selected highlight")}</h3>
-                    ${item.detail ? `<p>${html(item.detail)}</p>` : ""}
+                    <h3>${esc(item.title || "Selected highlight")}</h3>
+                    ${item.detail ? `<p>${esc(item.detail)}</p>` : ""}
                     ${facts.length ? `
                         <div class="experience-facts">
                             ${facts.map(fact => `
                                 <div class="experience-fact">
-                                    <span>${html(fact.label || "")}</span>
-                                    <strong>${html(fact.value || "")}</strong>
+                                    <span>${esc(fact.label || "")}</span>
+                                    <strong>${esc(fact.value || "")}</strong>
                                 </div>
                             `).join("")}
                         </div>
@@ -188,7 +188,7 @@ function renderWorkList(targetId, items, emptyText) {
                     ${links.length ? `
                         <div class="experience-links">
                             ${links.map(link => `
-                                <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${html(link.label || "Link")} ↗</a>
+                                <a href="${safeUrl(link.url)}" target="_blank" rel="noreferrer">${esc(link.label || "Link")} ↗</a>
                             `).join("")}
                         </div>
                     ` : ""}
@@ -237,8 +237,8 @@ function renderPractice(research, profile) {
             <p class="subsection-label reveal">Direction</p>
             ${focusItems.map(item => `
                 <div class="focus-item reveal">
-                    <strong>${html(item.label || "")}</strong>
-                    <span>${html(item.text || "")}</span>
+                    <strong>${esc(item.label || "")}</strong>
+                    <span>${esc(item.text || "")}</span>
                 </div>
             `).join("")}
         `;
@@ -250,8 +250,8 @@ function renderPractice(research, profile) {
             <article class="research-entry reveal">
                 <div class="research-entry-index">${String(index + 1).padStart(2, "0")}</div>
                 <div class="research-entry-main">
-                    <h3>${html(item.title || "Research")}</h3>
-                    <p>${html(item.desc || "")}</p>
+                    <h3>${esc(item.title || "Research")}</h3>
+                    <p>${esc(item.desc || "")}</p>
                 </div>
             </article>
         `).join("");
@@ -263,7 +263,7 @@ function renderPractice(research, profile) {
             <p class="subsection-label reveal">Tools</p>
             <div class="skills-list">
                 ${skills.map(skill => `
-                    <span class="skill-pill reveal">${html(skill)}</span>
+                    <span class="skill-pill reveal">${esc(skill)}</span>
                 `).join("")}
             </div>
         `;
@@ -302,8 +302,8 @@ function renderAbout(profile, contact) {
 
         facts.innerHTML = factItems.map(item => `
             <div class="profile-fact">
-                <span>${html(item.label)}</span>
-                <strong>${html(item.value)}</strong>
+                <span>${esc(item.label)}</span>
+                <strong>${esc(item.value)}</strong>
             </div>
         `).join("");
     }
@@ -312,15 +312,37 @@ function renderAbout(profile, contact) {
         const items = profile.education || [];
         education.innerHTML = items.length ? items.map(item => `
             <div class="timeline-item">
-                <div class="timeline-date">${html(item.date || "Now")}</div>
+                <div class="timeline-date">${esc(item.date || "Now")}</div>
                 <div class="timeline-main">
-                    <h4>${html(item.school || "")}</h4>
-                    ${item.degree ? `<p>${html(item.degree).replace(/\n/g, "<br>")}</p>` : ""}
+                    <h4>${esc(item.school || "")}</h4>
+                    ${item.degree ? `<p>${esc(item.degree).replace(/\n/g, "<br>")}</p>` : ""}
                 </div>
-                <div class="timeline-side">${html(item.detail || "").replace(/\n/g, "<br>")}</div>
+                <div class="timeline-side">${esc(item.detail || "").replace(/\n/g, "<br>")}</div>
             </div>
         `).join("") : `<div class="empty-copy">Education details will appear here.</div>`;
     }
+}
+
+function renderGallery(gallery) {
+    const grid = $("#gallery-grid");
+    if (!grid) return;
+
+    if (!gallery.length) {
+        grid.innerHTML = `<div class="empty-copy reveal">Photos and moments will appear here.</div>`;
+        return;
+    }
+
+    grid.innerHTML = gallery.map((item, index) => `
+        <div class="gallery-item reveal" data-index="${index}" onclick="openLightbox(${index})">
+            <img src="${safeUrl(item.image)}" alt="${esc(item.caption || "")}" loading="lazy">
+            <div class="gallery-caption">
+                <strong>${esc(item.caption || "")}</strong>
+                <span>${esc(item.date || "")}</span>
+            </div>
+        </div>
+    `).join("");
+
+    window._galleryData = gallery;
 }
 
 function renderNotes(posts) {
@@ -334,13 +356,13 @@ function renderNotes(posts) {
 
     notesGrid.innerHTML = posts.map(post => `
         <a class="note-row reveal" href="${safeUrl(post.url || "#")}">
-            <div class="note-row-date">${html(post.date || "Draft")}</div>
+            <div class="note-row-date">${esc(post.date || "Draft")}</div>
             <div class="note-row-main">
-                <h3>${html(post.title || "Untitled note")}</h3>
-                <p>${html(post.desc || "")}</p>
+                <h3>${esc(post.title || "Untitled note")}</h3>
+                <p>${esc(post.desc || "")}</p>
             </div>
             <div class="note-row-tags">
-                ${(post.tags || []).map(tag => `<span>${html(tag)}</span>`).join("")}
+                ${(post.tags || []).map(tag => `<span>${esc(tag)}</span>`).join("")}
             </div>
         </a>
     `).join("");
@@ -359,7 +381,7 @@ function renderContact(contact, profile) {
             primary.target = "_blank";
             primary.rel = "noreferrer";
         }
-        primary.innerHTML = `${html(primaryText)} <span>→</span>`;
+        primary.innerHTML = `${esc(primaryText)} <span>→</span>`;
     }
 
     setText("footer-note", `${(contact.location || "Shanghai").split("\n")[0]} · Fudan University`);
@@ -375,19 +397,25 @@ function renderContact(contact, profile) {
 
     grid.innerHTML = items.map(item => `
         <div class="contact-item reveal">
-            <div class="label">${html(item.label)}</div>
+            <div class="label">${esc(item.label)}</div>
             ${item.href
-                ? `<a class="value" href="${safeUrl(item.href)}" ${safeUrl(item.href).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>${html(item.value)}</a>`
-                : `<div class="value">${html(item.value)}</div>`
+                ? `<a class="value" href="${safeUrl(item.href)}" ${safeUrl(item.href).startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>${esc(item.value)}</a>`
+                : `<div class="value">${esc(item.value)}</div>`
             }
         </div>
     `).join("");
 }
 
+/* ===== Chrome / Interactive features ===== */
+
 function initChrome(data) {
     initNav();
     initActiveLinks();
     initHeroParallax();
+    initThemeToggle();
+    initBackToTop();
+    initReadingProgress();
+    initTypingEffect();
 }
 
 function initNav() {
@@ -453,6 +481,130 @@ function initHeroParallax() {
     window.addEventListener("scroll", onScroll, { passive: true });
 }
 
+function initThemeToggle() {
+    const toggle = $("#theme-toggle");
+    if (!toggle) return;
+
+    const saved = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initial = saved || (prefersDark ? "dark" : "light");
+
+    if (initial === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    }
+
+    toggle.addEventListener("click", () => {
+        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        const next = isDark ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+    });
+}
+
+function initBackToTop() {
+    const btn = $("#back-to-top");
+    if (!btn) return;
+
+    const onScroll = () => {
+        btn.classList.toggle("is-visible", window.scrollY > 600);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+
+function initReadingProgress() {
+    const bar = $("#reading-progress");
+    if (!bar) return;
+
+    const onScroll = () => {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+        bar.style.width = `${Math.min(progress, 100)}%`;
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+function initTypingEffect() {
+    const el = $("#hero-typed");
+    if (!el) return;
+
+    const phrases = [
+        "Exploring aerospace systems and intelligent engineering.",
+        "Building with Python, MATLAB, and scientific computing.",
+        "Dual-degree: Aircraft Design + Computational Science.",
+        "Turning ideas into reproducible projects and clear notes."
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    let timeout;
+
+    function tick() {
+        const current = phrases[phraseIndex];
+        if (!deleting) {
+            charIndex++;
+            el.textContent = current.slice(0, charIndex);
+            if (charIndex >= current.length) {
+                timeout = setTimeout(() => { deleting = true; tick(); }, 2400);
+                return;
+            }
+            timeout = setTimeout(tick, 42 + Math.random() * 30);
+        } else {
+            charIndex--;
+            el.textContent = current.slice(0, charIndex);
+            if (charIndex <= 0) {
+                deleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                timeout = setTimeout(tick, 400);
+                return;
+            }
+            timeout = setTimeout(tick, 22);
+        }
+    }
+
+    setTimeout(tick, 1200);
+}
+
+/* ===== Lightbox ===== */
+
+window.openLightbox = function(index) {
+    const gallery = window._galleryData;
+    if (!gallery || !gallery[index]) return;
+
+    const item = gallery[index];
+    const overlay = document.createElement("div");
+    overlay.className = "lightbox";
+    overlay.innerHTML = `
+        <img src="${safeUrl(item.image)}" alt="${esc(item.caption || "")}">
+        <div class="lightbox-caption">${esc(item.caption || "")}</div>
+    `;
+
+    overlay.addEventListener("click", () => {
+        overlay.classList.remove("is-active");
+        setTimeout(() => overlay.remove(), 300);
+    });
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("is-active"));
+
+    const onKey = (e) => {
+        if (e.key === "Escape") {
+            overlay.classList.remove("is-active");
+            setTimeout(() => overlay.remove(), 300);
+            document.removeEventListener("keydown", onKey);
+        }
+    };
+    document.addEventListener("keydown", onKey);
+};
+
 function initReveal() {
     const sections = $$("main section");
     if (!sections.length) return;
@@ -478,12 +630,14 @@ function initReveal() {
     });
 }
 
+/* ===== Utilities ===== */
+
 function setText(id, value) {
     const node = document.getElementById(id);
     if (node && value !== undefined && value !== null) node.textContent = value;
 }
 
-function html(value) {
+function esc(value) {
     return String(value ?? "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")

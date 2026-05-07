@@ -3,11 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Weijian Shi's personal homepage. Aerospace engineering, intelligent systems, and computational science.">
+    <meta name="description" content="Weijian Shi's personal homepage. Aerospace engineering, intelligent systems, and computational science at Fudan University.">
+    <meta name="author" content="Weijian Shi">
+    <meta name="keywords" content="Weijian Shi, Fudan University, aerospace engineering, AI, computational science, personal homepage">
+    <meta name="theme-color" content="#eff1f3">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Weijian Shi - Aerospace & Computation">
+    <meta property="og:description" content="Undergraduate at Fudan University exploring aerospace systems, AI, and scientific computing.">
+    <meta property="og:url" content="https://weijiansh1.github.io/">
+    <meta property="og:site_name" content="Weijian Shi">
+    <meta property="og:image" content="https://weijiansh1.github.io/assets/hero-aerospace.jpg">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Weijian Shi - Aerospace & Computation">
+    <meta name="twitter:description" content="Undergraduate at Fudan University exploring aerospace systems, AI, and scientific computing.">
+    <meta name="twitter:image" content="https://weijiansh1.github.io/assets/hero-aerospace.jpg">
+
+    <link rel="canonical" href="https://weijiansh1.github.io/">
     <title>Weijian Shi · Personal Homepage</title>
-    <link rel="stylesheet" href="style.css?v=20260503p">
+    <link rel="stylesheet" href="style.css?v=20260507a">
 </head>
 <body class="home-page">
+
+<!-- Reading progress bar -->
+<div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+
 <nav id="navbar" class="site-nav" aria-label="Primary navigation">
     <div class="nav-container">
         <a href="#home" class="nav-logo" aria-label="Go to homepage">
@@ -18,14 +42,21 @@
             <a href="#practice">Research</a>
             <a href="#work">Projects</a>
             <a href="#awards">Awards</a>
+            <a href="#gallery">Gallery</a>
             <a href="#notes">Notes</a>
             <a href="#contact">Contact</a>
         </div>
-        <a href="#contact" class="nav-cta">Contact →</a>
-        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
-            <span></span>
-            <span></span>
-        </button>
+        <div class="nav-right">
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <a href="#contact" class="nav-cta">Contact →</a>
+            <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -44,6 +75,7 @@
                 <p class="hero-summary" id="hero-summary">
                     I study at Fudan University, focusing on aerospace, computation, and AI.
                 </p>
+                <p class="hero-typed" id="hero-typed" aria-hidden="true"></p>
                 <div class="hero-status">
                     <span class="status-dot"></span>
                     <span id="hero-status">Shanghai · Fudan University</span>
@@ -125,6 +157,17 @@
         </div>
     </section>
 
+    <section id="gallery" class="section section-gallery">
+        <div class="container">
+            <div class="section-lead reveal">
+                <p class="section-label">Gallery</p>
+                <h2 class="section-title">Scenes from the <span class="accent">journey</span>.</h2>
+                <p class="section-copy">Moments captured from campus life, competitions, projects, and travels.</p>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"></div>
+        </div>
+    </section>
+
     <section id="notes" class="section section-notes">
         <div class="container">
             <div class="section-lead reveal">
@@ -142,7 +185,7 @@
             <div class="contact-shell">
                 <div class="contact-intro">
                     <p class="section-label reveal">Contact</p>
-                    <h2 class="contact-title reveal">If the work resonates, let’s <span class="accent">talk</span>.</h2>
+                    <h2 class="contact-title reveal">If the work resonates, let's <span class="accent">talk</span>.</h2>
                     <p class="contact-copy reveal">For research conversations, project collaboration, or anything related to aerospace, AI, and scientific computing.</p>
                     <a id="contact-primary" class="contact-primary reveal" href="https://github.com/weijiansh1" target="_blank" rel="noreferrer">
                         github.com/weijiansh1 <span>→</span>
@@ -158,6 +201,11 @@
     </section>
 </main>
 
-<script src="script.js?v=20260503m"></script>
+<!-- Back to top button -->
+<button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script src="script.js?v=20260507a"></script>
 </body>
 </html>
