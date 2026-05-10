@@ -27,6 +27,13 @@
   <!-- Game Canvas -->
   <canvas id="game"></canvas>
 
+  <!-- HUD: building tracker -->
+  <div id="hud" class="hud hidden">
+    <div class="hud-title">EXPLORE</div>
+    <div id="hud-list" class="hud-list"></div>
+    <div class="hud-progress"><span id="hud-count">0</span>/7</div>
+  </div>
+
   <!-- Dialog Overlay -->
   <div id="dialog-overlay" class="dialog-overlay hidden">
     <div id="dialog-box" class="dialog-box">
@@ -38,7 +45,7 @@
 
   <!-- Interaction Prompt -->
   <div id="interact-prompt" class="interact-prompt hidden">
-    SPACE to interact
+    <span class="prompt-key">SPACE</span> Talk / Enter
   </div>
 
   <!-- Mobile Controls -->
