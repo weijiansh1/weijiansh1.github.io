@@ -436,8 +436,10 @@ function initInput() {
       openDialog(nearBuilding.id);
     }
     if ((e.key === ' ' || e.key === 'Enter') && dialogOpen) {
-      // If typewriter still going, skip to end
-      if (typewriterActive) { finishTypewriter(); e.preventDefault(); return; }
+      e.preventDefault();
+      if (typewriterActive) finishTypewriter();
+      else closeDialog();
+      return;
     }
     if (e.key === 'Escape' && dialogOpen) closeDialog();
   });
