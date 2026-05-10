@@ -1,199 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Weijian Shi's personal homepage. Aerospace engineering, intelligent systems, and computational science at Fudan University.">
-    <meta name="author" content="Weijian Shi">
-    <meta name="keywords" content="Weijian Shi, Fudan University, aerospace engineering, AI, computational science, personal homepage">
-    <meta name="theme-color" content="#0a0a0f">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Weijian Shi - Aerospace & Computation">
-    <meta property="og:description" content="Undergraduate at Fudan University exploring aerospace systems, AI, and scientific computing.">
-    <meta property="og:url" content="https://weijiansh1.github.io/">
-    <meta property="og:site_name" content="Weijian Shi">
-    <meta property="og:image" content="https://weijiansh1.github.io/assets/hero-aerospace.jpg">
-    <meta property="og:locale" content="en_US">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Weijian Shi - Aerospace & Computation">
-    <meta name="twitter:description" content="Undergraduate at Fudan University exploring aerospace systems, AI, and scientific computing.">
-    <meta name="twitter:image" content="https://weijiansh1.github.io/assets/hero-aerospace.jpg">
-
-    <link rel="canonical" href="https://weijiansh1.github.io/">
-    <title>Weijian Shi · Personal Homepage</title>
-    <link rel="stylesheet" href="style.css?v=20260507a">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Weijian Shi — Pixel World</title>
+  <meta name="description" content="Weijian Shi's personal homepage — explore a pixel RPG world to learn about me.">
+  <meta name="author" content="Weijian Shi">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="home-page">
-
-<!-- Reading progress bar -->
-<div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
-
-<nav id="navbar" class="site-nav" aria-label="Primary navigation">
-    <div class="nav-container">
-        <a href="#home" class="nav-logo" aria-label="Go to homepage">
-            Weijian<span>.</span>
-        </a>
-        <div class="nav-links" id="nav-links">
-            <a href="#about">Profile</a>
-            <a href="#practice">Research</a>
-            <a href="#work">Projects</a>
-            <a href="#awards">Awards</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#notes">Notes</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="nav-right">
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
-                <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-            <a href="#contact" class="nav-cta">Contact →</a>
-            <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+<body>
+  <!-- Boot Screen -->
+  <div id="boot-screen" class="boot-screen">
+    <div id="boot-text" class="boot-text"></div>
+    <div id="boot-menu" class="boot-menu hidden">
+      <div class="menu-title">═══════════════════════════<br>  WEIJIAN SHI  ·  WORLD<br>═══════════════════════════</div>
+      <div class="menu-items">
+        <div class="menu-item selected" data-action="newgame">▶ NEW GAME</div>
+        <div class="menu-item" data-action="about">  ABOUT</div>
+      </div>
+      <div class="menu-hint">↑↓ Select · Enter Confirm</div>
     </div>
-</nav>
+  </div>
 
-<main>
-    <section id="home" class="hero">
-        <canvas id="fluid-canvas" aria-hidden="true"></canvas>
-        <div class="container hero-inner">
-            <h1 class="hero-heading reveal">
-                <span>Weijian Shi</span>
-            </h1>
-            <p class="hero-subtitle reveal" id="hero-summary">Aerospace & Computation · Fudan University</p>
-            <div class="hero-actions reveal" id="hero-links"></div>
-        </div>
-        <div class="scroll-indicator" id="scroll-indicator">
-            <span>Scroll</span>
-            <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-    </section>
+  <!-- Game Canvas -->
+  <canvas id="game"></canvas>
 
-    <section id="about" class="section section-about">
-        <div class="container">
-            <div class="profile-shell">
-                <div class="profile-main reveal">
-                    <p class="section-label">Profile</p>
-                    <h2 class="section-title">The route that is shaping how I <span class="accent">think</span>.</h2>
-                    <div class="profile-opening">
-                        <p class="profile-nameplate" id="profile-nameplate">石伟建 / Weijian Shi</p>
-                        <p class="profile-trackline" id="profile-trackline">Aircraft Design and Engineering · Information and Computational Science</p>
-                    </div>
-                    <p class="about-lead" id="about-lead"></p>
-                    <div class="about-body" id="about-body"></div>
-                </div>
-                <aside class="profile-side reveal">
-                    <div class="profile-card">
-                        <p class="about-caption" id="about-caption">Weijian Shi — Fudan University</p>
-                        <div id="profile-facts" class="profile-facts"></div>
-                    </div>
-                    <div class="profile-meta">
-                        <div class="profile-place" id="about-place">Shanghai, China</div>
-                    </div>
-                    <div class="timeline-wrap">
-                        <p class="timeline-label">Education</p>
-                        <div class="timeline-list" id="about-education"></div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </section>
+  <!-- Dialog Overlay -->
+  <div id="dialog-overlay" class="dialog-overlay hidden">
+    <div id="dialog-box" class="dialog-box">
+      <div id="dialog-title" class="dialog-title"></div>
+      <div id="dialog-content" class="dialog-content"></div>
+      <div id="dialog-hint" class="dialog-hint">ESC / Tap to close</div>
+    </div>
+  </div>
 
-    <section id="practice" class="section section-practice">
-        <div class="container practice-layout">
-            <div class="research-intro reveal">
-                <p class="section-label">Research Directions</p>
-                <h2 class="section-title">Questions that keep <span class="accent">returning</span>.</h2>
-                <p class="section-copy" id="practice-intro"></p>
-            </div>
-            <div class="research-panel reveal">
-                <div class="research-grid" id="research-grid"></div>
-                <div class="research-bottom">
-                    <div class="practice-focus" id="practice-focus"></div>
-                    <div class="skills-cloud" id="skills-cloud"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Interaction Prompt -->
+  <div id="interact-prompt" class="interact-prompt hidden">
+    SPACE to interact
+  </div>
 
-    <section id="work" class="section section-work">
-        <div class="container">
-            <div class="section-lead reveal">
-                <p class="section-label">Selected Projects</p>
-                <h2 class="section-title">Things I build when ideas need <span class="accent">form</span>.</h2>
-                <p class="section-copy">Coursework, experiments, and systems I have turned into something concrete.</p>
-            </div>
-            <div id="work-list" class="work-list"></div>
-        </div>
-    </section>
+  <!-- Mobile Controls -->
+  <div id="mobile-controls" class="mobile-controls">
+    <div class="dpad">
+      <button class="dpad-btn dpad-up" data-dir="up">▲</button>
+      <button class="dpad-btn dpad-left" data-dir="left">◀</button>
+      <button class="dpad-btn dpad-right" data-dir="right">▶</button>
+      <button class="dpad-btn dpad-down" data-dir="down">▼</button>
+    </div>
+    <button class="action-btn" id="action-a">A</button>
+  </div>
 
-    <section id="awards" class="section section-awards">
-        <div class="container">
-            <div class="section-lead reveal">
-                <p class="section-label">Honors & Awards</p>
-                <h2 class="section-title">Moments when the work met an <span class="accent">audience</span>.</h2>
-                <p class="section-copy">Competitions, public recognitions, and milestones that mark where the work has been seen.</p>
-            </div>
-            <div id="awards-list" class="work-list"></div>
-        </div>
-    </section>
-
-    <section id="gallery" class="section section-gallery">
-        <div class="container">
-            <div class="section-lead reveal">
-                <p class="section-label">Gallery</p>
-                <h2 class="section-title">Scenes from the <span class="accent">journey</span>.</h2>
-                <p class="section-copy">Moments captured from campus life, competitions, projects, and travels.</p>
-            </div>
-            <div class="gallery-grid" id="gallery-grid"></div>
-        </div>
-    </section>
-
-    <section id="notes" class="section section-notes">
-        <div class="container">
-            <div class="section-lead reveal">
-                <p class="section-label">Field Notes</p>
-                <h2 class="section-title">Fragments, logs, and small records worth <span class="accent">keeping</span>.</h2>
-                <p class="section-copy">A lightweight archive of things I have built, learned, or written down.</p>
-            </div>
-            <div class="notes-grid" id="notes-grid"></div>
-        </div>
-    </section>
-
-    <section id="contact" class="section section-contact">
-        <div class="contact-backdrop" aria-hidden="true"></div>
-        <div class="container contact-inner">
-            <div class="contact-shell">
-                <div class="contact-intro">
-                    <p class="section-label reveal">Contact</p>
-                    <h2 class="contact-title reveal">If the work resonates, let's <span class="accent">talk</span>.</h2>
-                    <p class="contact-copy reveal">For research conversations, project collaboration, or anything related to aerospace, AI, and scientific computing.</p>
-                    <a id="contact-primary" class="contact-primary reveal" href="https://github.com/weijiansh1" target="_blank" rel="noreferrer">
-                        github.com/weijiansh1 <span>→</span>
-                    </a>
-                </div>
-                <div class="contact-grid" id="contact-grid"></div>
-            </div>
-            <footer class="footer reveal">
-                <p>© 2026 Weijian Shi</p>
-                <p class="footer-note" id="footer-note">Shanghai · Fudan University</p>
-            </footer>
-        </div>
-    </section>
-</main>
-
-<!-- Back to top button -->
-<button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" title="Back to top">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
-
-<script src="script.js?v=20260507a"></script>
+  <script src="script.js"></script>
 </body>
 </html>
