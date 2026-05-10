@@ -6,7 +6,7 @@
     <meta name="description" content="Weijian Shi's personal homepage. Aerospace engineering, intelligent systems, and computational science at Fudan University.">
     <meta name="author" content="Weijian Shi">
     <meta name="keywords" content="Weijian Shi, Fudan University, aerospace engineering, AI, computational science, personal homepage">
-    <meta name="theme-color" content="#eff1f3">
+    <meta name="theme-color" content="#0a0a0f">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -62,14 +62,17 @@
 
 <main>
     <section id="home" class="hero">
-        <div class="hero-media" id="hero-media" aria-hidden="true"></div>
-        <div class="hero-overlay" aria-hidden="true"></div>
+        <canvas id="fluid-canvas" aria-hidden="true"></canvas>
         <div class="container hero-inner">
             <h1 class="hero-heading reveal">
                 <span>Weijian Shi</span>
             </h1>
             <p class="hero-subtitle reveal" id="hero-summary">Aerospace & Computation · Fudan University</p>
             <div class="hero-actions reveal" id="hero-links"></div>
+        </div>
+        <div class="scroll-indicator" id="scroll-indicator">
+            <span>Scroll</span>
+            <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
     </section>
 
