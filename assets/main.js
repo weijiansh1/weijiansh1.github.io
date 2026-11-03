@@ -25,7 +25,7 @@
     menuButton.setAttribute('aria-label', chinese
       ? (expanded ? '关闭导航' : '打开导航')
       : (expanded ? 'Close navigation' : 'Open navigation'));
-    themeColor.content = dark ? '#1c1d20' : '#faf9f6';
+    themeColor.content = dark ? '#1c1e21' : '#ffffff';
   }
 
   function setLanguage(nextLanguage) {
@@ -98,7 +98,12 @@
     for (const section of sections) {
       if (section.getBoundingClientRect().top <= 170) active = section;
     }
-    if (nearBottom) active = sections[sections.length - 1];
+    if (nearBottom) {
+      // A short page may reach its end before the requested section reaches the header.
+      const target = sections.find(section => '#' + section.id === window.location.hash);
+      if (target && target.getBoundingClientRect().top >= 0) active = target;
+      else if (window.scrollY > 0) active = sections[sections.length - 1];
+    }
     for (const link of links) {
       if (link.hash === '#' + active.id) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
@@ -111,5 +116,7 @@
       scrollScheduled = true;
     }
   }, { passive: true });
+  window.addEventListener('hashchange', updateActiveSection);
+  window.addEventListener('resize', updateActiveSection);
   updateActiveSection();
 })();

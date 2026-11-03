@@ -44,6 +44,16 @@ def external_link(url, label, css_class="text-link"):
     return f'<a class="{css_class}" href="{safe_url(url, local=True)}" target="_blank" rel="noopener noreferrer">{localized(label)}{icon("external", True)}</a>'
 
 
+def image_tag(url, description, width, height, css_class="", lazy=False):
+    attrs = ""
+    if isinstance(description, dict):
+        attrs = f' data-en="{esc(description["en"])}" data-zh="{esc(description["zh"])}" data-translate-attribute="alt"'
+        description = description["en"]
+    if lazy:
+        attrs += ' loading="lazy"'
+    return f'<img class="{esc(css_class)}" src="{safe_url(url, local=True)}" alt="{esc(description)}" width="{width}" height="{height}" decoding="async"{attrs}>'
+
+
 def build():
     profile = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))
     research = []
@@ -51,10 +61,8 @@ def build():
         if item["icon"] not in {"embodied", "experts", "learning"}:
             raise ValueError("Choose one of the three research icons: embodied, experts, learning")
         research.append(
-            '<article class="research-card"><div class="research-card-top">'
-            f'{icon(item["icon"])}<span class="research-number">{esc(item["number"])}</span></div>'
-            f'{localized(item["title"], "h3")}{localized(item["description"], "p")}'
-            + localized(item["tags"], "div", ' class="research-tags"') + '</article>'
+            f'<article class="research-item">{icon(item["icon"])}'
+            f'{localized(item["title"], "h3")}{localized(item["description"], "p")}</article>'
         )
 
     projects = []
@@ -62,18 +70,20 @@ def build():
         questions = "".join(localized(q, "li") for q in item.get("questions", []))
         details = (
             '<details class="project-details"><summary>' + icon("plus") +
-            localized({"en": "Inside this research", "zh": "了解研究内容"}) +
+            localized({"en": "Research questions", "zh": "研究问题"}) +
             f'</summary><ul>{questions}</ul></details>'
         ) if questions else ""
         links = "".join(external_link(link["url"], link["label"]) for link in item.get("links", []))
+        thumbnail = (
+            image_tag(item["image"], item.get("image_alt", item["name"]), 352, 264, lazy=True)
+            if item.get("image") else f'<span class="project-wordmark">{esc(item["name"])}</span>'
+        )
         projects.append(
             '<article class="project"><div class="project-main">'
-            f'<div class="project-visual" aria-hidden="true"><span class="project-wordmark">{esc(item["name"])}</span>'
-            '<span class="project-visual-caption">Observe · Understand · Adapt</span></div>'
-            '<div class="project-content"><div class="project-meta">'
-            f'<span class="project-label">{esc(item["name"])}</span>'
-            + localized(item["status"], "span", ' class="project-status"') + '</div>'
-            + f'{localized(item["title"], "h3")}{localized(item["description"], "p")}{details}'
+            f'<div class="project-visual">{thumbnail}</div><div class="project-content">'
+            + localized(item["status"], "span", ' class="project-status"')
+            + f'<h3><span class="project-name">{esc(item["name"])}</span>: {localized(item["title"])}</h3>'
+            + f'{localized(item["description"], "p")}{details}'
             + (f'<div class="project-links">{links}</div>' if links else "") + '</div></div></article>'
         )
 
@@ -89,10 +99,10 @@ def build():
         )
     publications_section = (
         '<section class="section" id="publications" aria-labelledby="publications-title">'
-        '<div class="section-heading"><div><p class="eyebrow"><span class="section-index">03 /</span>'
-        + localized({"en": "Publications", "zh": "学术论文"}) + '</p>'
-        + localized({"en": "Selected publications.", "zh": "论文成果。"}, "h2", ' id="publications-title"')
-        + '</div></div><div class="publication-list">' + "".join(publications) + '</div></section>'
+        '<div class="section-heading">'
+        + localized({"en": "Publications", "zh": "学术论文"}, "h2", ' id="publications-title"')
+        + '<span class="heading-rule" aria-hidden="true"></span></div><div class="publication-list">'
+        + "".join(publications) + '</div></section>'
     ) if publications else ""
     publications_nav = (
         '<a class="nav-link" href="#publications" data-en="Publications" data-zh="论文">Publications</a>'
@@ -126,7 +136,7 @@ def build():
         "CONTACT": localized(profile["contact"]), "EMAIL_LINK": email_link,
         "CV_LINK": external_link(profile["cv"], {"en": "CV", "zh": "简历"}) if profile.get("cv") else "",
         "SCHOLAR_LINK": external_link(profile["scholar"], "Google Scholar") if profile.get("scholar") else "",
-        "PORTRAIT": f'<img class="portrait" src="{safe_url(profile["portrait"], local=True)}" alt="{esc(profile["name"])}" width="440" height="310">' if profile.get("portrait") else "",
+        "PORTRAIT": ('<figure class="profile-portrait">' + image_tag(profile["portrait"], profile["name"], 184, 184, "portrait") + '</figure>') if profile.get("portrait") else "",
         "STRUCTURED_DATA": json.dumps(structured_data, ensure_ascii=False).replace("<", "\\u003c"),
         "YEAR": str(date.today().year),
     }

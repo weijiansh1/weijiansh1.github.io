@@ -1,12 +1,12 @@
 # Weijian Shi · Fudan University
 
-简洁的中英文学术主页。米白底色、炭灰文字，以少量绿色点缀图标与研究图示；深色模式使用中性炭灰。包含研究方向、项目介绍、可选论文列表、联系信息，以及手机布局。
+简洁的中英文学术主页。白底、深灰文字与少量绿色，使用个人头像、紧凑的简介和研究条目。支持中英文、深色模式、手机布局，以及可选的论文列表和联系信息。
 
 仓库：[weijiansh1/weijianshi.github.io](https://github.com/weijiansh1/weijianshi.github.io)。站点使用 GitHub Actions 构建并发布到 GitHub Pages。
 
 ## 个人内容
 
-姓名与复旦大学单位信息已由本人提供。研究方向及 NAR 项目简介介绍正在探索的问题；未填写学位、职位、学校院系、发表记录、性能结果或联系方式。未提供的论文、邮箱、简历、学术主页和照片不会出现在页面上。
+姓名与复旦大学单位信息已由本人提供。头像使用 [weijiansh1 的公开 GitHub 头像](https://github.com/weijiansh1)，本地文件为 `assets/avatar.jpg`。研究方向及 NAR 项目简介介绍正在探索的问题；未填写学位、职位、学校院系、发表记录、性能结果或联系方式。未提供的论文、邮箱、简历和学术主页不会出现在页面上。
 
 ## 预览
 
@@ -27,8 +27,8 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 | --- | --- |
 | `name`、`affiliation` | 姓名与单位 |
 | `intro`、`bio` | 首页简介，分别编辑 `en` 和 `zh` |
-| `research` | 研究方向、说明与关键词 |
-| `projects` | 项目简介、研究问题和可选链接 |
+| `research` | 研究方向、图标与说明 |
+| `projects` | 项目简介、可选缩略图、研究问题和链接 |
 | `publications` | 论文列表，空数组时自动隐藏整个栏目及导航 |
 | `email` | 填写真实邮箱后显示邮件链接 |
 | `scholar` | Google Scholar 的完整 HTTPS 地址 |
@@ -52,6 +52,8 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 ```
 
 项目 `links` 使用相同结构。添加论文后，导航与论文区块自动出现；论文按数组顺序展示。
+
+项目缩略图通过 `image` 指定路径，`image_alt` 填写中英文说明；未填写图片时显示项目名称。当前 NAR 图为概念示意图，不表示实验结果。
 
 ## GitHub Pages
 

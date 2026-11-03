@@ -40,6 +40,7 @@ fi
 profile_files=(
   index.html site.json README.md .nojekyll .gitignore
   assets/favicon.svg assets/main.js assets/preferences.js assets/style.css
+  assets/avatar.jpg assets/nar-overview.svg
   templates/index.html scripts/build.py scripts/push-to-github.sh
   .github/workflows/pages.yml
 )
