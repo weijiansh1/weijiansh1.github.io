@@ -1,6 +1,6 @@
 # Weijian Shi · Fudan University
 
-正式主页采用学术简历式布局：左侧为头像、姓名、单位与联系入口，右侧为简介、研究方向、项目与可选论文。白底、深灰文字和少量绿色，支持中英文、深色模式、手机布局与打印为 PDF。
+正式主页采用学术简历式布局：左侧为头像、姓名、单位与联系入口，右侧为简介、研究方向、「我在做的事」与可选论文。白底、深灰文字和少量绿色，支持中英文、深色模式、手机布局与打印为 PDF。
 
 仓库：[weijiansh1/weijianshi.github.io](https://github.com/weijiansh1/weijianshi.github.io)。站点使用 GitHub Actions 构建并发布到 GitHub Pages。
 
