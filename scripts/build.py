@@ -45,6 +45,9 @@ def external_link(url, label, css_class="text-link"):
 
 
 def image_tag(url, description, width, height, css_class="", lazy=False):
+    width, height = int(width), int(height)
+    if width <= 0 or height <= 0:
+        raise ValueError("Image dimensions must be positive")
     attrs = ""
     if isinstance(description, dict):
         attrs = f' data-en="{esc(description["en"])}" data-zh="{esc(description["zh"])}" data-translate-attribute="alt"'
@@ -81,15 +84,24 @@ def build():
         ) if questions else ""
         links = "".join(external_link(link["url"], link["label"]) for link in item.get("links", []))
         thumbnail = (
-            image_tag(item["image"], item.get("image_alt", item["name"]), 352, 264, lazy=True)
+            image_tag(item["image"], item.get("image_alt", item["name"]),
+                      item.get("image_width", 352), item.get("image_height", 264), lazy=True)
             if item.get("image") else f'<span class="project-wordmark">{esc(item["name"])}</span>'
         )
+        if item.get("image") and item.get("image_link"):
+            thumbnail = (
+                f'<a class="project-image-link" href="{safe_url(item["image_link"], local=True)}"'
+                f' target="_blank" rel="noopener noreferrer">{thumbnail}</a>'
+            )
+        award = (
+            '<p class="project-award">' + icon("award", True) + localized(item["award"]) + '</p>'
+        ) if item.get("award") else ""
         projects.append(
             '<article class="project"><div class="project-main">'
             f'<div class="project-visual">{thumbnail}</div><div class="project-content">'
             f'<div class="project-meta"><span class="project-name">{esc(item["name"])}</span>'
             + localized(item["status"], "span", ' class="project-status"')
-            + f'</div>{localized(item["title"], "h3")}{localized(item["description"], "p")}'
+            + f'</div>{localized(item["title"], "h3")}{award}{localized(item["description"], "p")}'
             + (f'<div class="project-links">{links}</div>' if links else "")
             + f'</div></div>{details}</article>'
         )
