@@ -4,7 +4,7 @@
   "affiliation": {"en": "Fudan University", "zh": "复旦大学"},
   "affiliation_url": "https://www.fudan.edu.cn/",
   "github": "https://github.com/weijiansh1",
-  "email": "",
+  "email": "24307130175@m.fudan.edu.cn",
   "scholar": "",
   "cv": "",
   "portrait": "assets/avatar.jpg",
@@ -71,6 +71,23 @@
         {"label": {"en": "Award certificate (PDF)", "zh": "获奖证书（PDF）"}, "url": "assets/cuadc-2026-certificate.pdf"},
         {"label": {"en": "Code", "zh": "代码"}, "url": "https://github.com/weijiansh1/Fixd-wing-RSI"},
         {"label": {"en": "Competition", "zh": "赛事介绍"}, "url": "https://cuadc.cn/"}
+      ]
+    },
+    {
+      "name": "4C",
+      "image": "assets/4c-2026-award-thumbnail.jpg",
+      "image_width": 480,
+      "image_height": 360,
+      "image_link": "assets/4c-2026-award.jpg",
+      "image_alt": {"en": "National Second Prize award plaque from the 2026 Chinese Collegiate Computing Competition", "zh": "2026 年中国大学生计算机设计大赛全国二等奖奖牌"},
+      "status": {"en": "2026 · Competition project", "zh": "2026 · 竞赛项目"},
+      "title": {"en": "Same Wind, Different Haze", "zh": "同样的风，不同的霾"},
+      "award": {"en": "National Second Prize (team) · July–August 2026", "zh": "全国二等奖（团队）· 2026 年 7–8 月"},
+      "description": {"en": "A Fudan University entry in the 19th Chinese Collegiate Computing Competition (2026), using multi-source big data to assess the cross-regional transfer and attenuation of Beijing–Tianjin–Hebei haze-control experience.", "zh": "复旦大学 2026 年（第 19 届）中国大学生计算机设计大赛参赛作品。基于多源大数据，评估京津冀治霾经验的跨区域迁移与衰减。"},
+      "links": [
+        {"label": {"en": "Award certificate", "zh": "获奖证书"}, "url": "assets/4c-2026-certificate.jpg"},
+        {"label": {"en": "Award plaque", "zh": "奖牌照片"}, "url": "assets/4c-2026-award.jpg"},
+        {"label": {"en": "Competition", "zh": "赛事介绍"}, "url": "https://jsjds.blcu.edu.cn/index.htm"}
       ]
     }
   ],

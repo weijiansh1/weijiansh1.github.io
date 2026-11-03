@@ -133,7 +133,7 @@ def build():
         if "@" not in email or any(c.isspace() for c in email):
             raise ValueError("Please use a complete email address without whitespace")
         email_link = (
-            f'<a class="text-link" href="mailto:{esc(quote(email, safe="@.+-_"))}">{icon("mail")}{esc(email)}</a>'
+            f'<a class="text-link" href="mailto:{esc(quote(email, safe="@.+-_"))}">{icon("mail")}{esc(email).replace("@", "@<wbr>")}</a>'
         )
 
     structured_data = {

@@ -8,9 +8,11 @@
 
 ## 个人内容
 
-姓名与复旦大学单位信息已由本人提供。头像使用 [weijiansh1 的公开 GitHub 头像](https://github.com/weijiansh1)，本地文件为 `assets/avatar.jpg`。研究方向及 NAR 项目简介介绍正在探索的问题；未填写学位、职位、学校院系、发表记录、性能结果或联系方式。未提供的论文、邮箱、简历和学术主页不会出现在页面上。
+姓名、复旦大学单位信息与邮箱 `24307130175@m.fudan.edu.cn` 已由本人提供。头像使用 [weijiansh1 的公开 GitHub 头像](https://github.com/weijiansh1)，本地文件为 `assets/avatar.jpg`。研究方向及 NAR 项目简介介绍正在探索的问题；未填写学位、职位、学校院系、发表记录或性能结果。未提供的论文、简历和学术主页不会出现在页面上。
 
 CUADC 条目依据本人公开仓库 [Fixd-wing-RSI](https://github.com/weijiansh1/Fixd-wing-RSI) 的介绍，展示 2026 年复旦“固定翼无人机侦察与打击”项目中的视觉感知、飞控通信与仿真软件工作，并链接到 [赛事官网](https://cuadc.cn/)。比赛实拍照片和获奖证书由本人提供，展示“全国三等奖（团队）· 2026 年 10 月”；证书载明该赛项、复旦大学、团队成员、三等奖及 2026 年 10 月四川自贡。照片为 `assets/cuadc-2026.jpg`，可点击查看大图；证书原件为 `assets/cuadc-2026-certificate.pdf`。
+
+4C 条目使用 [赛事官方简介](https://jsjds.blcu.edu.cn/gyds1/dsjj.htm) 中的缩写（Chinese Collegiate Computing Competition）。本人提供的证书载明复旦大学作品《“同样的风，不同的霾”——基于多源大数据的京津冀治霾经验跨区域迁移与衰减评估系统》在 2026 年（第 19 届）中国大学生计算机设计大赛获二等奖，日期为 2026 年 7–8 月；主页展示“全国二等奖（团队）”。奖牌照片为 `assets/4c-2026-award.jpg`，列表加载 `assets/4c-2026-award-thumbnail.jpg`，点击查看大图；证书原图为 `assets/4c-2026-certificate.jpg`。简介仅概述证书中的项目内容，未补写个人分工或技术成果。
 
 ## 预览
 

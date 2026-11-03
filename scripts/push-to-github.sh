@@ -42,6 +42,7 @@ profile_files=(
   assets/favicon.svg assets/main.js assets/preferences.js assets/style.css
   assets/avatar.jpg assets/nar-overview.svg assets/cuadc-overview.svg assets/resume.css assets/redirect.js
   assets/cuadc-2026.jpg assets/cuadc-2026-certificate.pdf
+  assets/4c-2026-award-thumbnail.jpg assets/4c-2026-award.jpg assets/4c-2026-certificate.jpg
   templates/index.html templates/resume.html scripts/build.py scripts/push-to-github.sh
   .github/workflows/pages.yml
 )
