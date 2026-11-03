@@ -59,10 +59,10 @@
     {
       "name": "CUADC",
       "image": "assets/cuadc-overview.svg",
-      "image_alt": {"en": "Conceptual illustration of a fixed-wing aircraft", "zh": "固定翼飞行器概念插图"},
+      "image_alt": {"en": "Conceptual illustration of a fixed-wing UAV", "zh": "固定翼无人机概念插图"},
       "status": {"en": "2026 · Engineering practice", "zh": "2026 · 工程实践"},
-      "title": {"en": "Algorithms for fixed-wing aircraft", "zh": "固定翼飞行器算法开发"},
-      "description": {"en": "A fixed-wing aircraft project for Fudan University's 2026 CUADC entry, with software for visual perception, flight-controller communication, and simulation.", "zh": "复旦大学 2026 年中国大学生飞行器设计创新大赛固定翼飞行器项目，涉及视觉感知、飞控通信与仿真等算法及软件工作。"},
+      "title": {"en": "Fixed-wing UAV reconnaissance and strike", "zh": "固定翼无人机侦察与打击"},
+      "description": {"en": "Fudan University's 2026 CUADC project in fixed-wing UAV reconnaissance and strike, involving software for visual perception, flight-controller communication, and simulation.", "zh": "复旦大学 2026 年中国大学生飞行器设计创新大赛“固定翼无人机侦察与打击”项目，涉及视觉感知、飞控通信与仿真等算法及软件工作。"},
       "links": [
         {"label": {"en": "Code", "zh": "代码"}, "url": "https://github.com/weijiansh1/Fixd-wing-RSI"},
         {"label": {"en": "Competition", "zh": "赛事介绍"}, "url": "https://cuadc.cn/"}
