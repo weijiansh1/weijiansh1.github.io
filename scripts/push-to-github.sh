@@ -40,7 +40,7 @@ fi
 profile_files=(
   index.html resume.html site.json README.md .nojekyll .gitignore
   assets/favicon.svg assets/main.js assets/preferences.js assets/style.css
-  assets/avatar.jpg assets/nar-overview.svg assets/resume.css assets/redirect.js
+  assets/avatar.jpg assets/nar-overview.svg assets/cuadc-overview.svg assets/resume.css assets/redirect.js
   templates/index.html templates/resume.html scripts/build.py scripts/push-to-github.sh
   .github/workflows/pages.yml
 )

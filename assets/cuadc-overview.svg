@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 264" role="img" aria-labelledby="title desc">
+  <title id="title">CUADC aircraft illustration</title>
+  <desc id="desc">A conceptual fixed-wing aircraft silhouette for the competition and engineering entry.</desc>
+  <style>
+    svg { --bg: #f6f8f7; --wire: #dce5df; --line: #35835b; --fill: #e7f1e9; --label: #526b5c; }
+    @media (prefers-color-scheme: dark) {
+      svg { --bg: #262a2c; --wire: #3c4b43; --line: #86bd9a; --fill: #314639; --label: #aac1b3; }
+    }
+  </style>
+  <rect width="352" height="264" fill="var(--bg)"/>
+  <g fill="none" stroke="var(--wire)" stroke-width="1.5">
+    <circle cx="176" cy="126" r="84" stroke-dasharray="3 6"/>
+    <path d="M65 126h222M176 30v20M176 204v17"/>
+  </g>
+  <path d="M176 51c-5 6-7 13-7 24v30l-76 33v12l77-17v35l-25 17v11l31-12 31 12v-11l-25-17v-35l77 17v-12l-76-33V75c0-11-2-18-7-24Z" fill="var(--fill)" stroke="var(--line)" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M176 73v94" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-linecap="round"/>
+  <g fill="var(--line)"><circle cx="76" cy="126" r="3"/><circle cx="276" cy="126" r="3"/></g>
+  <text x="176" y="239" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" letter-spacing="2.2" fill="var(--label)">CUADC · 2026</text>
+</svg>

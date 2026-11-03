@@ -10,6 +10,8 @@
 
 姓名与复旦大学单位信息已由本人提供。头像使用 [weijiansh1 的公开 GitHub 头像](https://github.com/weijiansh1)，本地文件为 `assets/avatar.jpg`。研究方向及 NAR 项目简介介绍正在探索的问题；未填写学位、职位、学校院系、发表记录、性能结果或联系方式。未提供的论文、邮箱、简历和学术主页不会出现在页面上。
 
+CUADC 条目依据本人公开仓库 [Fixd-wing-RSI](https://github.com/weijiansh1/Fixd-wing-RSI) 的介绍，展示 2026 年复旦固定翼飞行器项目中的视觉感知、飞控通信与仿真软件工作，并链接到 [赛事官网](https://cuadc.cn/)。飞行器缩略图是概念插图。
+
 ## 预览
 
 网站不依赖 npm、外部字体或 CDN，Python 3.9 及以上即可构建。
