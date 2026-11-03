@@ -1,0 +1,65 @@
+{
+  "name": "Weijian Shi",
+  "affiliation": {"en": "Fudan University", "zh": "复旦大学"},
+  "affiliation_url": "https://www.fudan.edu.cn/",
+  "github": "https://github.com/weijiansh1",
+  "email": "",
+  "scholar": "",
+  "cv": "",
+  "portrait": "",
+  "description": {
+    "en": "Weijian Shi at Fudan University. Research interests in embodied intelligence, robot learning, and mixture-of-experts models.",
+    "zh": "Weijian Shi，复旦大学。关注具身智能、机器人学习与混合专家模型。"
+  },
+  "intro": {
+    "en": "I’m interested in how intelligent systems learn to act in the physical world.",
+    "zh": "我关注智能系统如何学习，并在真实的物理世界中行动。"
+  },
+  "bio": {
+    "en": "My research interests lie at the intersection of embodied intelligence, robot learning, and mixture-of-experts models. I explore what a model’s internal dynamics can tell us about its behavior — and how that understanding can inform more reliable, efficient learning.",
+    "zh": "我的研究兴趣包括具身智能、机器人学习和混合专家模型。我希望理解模型内部动态与外部行为之间的联系，并探索如何利用这种理解，提高学习效率与执行可靠性。"
+  },
+  "research": [
+    {
+      "number": "01",
+      "icon": "embodied",
+      "title": {"en": "Embodied intelligence", "zh": "具身智能"},
+      "description": {"en": "How do learned policies turn perception into purposeful action in the physical world?", "zh": "学习得到的策略，如何将感知转化为物理世界中有目的的行动？"},
+      "tags": {"en": "Robot learning · Policy behavior", "zh": "机器人学习 · 策略行为"}
+    },
+    {
+      "number": "02",
+      "icon": "experts",
+      "title": {"en": "Mixture of experts", "zh": "混合专家模型"},
+      "description": {"en": "What can routing dynamics and expert interactions reveal about a model’s behavior?", "zh": "路由动态与专家之间的交互，能够揭示哪些模型行为的规律？"},
+      "tags": {"en": "Sparse models · Internal dynamics", "zh": "稀疏模型 · 内部动态"}
+    },
+    {
+      "number": "03",
+      "icon": "learning",
+      "title": {"en": "Reliable & efficient learning", "zh": "可靠与高效的学习"},
+      "description": {"en": "How can we learn with less data, recover from failures, and improve the quality of execution?", "zh": "如何用更少的数据学习、从失败中恢复，并提升任务执行质量？"},
+      "tags": {"en": "Data efficiency · Recovery", "zh": "数据效率 · 失败恢复"}
+    }
+  ],
+  "projects": [
+    {
+      "name": "NAR",
+      "status": {"en": "Ongoing research", "zh": "进行中的研究"},
+      "title": {"en": "Understanding models. Improving robot behavior.", "zh": "理解模型内部，探索更可靠的机器人行为。"},
+      "description": {"en": "Exploring intrinsic signals in mixture-of-experts policies for execution monitoring, recovery, and learning. The work connects patterns inside a model with the behavior of a robot over time.", "zh": "探索混合专家策略中的内在信号，用于执行监测、失败恢复与学习。研究关注模型内部模式与机器人执行过程之间的联系。"},
+      "questions": [
+        {"en": "Execution monitoring from the first policy inference.", "zh": "从第一次策略推理开始进行执行监测。"},
+        {"en": "Recovery evaluated through task outcomes, including both benefits and harms.", "zh": "通过任务结果评估恢复操作，同时考察收益与损害。"},
+        {"en": "Using model structure to guide more efficient training and data use.", "zh": "利用模型结构探索更高效的训练与数据利用方式。"},
+        {"en": "Improving the smoothness and directness of successful executions.", "zh": "提升成功执行过程的流畅性，减少不必要的动作。"}
+      ],
+      "links": []
+    }
+  ],
+  "publications": [],
+  "contact": {
+    "en": "Interested in robot learning, embodied intelligence, or the inner workings of models? Let’s connect.",
+    "zh": "如果你也关注机器人学习、具身智能，或模型内部的工作机制，欢迎交流。"
+  }
+}
