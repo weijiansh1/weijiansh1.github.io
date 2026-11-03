@@ -45,7 +45,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 /* A quiet toolbar keeps the document itself in focus. */
 .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: var(--page); }
 .header-inner { display: flex; align-items: center; gap: 27px; min-height: 62px; }
-.home-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.home-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.brand-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 .home-link:hover { color: var(--accent); }
 .desktop-nav { display: flex; align-items: center; gap: 24px; margin-left: auto; }
 .nav-link { position: relative; padding-block: 10px; color: var(--muted); font-size: 12px; }

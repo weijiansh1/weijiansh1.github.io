@@ -1,10 +1,10 @@
 # Weijian Shi · Fudan University
 
-中英文学术主页。白底、深灰文字与少量绿色，使用带相框的个人头像、三栏研究方向、项目图示和默认展开的研究问题。支持中英文、深色模式、手机布局，以及可选的论文列表和联系信息。
+正式主页采用学术简历式布局：左侧为头像、姓名、单位与联系入口，右侧为简介、研究方向、项目与可选论文。白底、深灰文字和少量绿色，支持中英文、深色模式、手机布局与打印为 PDF。
 
 仓库：[weijiansh1/weijianshi.github.io](https://github.com/weijiansh1/weijianshi.github.io)。站点使用 GitHub Actions 构建并发布到 GitHub Pages。
 
-另有学术简历式预览页 `resume.html`：左侧个人信息，右侧简介、研究方向与项目。它与主页共用 `site.json`，支持中英文、深色模式和打印为 PDF；样式位于 `assets/resume.css`，模板位于 `templates/resume.html`。预览页不参与搜索引擎索引。
+正式入口为 [个人主页](https://weijiansh1.github.io/weijianshi.github.io/)。原来的 `resume.html` 预览地址会自动跳转到正式主页，并保留页内锚点。页面模板是 `templates/index.html`，样式位于 `assets/resume.css`。
 
 ## 个人内容
 
@@ -28,8 +28,9 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 | 字段 | 用途 |
 | --- | --- |
 | `name`、`affiliation` | 姓名与单位 |
+| `url` | 正式站点的完整 HTTPS 地址，用于标准网址与分享信息 |
 | `intro`、`bio` | 首页简介，分别编辑 `en` 和 `zh` |
-| `research` | 研究方向、图标、说明与可选关键词 `keywords` |
+| `research` | 研究方向、图标与说明；`keywords` 保留在数据中，简历式布局不显示 |
 | `projects` | 项目简介、可选缩略图、研究问题和链接 |
 | `publications` | 论文列表，空数组时自动隐藏整个栏目及导航 |
 | `email` | 填写真实邮箱后显示邮件链接 |
@@ -84,10 +85,13 @@ bash scripts/push-to-github.sh
 
 - `site.json`：个人内容的唯一数据源。
 - `templates/index.html`：页面结构，保留构建占位符。
-- `assets/style.css`：桌面、手机、深色与打印样式。
+- `assets/resume.css`：正式主页的桌面、手机、深色与打印样式。
+- `templates/resume.html`、`assets/redirect.js`：原预览地址的跳转页面。
+- `assets/style.css`：早期展示式版本的样式，正式主页不加载。
 - `assets/preferences.js`、`assets/main.js`：主题、语言、导航交互。
 - `scripts/build.py`：使用 Python 标准库生成静态 HTML。
 - `index.html`：生成后的可直接打开的页面。
+- `resume.html`：生成后的原预览地址跳转页。
 - `dist/`：部署目录，由构建脚本生成，不纳入版本管理。
 - `output/playwright/`：本地检查与截图，不参与部署。
 

@@ -126,11 +126,13 @@ def build():
 
     structured_data = {
         "@context": "https://schema.org", "@type": "Person", "name": profile["name"],
+        "url": profile["url"],
         "affiliation": {"@type": "Organization", "name": profile["affiliation"]["en"]},
         "sameAs": [profile["github"]] + ([profile["scholar"]] if profile.get("scholar") else []),
     }
     values = {
         "NAME": esc(profile["name"]),
+        "SITE_URL": safe_url(profile["url"]),
         "PAGE_TITLE": esc(f'{profile["name"]} | {profile["affiliation"]["en"]}'),
         "DESCRIPTION_EN": esc(profile["description"]["en"]),
         "DESCRIPTION_ZH": esc(profile["description"]["zh"]),
@@ -144,12 +146,6 @@ def build():
         "CV_LINK": external_link(profile["cv"], {"en": "CV", "zh": "简历"}) if profile.get("cv") else "",
         "SCHOLAR_LINK": external_link(profile["scholar"], "Google Scholar") if profile.get("scholar") else "",
         "PORTRAIT": (
-            '<figure class="profile-portrait"><div class="portrait-frame">'
-            + image_tag(profile["portrait"], profile["name"], 224, 224, "portrait")
-            + '</div><span class="portrait-sprig" aria-hidden="true">'
-            + icon("sprout") + '</span></figure>'
-        ) if profile.get("portrait") else "",
-        "RESUME_PORTRAIT": (
             '<figure class="resume-portrait">'
             + image_tag(profile["portrait"], profile["name"], 164, 164, "portrait")
             + '</figure>'
@@ -168,7 +164,7 @@ def build():
     if (output / "assets").exists():
         shutil.rmtree(output / "assets")
     shutil.copytree(ROOT / "assets", output / "assets")
-    print(f'Built index.html, resume.html and dist/ — {len(research)} research areas, {len(projects)} project(s), {len(publications)} publication(s).')
+    print(f'Built homepage, resume redirect and dist/ — {len(research)} research areas, {len(projects)} project(s), {len(publications)} publication(s).')
 
 
 if __name__ == "__main__":
