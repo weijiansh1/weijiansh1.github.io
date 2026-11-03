@@ -1,6 +1,6 @@
 # Weijian Shi · Fudan University
 
-简洁的中英文学术主页。米白与深绿配色，包含研究方向、项目介绍、可选论文列表、联系信息，以及手机布局与深色模式。
+简洁的中英文学术主页。米白底色、炭灰文字，以少量绿色点缀图标与研究图示；深色模式使用中性炭灰。包含研究方向、项目介绍、可选论文列表、联系信息，以及手机布局。
 
 仓库：[weijiansh1/weijianshi.github.io](https://github.com/weijiansh1/weijianshi.github.io)。站点使用 GitHub Actions 构建并发布到 GitHub Pages。
 

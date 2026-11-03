@@ -25,7 +25,7 @@
     menuButton.setAttribute('aria-label', chinese
       ? (expanded ? '关闭导航' : '打开导航')
       : (expanded ? 'Close navigation' : 'Open navigation'));
-    themeColor.content = dark ? '#17231f' : '#f7f8f4';
+    themeColor.content = dark ? '#1c1d20' : '#faf9f6';
   }
 
   function setLanguage(nextLanguage) {
