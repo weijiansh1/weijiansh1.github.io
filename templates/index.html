@@ -29,6 +29,8 @@
     <symbol id="icon-learning" viewBox="0 0 32 32"><path d="M5 5v23h23M9 22l6-8 5 3 8-11M23 6h5v5"/><circle cx="15" cy="14" r="1.5"/></symbol>
     <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M5 12h14m-7-7v14"/></symbol>
     <symbol id="icon-up" viewBox="0 0 24 24"><path d="M12 19V5m-5 5 5-5 5 5"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="icon-sprout" viewBox="0 0 32 32"><path d="M16 28V15M16 20C7 20 4 14 5 8c8 0 12 4 11 12ZM16 15c0-8 5-12 12-11 0 8-4 12-12 11Z"/></symbol>
   </svg>
   <header class="site-header">
     <div class="header-inner container">
@@ -57,7 +59,7 @@
   <main id="main" class="container">
     <section class="profile" id="about" aria-labelledby="profile-title">
       <div class="profile-identity">
-        <p class="profile-kicker" data-en="A little about me" data-zh="关于我">A little about me</p>
+        <p class="profile-kicker"><span class="welcome-line" aria-hidden="true"></span><span data-en="Hello, I’m" data-zh="你好，我是">Hello, I’m</span></p>
         <h1 id="profile-title">$NAME</h1>
         <a class="affiliation" href="$AFFILIATION_URL" target="_blank" rel="noopener noreferrer">$AFFILIATION<svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>
       </div>
@@ -65,7 +67,8 @@
         <p class="profile-intro">$INTRO</p>
         <p class="profile-bio">$BIO</p>
         <div class="profile-links">
-          <a class="text-link" href="$GITHUB" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg>GitHub<svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>
+          <a class="profile-button" href="#work"><span data-en="Explore my research" data-zh="看看我的研究">Explore my research</span><svg class="icon small" aria-hidden="true"><use href="#icon-arrow"/></svg></a>
+          <a class="text-link profile-github" href="$GITHUB" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg>GitHub<svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>
           $EMAIL_LINK
           $SCHOLAR_LINK
           $CV_LINK
@@ -84,8 +87,11 @@
     $PUBLICATIONS
     <section class="section contact-section" id="contact" aria-labelledby="contact-title">
       <div class="section-heading"><h2 id="contact-title" data-en="Get in touch" data-zh="联系我">Get in touch</h2><span class="heading-rule" aria-hidden="true"></span></div>
-      <p class="contact-copy">$CONTACT</p>
-      <div class="contact-links">$EMAIL_LINK<a class="text-link" href="$GITHUB" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg>GitHub<svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>$SCHOLAR_LINK</div>
+      <div class="contact-panel">
+        <div class="contact-mark" aria-hidden="true"><svg class="icon"><use href="#icon-sprout"/></svg></div>
+        <p class="contact-copy">$CONTACT</p>
+        <div class="contact-links">$EMAIL_LINK<a class="text-link" href="$GITHUB" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg><span data-en="Find me on GitHub" data-zh="在 GitHub 上找到我">Find me on GitHub</span><svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>$SCHOLAR_LINK</div>
+      </div>
     </section>
   </main>
   <footer class="site-footer container"><p>© $YEAR $NAME<span class="footer-dot">·</span>$AFFILIATION</p><a class="back-top" href="#about"><span data-en="Back to top" data-zh="回到顶部">Back to top</span><svg class="icon small" aria-hidden="true"><use href="#icon-up"/></svg></a></footer>

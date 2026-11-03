@@ -23,16 +23,19 @@
     {
       "icon": "embodied",
       "title": {"en": "Embodied intelligence", "zh": "具身智能"},
+      "keywords": {"en": "Perception · Decision · Action", "zh": "感知 · 决策 · 行动"},
       "description": {"en": "Learning policies for perception, decision-making, and action in the physical world.", "zh": "探索物理世界中的感知、决策与行动，以及支撑这些能力的学习策略。"}
     },
     {
       "icon": "experts",
       "title": {"en": "Mixture of experts", "zh": "混合专家模型"},
+      "keywords": {"en": "Routing · Structure · Behavior", "zh": "路由 · 结构 · 行为"},
       "description": {"en": "Routing dynamics, expert interactions, and the behavior of sparsely activated models.", "zh": "理解稀疏模型中的路由动态、专家交互及其与模型行为的联系。"}
     },
     {
       "icon": "learning",
       "title": {"en": "Reliable & efficient learning", "zh": "可靠与高效的学习"},
+      "keywords": {"en": "Efficiency · Recovery · Quality", "zh": "效率 · 恢复 · 质量"},
       "description": {"en": "Data-efficient training, failure recovery, and execution quality beyond task success.", "zh": "研究高效的数据利用、失败恢复，以及任务成功之外的执行质量。"}
     }
   ],

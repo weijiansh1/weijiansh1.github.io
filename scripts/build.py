@@ -61,17 +61,23 @@ def build():
         if item["icon"] not in {"embodied", "experts", "learning"}:
             raise ValueError("Choose one of the three research icons: embodied, experts, learning")
         research.append(
-            f'<article class="research-item">{icon(item["icon"])}'
-            f'{localized(item["title"], "h3")}{localized(item["description"], "p")}</article>'
+            f'<article class="research-item research-{esc(item["icon"])}">'
+            f'<div class="research-icon">{icon(item["icon"])}</div>'
+            f'{localized(item["title"], "h3")}{localized(item["description"], "p")}'
+            + (localized(item["keywords"], "p", ' class="research-keywords"') if item.get("keywords") else "")
+            + '</article>'
         )
 
     projects = []
     for item in profile["projects"]:
-        questions = "".join(localized(q, "li") for q in item.get("questions", []))
+        questions = "".join(
+            f'<li><span class="question-number" aria-hidden="true">{i:02d}</span>{localized(q)}</li>'
+            for i, q in enumerate(item.get("questions", []), 1)
+        )
         details = (
-            '<details class="project-details"><summary>' + icon("plus") +
+            '<details class="project-details" open><summary>' +
             localized({"en": "Research questions", "zh": "研究问题"}) +
-            f'</summary><ul>{questions}</ul></details>'
+            icon("plus") + f'</summary><ol role="list">{questions}</ol></details>'
         ) if questions else ""
         links = "".join(external_link(link["url"], link["label"]) for link in item.get("links", []))
         thumbnail = (
@@ -81,10 +87,11 @@ def build():
         projects.append(
             '<article class="project"><div class="project-main">'
             f'<div class="project-visual">{thumbnail}</div><div class="project-content">'
+            f'<div class="project-meta"><span class="project-name">{esc(item["name"])}</span>'
             + localized(item["status"], "span", ' class="project-status"')
-            + f'<h3><span class="project-name">{esc(item["name"])}</span>: {localized(item["title"])}</h3>'
-            + f'{localized(item["description"], "p")}{details}'
-            + (f'<div class="project-links">{links}</div>' if links else "") + '</div></div></article>'
+            + f'</div>{localized(item["title"], "h3")}{localized(item["description"], "p")}'
+            + (f'<div class="project-links">{links}</div>' if links else "")
+            + f'</div></div>{details}</article>'
         )
 
     publications = []
@@ -136,7 +143,12 @@ def build():
         "CONTACT": localized(profile["contact"]), "EMAIL_LINK": email_link,
         "CV_LINK": external_link(profile["cv"], {"en": "CV", "zh": "简历"}) if profile.get("cv") else "",
         "SCHOLAR_LINK": external_link(profile["scholar"], "Google Scholar") if profile.get("scholar") else "",
-        "PORTRAIT": ('<figure class="profile-portrait">' + image_tag(profile["portrait"], profile["name"], 184, 184, "portrait") + '</figure>') if profile.get("portrait") else "",
+        "PORTRAIT": (
+            '<figure class="profile-portrait"><div class="portrait-frame">'
+            + image_tag(profile["portrait"], profile["name"], 224, 224, "portrait")
+            + '</div><span class="portrait-sprig" aria-hidden="true">'
+            + icon("sprout") + '</span></figure>'
+        ) if profile.get("portrait") else "",
         "STRUCTURED_DATA": json.dumps(structured_data, ensure_ascii=False).replace("<", "\\u003c"),
         "YEAR": str(date.today().year),
     }
