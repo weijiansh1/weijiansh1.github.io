@@ -149,20 +149,26 @@ def build():
             + '</div><span class="portrait-sprig" aria-hidden="true">'
             + icon("sprout") + '</span></figure>'
         ) if profile.get("portrait") else "",
+        "RESUME_PORTRAIT": (
+            '<figure class="resume-portrait">'
+            + image_tag(profile["portrait"], profile["name"], 164, 164, "portrait")
+            + '</figure>'
+        ) if profile.get("portrait") else "",
         "STRUCTURED_DATA": json.dumps(structured_data, ensure_ascii=False).replace("<", "\\u003c"),
         "YEAR": str(date.today().year),
     }
-    html = Template((ROOT / "templates/index.html").read_text(encoding="utf-8")).substitute(values)
-    html = "\n".join(line.rstrip() for line in html.splitlines()) + "\n"
-    (ROOT / "index.html").write_text(html, encoding="utf-8")
     output = ROOT / "dist"
     output.mkdir(exist_ok=True)
-    shutil.copy2(ROOT / "index.html", output / "index.html")
+    for page in ("index.html", "resume.html"):
+        html = Template((ROOT / "templates" / page).read_text(encoding="utf-8")).substitute(values)
+        html = "\n".join(line.rstrip() for line in html.splitlines()) + "\n"
+        (ROOT / page).write_text(html, encoding="utf-8")
+        shutil.copy2(ROOT / page, output / page)
     shutil.copy2(ROOT / ".nojekyll", output / ".nojekyll")
     if (output / "assets").exists():
         shutil.rmtree(output / "assets")
     shutil.copytree(ROOT / "assets", output / "assets")
-    print(f'Built index.html and dist/ — {len(research)} research areas, {len(projects)} project(s), {len(publications)} publication(s).')
+    print(f'Built index.html, resume.html and dist/ — {len(research)} research areas, {len(projects)} project(s), {len(publications)} publication(s).')
 
 
 if __name__ == "__main__":

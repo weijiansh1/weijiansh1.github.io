@@ -62,6 +62,20 @@
     updateControls();
   });
 
+  const printButton = document.querySelector('[data-print]');
+  if (printButton) {
+    let collapsedDetails = [];
+    window.addEventListener('beforeprint', () => {
+      collapsedDetails = [...document.querySelectorAll('details:not([open])')];
+      collapsedDetails.forEach(details => { details.open = true; });
+    });
+    window.addEventListener('afterprint', () => {
+      collapsedDetails.forEach(details => { details.open = false; });
+      collapsedDetails = [];
+    });
+    printButton.addEventListener('click', () => window.print());
+  }
+
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
     try { if (localStorage.getItem('weijian-theme')) return; } catch { /* Follow system. */ }
     root.dataset.theme = event.matches ? 'dark' : 'light';

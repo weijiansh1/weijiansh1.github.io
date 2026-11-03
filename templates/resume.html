@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex">
+  <title>$NAME | Academic profile</title>
+  <meta name="description" content="$DESCRIPTION_EN" data-en="$DESCRIPTION_EN" data-zh="$DESCRIPTION_ZH">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script src="assets/preferences.js"></script>
+  <link rel="stylesheet" href="assets/resume.css">
+  <script src="assets/main.js" defer></script>
+  <script type="application/ld+json">$STRUCTURED_DATA</script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-en="Skip to content" data-zh="跳转到正文">Skip to content</a>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-external" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
+    <symbol id="icon-github" viewBox="0 0 24 24"><path d="M9 19c-4 1.2-4-2-6-2m12 5v-3.9a3.4 3.4 0 0 0-1-2.6c3.3-.4 6.8-1.6 6.8-7.3a5.7 5.7 0 0 0-1.5-4 5.3 5.3 0 0 0-.1-4s-1.3-.4-4.3 1.5a14.7 14.7 0 0 0-7.8 0C4.1-.2 2.8.2 2.8.2a5.3 5.3 0 0 0-.1 4 5.7 5.7 0 0 0-1.5 4c0 5.7 3.5 6.9 6.8 7.3a3.4 3.4 0 0 0-1 2.6V22" transform="translate(2 1) scale(.85)"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20.3 15.3A9 9 0 0 1 8.7 3.7 9 9 0 1 0 20.3 15.3Z"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></symbol>
+    <symbol id="icon-embodied" viewBox="0 0 32 32"><path d="M7 28h18M12 28v-4l6-5-5-8 5-6m2 1 5 3-2 4-5-3"/><circle cx="12" cy="10" r="3"/><circle cx="19" cy="20" r="3"/><path d="M18 2v4"/></symbol>
+    <symbol id="icon-experts" viewBox="0 0 32 32"><path d="m8 16 14-9M8 16h14M8 16l14 9"/><circle cx="6" cy="16" r="3"/><rect x="22" y="4" width="6" height="6" rx="1.5"/><rect x="22" y="13" width="6" height="6" rx="1.5"/><rect x="22" y="22" width="6" height="6" rx="1.5"/></symbol>
+    <symbol id="icon-learning" viewBox="0 0 32 32"><path d="M5 5v23h23M9 22l6-8 5 3 8-11M23 6h5v5"/><circle cx="15" cy="14" r="1.5"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M5 12h14m-7-7v14"/></symbol>
+    <symbol id="icon-up" viewBox="0 0 24 24"><path d="M12 19V5m-5 5 5-5 5 5"/></symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24"><path d="M19 12H5m5-5-5 5 5 5"/></symbol>
+    <symbol id="icon-print" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM16 11h1"/></symbol>
+  </svg>
+  <header class="site-header">
+    <div class="header-inner container">
+      <a class="home-link" href="index.html"><svg class="icon small" aria-hidden="true"><use href="#icon-back"/></svg><span data-en="Homepage" data-zh="主页">Homepage</span></a>
+      <nav class="desktop-nav" aria-label="Main navigation" data-en="Main navigation" data-zh="主导航" data-translate-attribute="aria-label">
+        <a class="nav-link" href="#about" aria-current="location" data-en="About" data-zh="简介">About</a>
+        <a class="nav-link" href="#research" data-en="Research" data-zh="研究">Research</a>
+        <a class="nav-link" href="#work" data-en="Projects" data-zh="项目">Projects</a>
+        $PUBLICATIONS_NAV
+        <a class="nav-link" href="#contact" data-en="Contact" data-zh="联系">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="language-button js-control" type="button" aria-label="Switch to Chinese" data-language-toggle><span lang="en">EN</span><span class="language-divider">/</span><span lang="zh-CN">中</span></button>
+        <button class="icon-button theme-button js-control" type="button" aria-label="Switch to dark theme" data-theme-toggle><svg class="icon moon" aria-hidden="true"><use href="#icon-moon"/></svg><svg class="icon sun" aria-hidden="true"><use href="#icon-sun"/></svg></button>
+        <button class="icon-button menu-toggle js-control" type="button" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open navigation" data-menu-toggle><span></span><span></span></button>
+      </div>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav container" aria-label="Mobile navigation" data-en="Mobile navigation" data-zh="移动端导航" data-translate-attribute="aria-label" hidden>
+      <a href="#about" data-en="About" data-zh="简介">About</a>
+      <a href="#research" data-en="Research" data-zh="研究">Research</a>
+      <a href="#work" data-en="Projects" data-zh="项目">Projects</a>
+      $PUBLICATIONS_NAV
+      <a href="#contact" data-en="Contact" data-zh="联系">Contact</a>
+    </nav>
+  </header>
+  <div class="resume-layout container">
+    <aside class="resume-sidebar" aria-labelledby="profile-name">
+      $RESUME_PORTRAIT
+      <div class="sidebar-identity">
+        <h1 id="profile-name">$NAME</h1>
+        <a class="affiliation" href="$AFFILIATION_URL" target="_blank" rel="noopener noreferrer">$AFFILIATION<svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>
+        <div class="profile-links">
+          <a class="text-link" href="$GITHUB" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg>GitHub<svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>
+          $EMAIL_LINK
+          $SCHOLAR_LINK
+          $CV_LINK
+        </div>
+        <button class="print-button js-control" type="button" data-print><svg class="icon small" aria-hidden="true"><use href="#icon-print"/></svg><span data-en="Print / Save PDF" data-zh="打印 / 保存 PDF">Print / Save PDF</span></button>
+      </div>
+    </aside>
+    <main id="main" class="resume-content">
+      <section class="section about-section" id="about" aria-labelledby="about-title">
+        <p class="document-label" data-en="Academic profile" data-zh="学术简介">Academic profile</p>
+        <div class="section-heading"><h2 id="about-title" data-en="About me" data-zh="关于我">About me</h2><span class="heading-rule" aria-hidden="true"></span></div>
+        <p class="profile-intro">$INTRO</p>
+        <p class="profile-bio">$BIO</p>
+      </section>
+      <section class="section" id="research" aria-labelledby="research-title">
+        <div class="section-heading"><h2 id="research-title" data-en="Research interests" data-zh="研究方向">Research interests</h2><span class="heading-rule" aria-hidden="true"></span></div>
+        <div class="research-list">$RESEARCH</div>
+      </section>
+      <section class="section" id="work" aria-labelledby="work-title">
+        <div class="section-heading"><h2 id="work-title" data-en="Research projects" data-zh="研究项目">Research projects</h2><span class="heading-rule" aria-hidden="true"></span><a class="text-link section-link" href="$GITHUB?tab=repositories" target="_blank" rel="noopener noreferrer"><span data-en="Repositories" data-zh="代码仓库">Repositories</span><svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a></div>
+        <div class="projects-list">$PROJECTS</div>
+      </section>
+      $PUBLICATIONS
+      <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="section-heading"><h2 id="contact-title" data-en="Contact" data-zh="联系我">Contact</h2><span class="heading-rule" aria-hidden="true"></span></div>
+        <p class="contact-copy">$CONTACT</p>
+        <div class="contact-links">$EMAIL_LINK<a class="text-link" href="$GITHUB" target="_blank" rel="noopener noreferrer"><span data-en="Find me on GitHub" data-zh="在 GitHub 上找到我">Find me on GitHub</span><svg class="icon small" aria-hidden="true"><use href="#icon-external"/></svg></a>$SCHOLAR_LINK</div>
+      </section>
+      <footer class="site-footer"><p>© $YEAR $NAME<span class="footer-dot">·</span>$AFFILIATION</p><a class="back-top" href="#about"><span data-en="Back to top" data-zh="回到顶部">Back to top</span><svg class="icon small" aria-hidden="true"><use href="#icon-up"/></svg></a></footer>
+    </main>
+  </div>
+</body>
+</html>
