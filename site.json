@@ -9,8 +9,8 @@
   "cv": "",
   "portrait": "assets/avatar.jpg",
   "description": {
-    "en": "Weijian Shi at Fudan University. Research interests in embodied intelligence, robot learning, and mixture-of-experts models.",
-    "zh": "Weijian Shi，复旦大学。关注具身智能、机器人学习与混合专家模型。"
+    "en": "Personal homepage of Weijian Shi at Fudan University, featuring interests, projects, and experiences.",
+    "zh": "Weijian Shi，复旦大学。个人主页，记录我的兴趣、项目与经历。"
   },
   "intro": {
     "en": "I’m interested in how intelligent systems learn to act in the physical world.",
