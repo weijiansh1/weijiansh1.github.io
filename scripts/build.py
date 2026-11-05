@@ -164,6 +164,8 @@ def build():
         ) if profile.get("portrait") else "",
         "STRUCTURED_DATA": json.dumps(structured_data, ensure_ascii=False).replace("<", "\\u003c"),
         "YEAR": str(date.today().year),
+        "REDIRECT_TARGET": "index.html",
+        "REDIRECT_SCRIPT": "assets/redirect.js",
     }
     output = ROOT / "dist"
     output.mkdir(exist_ok=True)
@@ -176,7 +178,19 @@ def build():
     if (output / "assets").exists():
         shutil.rmtree(output / "assets")
     shutil.copytree(ROOT / "assets", output / "assets")
-    print(f'Built homepage, resume redirect and dist/ — {len(research)} research areas, {len(projects)} project(s), {len(publications)} publication(s).')
+
+    # Preserve the former project-site URL and already-shared asset links.
+    legacy = output / "weijianshi.github.io"
+    if legacy.exists():
+        shutil.rmtree(legacy)
+    legacy.mkdir()
+    redirect = Template((ROOT / "templates" / "resume.html").read_text(encoding="utf-8")).substitute(
+        values | {"REDIRECT_TARGET": "../", "REDIRECT_SCRIPT": "../assets/redirect.js"}
+    )
+    for page in ("index.html", "resume.html"):
+        (legacy / page).write_text(redirect, encoding="utf-8")
+    shutil.copytree(output / "assets", legacy / "assets")
+    print(f'Built homepage, redirects and dist/ — {len(research)} research areas, {len(projects)} project(s), {len(publications)} publication(s).')
 
 
 if __name__ == "__main__":

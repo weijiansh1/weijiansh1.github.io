@@ -6,10 +6,10 @@
   <meta name="robots" content="noindex">
   <link rel="canonical" href="$SITE_URL">
   <title>$PAGE_TITLE</title>
-  <script src="assets/redirect.js"></script>
-  <noscript><meta http-equiv="refresh" content="0; url=index.html"></noscript>
+  <script src="$REDIRECT_SCRIPT" data-target="$REDIRECT_TARGET"></script>
+  <noscript><meta http-equiv="refresh" content="0; url=$REDIRECT_TARGET"></noscript>
 </head>
 <body>
-  <p><a href="index.html">$NAME — Homepage / 个人主页</a></p>
+  <p><a href="$REDIRECT_TARGET">$NAME — Homepage / 个人主页</a></p>
 </body>
 </html>

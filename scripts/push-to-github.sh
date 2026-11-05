@@ -3,7 +3,7 @@
 set -euo pipefail
 
 profile_root="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-profile_repository="weijiansh1/weijianshi.github.io"
+profile_repository="weijiansh1/weijiansh1.github.io"
 
 for dependency in git gh python3; do
   if ! command -v "$dependency" >/dev/null 2>&1; then

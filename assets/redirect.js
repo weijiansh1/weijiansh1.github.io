@@ -1,2 +1,5 @@
-// Keep links to the former preview working, including section anchors.
-window.location.replace('index.html' + window.location.search + window.location.hash);
+// Keep former homepage and preview links working, including queries and anchors.
+(() => {
+  const target = document.currentScript.dataset.target || 'index.html';
+  window.location.replace(target + window.location.search + window.location.hash);
+})();

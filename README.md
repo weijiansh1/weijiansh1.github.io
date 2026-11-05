@@ -2,9 +2,9 @@
 
 个人主页采用简历式布局：左侧为头像、姓名、单位与联系入口，右侧为简介、研究方向、「我在做的事」与可选论文。开头使用「个人简介 / Personal profile」，容纳兴趣、项目与个人经历。白底、深灰文字和少量绿色，支持中英文、深色模式、手机布局与打印为 PDF。
 
-仓库：[weijiansh1/weijianshi.github.io](https://github.com/weijiansh1/weijianshi.github.io)。站点使用 GitHub Actions 构建并发布到 GitHub Pages。
+仓库：[weijiansh1/weijiansh1.github.io](https://github.com/weijiansh1/weijiansh1.github.io)。站点使用 GitHub Actions 构建并发布到 GitHub Pages。
 
-正式入口为 [个人主页](https://weijiansh1.github.io/weijianshi.github.io/)。原来的 `resume.html` 预览地址会自动跳转到正式主页，并保留页内锚点。页面模板是 `templates/index.html`，样式位于 `assets/resume.css`。
+正式入口为 [个人主页](https://weijiansh1.github.io/)。原来的 `/weijianshi.github.io/` 和 `resume.html` 预览地址会自动跳转到正式主页，并保留查询参数与页内锚点。页面模板是 `templates/index.html`，样式位于 `assets/resume.css`。
 
 ## 个人内容
 
@@ -79,11 +79,11 @@ bash scripts/push-to-github.sh
 3. 提交至 `main` 或 `master`，或手动运行 **Deploy academic homepage**。工作流只发布 `dist/`，不会上传源码、预览截图等内容。
 4. 等待工作流成功，访问其 deployment 输出地址。若默认分支名不同，修改工作流中的分支名。
 
-仓库所有者是 **`weijiansh1`**（最后一位是数字 `1`），而仓库名为 **`weijianshi.github.io`**（这里是字母 `i`）。按 [GitHub Pages 的命名规则](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)，保留这个名字时，默认项目站点地址应为：
+仓库所有者是 **`weijiansh1`**（最后一位是数字 `1`），仓库名为 **`weijiansh1.github.io`**。按 [GitHub Pages 的命名规则](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)，主页直接发布到：
 
-<https://weijiansh1.github.io/weijianshi.github.io/>
+<https://weijiansh1.github.io/>
 
-如果希望使用根地址 `https://weijiansh1.github.io/`，用户站点仓库需要命名为 `weijiansh1.github.io`。这里没有替你重命名仓库，也没有设置自定义域名。所有网站资源都使用相对路径，可部署到任意子目录。
+构建器在 `dist/weijianshi.github.io/` 保留旧地址的跳转页与资源副本，让之前分享的主页、照片和证书链接继续可用。站点使用 GitHub 提供的默认域名，无需配置自定义域名或 DNS。
 
 部署配置参考 [GitHub 官方自定义 Pages 工作流](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
 
@@ -92,13 +92,14 @@ bash scripts/push-to-github.sh
 - `site.json`：个人内容的唯一数据源。
 - `templates/index.html`：页面结构，保留构建占位符。
 - `assets/resume.css`：正式主页的桌面、手机、深色与打印样式。
-- `templates/resume.html`、`assets/redirect.js`：原预览地址的跳转页面。
+- `templates/resume.html`、`assets/redirect.js`：原预览地址及旧项目站点地址的跳转页面。
 - `assets/style.css`：早期展示式版本的样式，正式主页不加载。
 - `assets/preferences.js`、`assets/main.js`：主题、语言、导航交互。
 - `scripts/build.py`：使用 Python 标准库生成静态 HTML。
 - `index.html`：生成后的可直接打开的页面。
 - `resume.html`：生成后的原预览地址跳转页。
 - `dist/`：部署目录，由构建脚本生成，不纳入版本管理。
+- `dist/weijianshi.github.io/`：构建时生成的旧网址跳转页与资源副本。
 - `output/playwright/`：本地检查与截图，不参与部署。
 
 ## 本次验证
